@@ -1,0 +1,37 @@
+.column {
+  width: 600px;
+  padding-top: 40px;
+}
+
+.tabs {
+  margin-top: 20px;
+  display: flex;
+
+}
+
+.ingredients {
+  margin-top: 40px;
+  height: 664px;
+  overflow-y: scroll;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+
+.list {
+  list-style: none;
+  padding: 24px 8px 40px 16px;
+  margin: 0;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}

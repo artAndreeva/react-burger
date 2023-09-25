@@ -25,13 +25,15 @@ const AppHeader = () => {
         </ul>
       </nav>
       <Logo />
-      <div className={appHeaderStyles.profile}>
-        <a href='#' className={appHeaderStyles.link}>
-          <ProfileIcon type="secondary" />
-          <span className='text text_type_main-default text_color_inactive'>
-           Личный кабинет
-          </span>
-        </a>
+      <div className={appHeaderStyles.container}>
+        <div className={appHeaderStyles.profile}>
+          <a href='#' className={appHeaderStyles.link}>
+            <ProfileIcon type="secondary" />
+            <span className='text text_type_main-default text_color_inactive'>
+            Личный кабинет
+            </span>
+          </a>
+        </div>
       </div>
     </header>
   )

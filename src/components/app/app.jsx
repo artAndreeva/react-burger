@@ -7,8 +7,8 @@ const App = () => {
   return (
     <div className={appStyles.content}>
       <div className={appStyles.page}>
-        <AppHeader/>
-        <Main/>
+        <AppHeader />
+        <Main />
       </div>
     </div>
   );
