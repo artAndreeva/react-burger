@@ -1,23 +1,15 @@
 import React from 'react';
-import './App.css';
+import appStyles from './app.module.css';
+import AppHeader from '../app-header/app-header';
+import Main from '../main/main';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={appStyles.content}>
+      <div className={appStyles.page}>
+        <AppHeader/>
+        <Main/>
+      </div>
     </div>
   );
 }
