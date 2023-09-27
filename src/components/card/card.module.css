@@ -17,16 +17,3 @@
 .image {
   width: 240px;
 }
-
-.quantity {
-  width: 32px;
-  height: 32px;
-  background-color: #4C4CFF;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
