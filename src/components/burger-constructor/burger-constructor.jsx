@@ -1,8 +1,17 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import burgersData from '../../utils/data';
+import {useEffect, useState} from  'react'
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ingredients}) => {
+
+  const [endElem, setEndElem] = useState({})
+  const [middleElem, setMiddleElem] = useState([])
+
+  useEffect(()=> {
+    setEndElem(ingredients[0]);
+    setMiddleElem(ingredients.slice(1, ingredients.length))
+  }, [ingredients])
+
   return (
     <section className={burgerConstructorStyles.column}>
       <div className={burgerConstructorStyles.container}>
@@ -10,13 +19,13 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={burgersData[0].name}
-            price={burgersData[0].price}
-            thumbnail={burgersData[0].image}
+            text={`${endElem.name} (верх)`}
+            price={endElem.price}
+            thumbnail={endElem.image}
           />
         </div>
         <ul className={burgerConstructorStyles.list}>
-            {burgersData.slice(1, burgersData.length -1).map((item) => (
+            {middleElem.map((item) => (
               <li key={item._id} className={burgerConstructorStyles.item}>
                 <DragIcon type="primary" />
                 <ConstructorElement
@@ -31,9 +40,9 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={burgersData[burgersData.length - 1].name}
-            price={burgersData[burgersData.length - 1].price}
-            thumbnail={burgersData[burgersData.length - 1].image}
+            text={`${endElem.name} (низ)`}
+            price={endElem.price}
+            thumbnail={endElem.image}
           />
         </div>
       </div>
