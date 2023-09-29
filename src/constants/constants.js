@@ -22,3 +22,7 @@ export const tabs = {
   SECOND: 'sauce',
   THIRD: 'main',
 }
+
+export const apiError = 'Ошибка сервера';
+
+export const ingredientModalHeader = 'Детали ингредиента';
