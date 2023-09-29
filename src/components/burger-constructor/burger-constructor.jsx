@@ -1,16 +1,18 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import {useEffect, useState} from  'react'
+import {useEffect, useState} from  'react';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../constants/constants';
 
 const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 
-  const [endElem, setEndElem] = useState({})
-  const [middleElem, setMiddleElem] = useState([])
+  const [endElem, setEndElem] = useState({});
+  const [middleElem, setMiddleElem] = useState([]);
 
   useEffect(()=> {
     setEndElem(ingredients[0]);
     setMiddleElem(ingredients.slice(1, ingredients.length))
-  }, [ingredients])
+  }, [ingredients]);
 
   return (
     <section className={burgerConstructorStyles.column}>
@@ -56,7 +58,12 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
         </Button>
       </div>
     </section>
-  )
+  );
 }
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  onOrderClick: PropTypes.func.isRequired
+};
 
 export default BurgerConstructor;
