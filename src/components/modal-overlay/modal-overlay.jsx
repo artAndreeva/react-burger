@@ -4,19 +4,6 @@ import PropTypes from 'prop-types';
 
 const ModalOverlay = ({ children, onClose }) => {
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleEscClose);
-    return () => {
-      document.removeEventListener('keydown', handleEscClose);
-    }
-  }, []);
-
-  const handleEscClose = (e) => {
-    if (e.key === 'Escape') {
-      onClose();
-    }
-  };
-
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
