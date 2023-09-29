@@ -10,8 +10,8 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
   const [middleElem, setMiddleElem] = useState([]);
 
   useEffect(()=> {
-    setEndElem(ingredients[0]);
-    setMiddleElem(ingredients.slice(1, ingredients.length))
+    setEndElem(ingredients.filter(item => item.name === 'Краторная булка N-200i')[0]);
+    setMiddleElem(ingredients.filter(item => item.name !== 'Краторная булка N-200i'))
   }, [ingredients]);
 
   return (
