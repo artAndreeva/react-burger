@@ -3,7 +3,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import Card from '../card/card';
 
-const BurgerIngredients = ({ingredients}) => {
+const BurgerIngredients = ({ingredients, onIngredientClick}) => {
 
   const [current, setCurrent] = useState('bun');
 
@@ -38,7 +38,7 @@ const BurgerIngredients = ({ingredients}) => {
           <ul className={burgerIngredientsStyles.list}>
             {filterIngredients('bun').map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Card {...item}/>
+                <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
             ))}
         </ul>
@@ -48,7 +48,7 @@ const BurgerIngredients = ({ingredients}) => {
           <ul className={burgerIngredientsStyles.list}>
             {filterIngredients('sauce').map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Card {...item}/>
+                <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
             ))}
         </ul>
@@ -58,7 +58,7 @@ const BurgerIngredients = ({ingredients}) => {
           <ul className={burgerIngredientsStyles.list}>
             {filterIngredients('main').map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Card {...item}/>
+                <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
             ))}
         </ul>

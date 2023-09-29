@@ -2,7 +2,7 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktiku
 import burgerConstructorStyles from './burger-constructor.module.css';
 import {useEffect, useState} from  'react'
 
-const BurgerConstructor = ({ingredients}) => {
+const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 
   const [endElem, setEndElem] = useState({})
   const [middleElem, setMiddleElem] = useState([])
@@ -51,7 +51,7 @@ const BurgerConstructor = ({ingredients}) => {
           <span className='text text_type_digits-medium'>610</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={onOrderClick}>
           Оформить заказ
         </Button>
       </div>
