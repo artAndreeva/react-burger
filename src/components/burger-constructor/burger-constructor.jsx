@@ -1,18 +1,32 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import {useEffect, useState} from  'react';
+import {useEffect, useState, useMemo } from  'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../constants/constants';
+import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 
 const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 
-  const [endElem, setEndElem] = useState({});
-  const [middleElem, setMiddleElem] = useState([]);
+  const [endIngredient, setEndIngredient] = useState({});
+  const [middleIngredient, setMiddleIngredient] = useState([]);
 
   useEffect(()=> {
-    setEndElem(ingredients.filter(item => item.name === 'Краторная булка N-200i')[0]);
-    setMiddleElem(ingredients.filter(item => item.name !== 'Краторная булка N-200i'))
+    setEndIngredient(filterEndIngredient);
+    setMiddleIngredient(filterMiddleIngredient);
   }, [ingredients]);
+
+  const filterEndIngredient = useMemo(
+    () => {
+      return ingredients.filter(item => item.name === 'Краторная булка N-200i')[0];
+    },
+    [ingredients]
+  );
+
+  const filterMiddleIngredient = useMemo(
+    () => {
+      return ingredients.filter(item => item.name !== 'Краторная булка N-200i');
+    },
+    [ingredients]
+  );
 
   return (
     <section className={burgerConstructorStyles.column}>
@@ -21,13 +35,13 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${endElem.name} (верх)`}
-            price={endElem.price}
-            thumbnail={endElem.image}
+            text={`${endIngredient.name} (верх)`}
+            price={endIngredient.price}
+            thumbnail={endIngredient.image}
           />
         </div>
         <ul className={burgerConstructorStyles.list}>
-            {middleElem.map((item) => (
+            {middleIngredient.map((item) => (
               <li key={item._id} className={burgerConstructorStyles.item}>
                 <DragIcon type="primary" />
                 <ConstructorElement
@@ -42,9 +56,9 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${endElem.name} (низ)`}
-            price={endElem.price}
-            thumbnail={endElem.image}
+            text={`${endIngredient.name} (низ)`}
+            price={endIngredient.price}
+            thumbnail={endIngredient.image}
           />
         </div>
       </div>
@@ -62,7 +76,7 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  ingredients: PropTypes.arrayOf(INGREDIENS_PROP_TYPES).isRequired,
   onOrderClick: PropTypes.func.isRequired
 };
 

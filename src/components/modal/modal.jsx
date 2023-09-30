@@ -24,17 +24,18 @@ const Modal = ({ children, header, onClose }) => {
 
   return ReactDOM.createPortal(
     (
-    <ModalOverlay onClose={onClose}>
-      <div className={modalStyles.modal}>
-        <button className={modalStyles.button} onClick={onClose}>
-          <CloseIcon type="primary" />
-        </button>
-        <div className={modalStyles.container}>
-          <h3 className='text text_type_main-large'>{header}</h3>
+      <>
+        <div className={modalStyles.modal}>
+          <button className={modalStyles.button} onClick={onClose}>
+            <CloseIcon type="primary" />
+          </button>
+          <div className={modalStyles.container}>
+            <h3 className='text text_type_main-large'>{header}</h3>
+          </div>
+            {children}
         </div>
-          {children}
-      </div>
-    </ModalOverlay>
+        <ModalOverlay onClose={onClose}/>
+      </>
     ),
     modalRoot
   );

@@ -1,7 +1,7 @@
 import overlayStyles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-const ModalOverlay = ({ children, onClose }) => {
+const ModalOverlay = ({ onClose }) => {
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -10,14 +10,11 @@ const ModalOverlay = ({ children, onClose }) => {
   };
 
   return (
-    <div className={overlayStyles.background} onClick={handleOverlayClick}>
-      {children}
-    </div>
+    <div className={overlayStyles.background} onClick={handleOverlayClick}></div>
   );
 }
 
 ModalOverlay.propTypes = {
-  children: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired
 };
 

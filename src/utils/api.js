@@ -1,7 +1,7 @@
 import {BASE_URL} from '../constants/constants'
 
 const handleResponse = (res) => {
-  if (res.ok) {
+  if (res.ok && (() => res.json().success)) {
     return res.json();
   }
   return Promise.reject(res.status);

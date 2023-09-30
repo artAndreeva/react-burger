@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import Card from '../card/card';
-import { tabs } from '../../constants/constants';
-import { ingredientPropTypes } from '../../constants/constants';
+import { TABS } from '../../constants/constants';
+import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 import PropTypes from 'prop-types';
 
 const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
 
-  const [current, setCurrent] = useState(tabs.FIRST);
+  const [current, setCurrent] = useState(TABS.bun);
 
   const setTab = (tab) => {
     setCurrent(tab);
@@ -25,21 +25,21 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
     <section className={burgerIngredientsStyles.column}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
       <div className={burgerIngredientsStyles.tabs}>
-        <Tab value={tabs.FIRST} active={current === tabs.FIRST} onClick={setTab}>
+        <Tab value={TABS.bun} active={current === TABS.bun} onClick={setTab}>
          Булки
         </Tab>
-        <Tab value={tabs.SECOND} active={current === tabs.SECOND} onClick={setTab}>
+        <Tab value={TABS.sauce} active={current === TABS.sauce} onClick={setTab}>
           Соусы
         </Tab>
-        <Tab value={tabs.THIRD} active={current === tabs.THIRD} onClick={setTab}>
+        <Tab value={TABS.main} active={current === TABS.main} onClick={setTab}>
           Начинки
         </Tab>
       </div>
       <div className={burgerIngredientsStyles.ingredients}>
         <div className={burgerIngredientsStyles.buns}>
-          <h2 className='text text_type_main-medium' id={tabs.FIRST}>Булки</h2>
+          <h2 className='text text_type_main-medium' id={TABS.bun}>Булки</h2>
           <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(tabs.FIRST).map((item) => (
+            {filterIngredients(TABS.bun).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
                 <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
@@ -47,9 +47,9 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
         </ul>
         </div>
         <div className={burgerIngredientsStyles.sauce}>
-          <h2 className='text text_type_main-medium' id={tabs.SECOND}>Соусы</h2>
+          <h2 className='text text_type_main-medium' id={TABS.sauce}>Соусы</h2>
           <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(tabs.SECOND).map((item) => (
+            {filterIngredients(TABS.sauce).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
                 <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
@@ -57,9 +57,9 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
         </ul>
         </div>
         <div className={burgerIngredientsStyles.main}>
-          <h2 className='text text_type_main-medium' id={tabs.THIRD}>Начинки</h2>
+          <h2 className='text text_type_main-medium' id={TABS.main}>Начинки</h2>
           <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(tabs.THIRD).map((item) => (
+            {filterIngredients(TABS.main).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
                 <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
@@ -72,7 +72,7 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  ingredients: PropTypes.arrayOf(INGREDIENS_PROP_TYPES).isRequired,
   onIngredientClick: PropTypes.func.isRequired
 };
 

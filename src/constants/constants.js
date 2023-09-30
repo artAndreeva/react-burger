@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const ingredientPropTypes = PropTypes.shape({
+export const INGREDIENS_PROP_TYPES = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -17,12 +17,12 @@ export const ingredientPropTypes = PropTypes.shape({
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
-export const tabs = {
-  FIRST: 'bun',
-  SECOND: 'sauce',
-  THIRD: 'main',
+export const TABS = {
+  bun: 'bun',
+  sauce: 'sauce',
+  main: 'main',
 }
 
-export const apiError = 'Ошибка сервера';
+export const API_ERROR = 'Ошибка сервера';
 
-export const ingredientModalHeader = 'Детали ингредиента';
+export const INGREDIENT_MODAL_HEADER = 'Детали ингредиента';

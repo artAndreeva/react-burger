@@ -6,26 +6,28 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useEffect, useState } from 'react';
 import { getIngredients } from '../../utils/api'
-import { ingredientModalHeader, apiError } from '../../constants/constants';
+import { INGREDIENT_MODAL_HEADER, API_ERROR } from '../../constants/constants';
 
 const App = () => {
   const [ingredients, setIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isIngredientsModalOpen, setIngredientsIsModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
+  const [apiErrorText, setApiErrorText] = useState('');
 
-  const getProductData = async() => {
-    setIsLoading(false);
-    try {
-      const res = await getIngredients();
-      setIngredients(res.data);
-    } catch {
-      console.log(apiError);
-    } finally {
-      setTimeout(() => {
-        setIsLoading(true);
-    }, 500)}
+  const getProductData = () => {
+    setIsLoading(true);
+      getIngredients()
+      .then((res) => {
+        setIngredients(res.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setApiErrorText(API_ERROR);
+        setApiErrorModalOpen(true);
+      });
   }
 
   useEffect(() => {
@@ -41,17 +43,15 @@ const App = () => {
     setIngredientsIsModalOpen(true);
   }
 
-  const closeOrderModal = () => {
+  const closeModal = () => {
     setIsOrderModalOpen(false);
-  }
-
-  const closeIngredientsModal = () => {
     setIngredientsIsModalOpen(false);
+    setApiErrorModalOpen(false);
   }
 
   return (
     <div className={appStyles.content}>
-      {isLoading &&
+      {!isLoading &&
         <>
           <AppHeader />
           <Main
@@ -61,8 +61,8 @@ const App = () => {
 
           {isIngredientsModalOpen &&
             <Modal
-              onClose={closeIngredientsModal}
-              header={ingredientModalHeader}
+              onClose={closeModal}
+              header={INGREDIENT_MODAL_HEADER}
             >
               <IngredientsDetails selectedIngredient={selectedIngredient}/>
             </Modal>
@@ -70,9 +70,17 @@ const App = () => {
 
           {isOrderModalOpen &&
             <Modal
-              onClose={closeOrderModal}
+              onClose={closeModal}
             >
               <OrderDetails />
+            </Modal>
+          }
+
+          {isApiErrorModalOpen &&
+            <Modal
+              onClose={closeModal}
+            >
+              <p className='text text_type_main-large mt-6'>{apiErrorText}</p>
             </Modal>
           }
 

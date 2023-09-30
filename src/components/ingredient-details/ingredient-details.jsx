@@ -1,12 +1,12 @@
 import ingredientDetailStyles from './ingredient-details.module.css';
-import { ingredientPropTypes } from '../../constants/constants';
+import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 
 const IngredientsDetails = ({ selectedIngredient }) => {
   return (
     <div className={ingredientDetailStyles.container}>
-      <img 
-        src={selectedIngredient.image} 
-        alt={selectedIngredient.name} 
+      <img
+        src={selectedIngredient.image}
+        alt={selectedIngredient.name}
         className={ingredientDetailStyles.image}/>
       <p className='text text_type_main-medium'>
         {selectedIngredient.name}
@@ -34,7 +34,7 @@ const IngredientsDetails = ({ selectedIngredient }) => {
 }
 
 IngredientsDetails.propTypes = {
-  selectedIngredient: ingredientPropTypes.isRequired,
+  selectedIngredient: INGREDIENS_PROP_TYPES.isRequired,
 };
 
 export default IngredientsDetails;
