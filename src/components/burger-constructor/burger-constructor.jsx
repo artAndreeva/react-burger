@@ -12,7 +12,7 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
   useEffect(()=> {
     setEndIngredient(filterEndIngredient);
     setMiddleIngredient(filterMiddleIngredient);
-  }, [ingredients]);
+  }, []);
 
   const filterEndIngredient = useMemo(
     () => {
