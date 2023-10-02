@@ -7,6 +7,7 @@ import OrderDetails from '../order-details/order-details';
 import { useEffect, useState } from 'react';
 import { getIngredients } from '../../utils/api'
 import { INGREDIENT_MODAL_HEADER, API_ERROR } from '../../constants/constants';
+import { ingredientsContext } from '../../context/ingredientsContext';
 
 const App = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -54,10 +55,13 @@ const App = () => {
       {!isLoading &&
         <>
           <AppHeader />
-          <Main
-            ingredients={ingredients}
-            onIngredientClick={openIngredientsModal}
-            onOrderClick={openOrderModal}/>
+          <ingredientsContext.Provider value={ingredients}>
+            <Main
+              ingredients={ingredients}
+              onIngredientClick={openIngredientsModal}
+              onOrderClick={openOrderModal}
+            />
+          </ingredientsContext.Provider>
 
           {isIngredientsModalOpen &&
             <Modal

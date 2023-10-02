@@ -8,7 +8,7 @@ const Main = ({ ingredients, onIngredientClick, onOrderClick }) => {
   return (
     <main className={mainStyles.main}>
       <BurgerIngredients ingredients={ingredients} onIngredientClick={onIngredientClick} />
-      <BurgerConstructor ingredients={ingredients} onOrderClick={onOrderClick}/>
+      <BurgerConstructor onOrderClick={onOrderClick}/>
     </main>
   );
 }

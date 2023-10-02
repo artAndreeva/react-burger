@@ -1,13 +1,14 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import {useEffect, useState, useMemo } from  'react';
+import {useEffect, useState, useMemo, useContext } from  'react';
 import PropTypes from 'prop-types';
-import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
+import { ingredientsContext } from '../../context/ingredientsContext';
 
-const BurgerConstructor = ({ ingredients, onOrderClick }) => {
+const BurgerConstructor = ({ onOrderClick }) => {
 
   const [endIngredient, setEndIngredient] = useState({});
   const [middleIngredient, setMiddleIngredient] = useState([]);
+  const ingredients = useContext(ingredientsContext);
 
   useEffect(()=> {
     setEndIngredient(filterEndIngredient);
@@ -76,7 +77,6 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(INGREDIENS_PROP_TYPES).isRequired,
   onOrderClick: PropTypes.func.isRequired
 };
 
