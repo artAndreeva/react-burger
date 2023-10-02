@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import Card from '../card/card';
-import { TABS } from '../../constants/constants';
+import { TYPE } from '../../constants/constants';
 import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 import PropTypes from 'prop-types';
 
 const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
 
-  const [current, setCurrent] = useState(TABS.bun);
+  const [current, setCurrent] = useState(TYPE.bun);
 
   const setTab = (tab) => {
     setCurrent(tab);
@@ -25,21 +25,21 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
     <section className={burgerIngredientsStyles.column}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
       <div className={burgerIngredientsStyles.tabs}>
-        <Tab value={TABS.bun} active={current === TABS.bun} onClick={setTab}>
+        <Tab value={TYPE.bun} active={current === TYPE.bun} onClick={setTab}>
          Булки
         </Tab>
-        <Tab value={TABS.sauce} active={current === TABS.sauce} onClick={setTab}>
+        <Tab value={TYPE.sauce} active={current === TYPE.sauce} onClick={setTab}>
           Соусы
         </Tab>
-        <Tab value={TABS.main} active={current === TABS.main} onClick={setTab}>
+        <Tab value={TYPE.main} active={current === TYPE.main} onClick={setTab}>
           Начинки
         </Tab>
       </div>
       <div className={burgerIngredientsStyles.ingredients}>
         <div className={burgerIngredientsStyles.buns}>
-          <h2 className='text text_type_main-medium' id={TABS.bun}>Булки</h2>
+          <h2 className='text text_type_main-medium' id={TYPE.bun}>Булки</h2>
           <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(TABS.bun).map((item) => (
+            {filterIngredients(TYPE.bun).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
                 <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
@@ -47,9 +47,9 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
         </ul>
         </div>
         <div className={burgerIngredientsStyles.sauce}>
-          <h2 className='text text_type_main-medium' id={TABS.sauce}>Соусы</h2>
+          <h2 className='text text_type_main-medium' id={TYPE.sauce}>Соусы</h2>
           <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(TABS.sauce).map((item) => (
+            {filterIngredients(TYPE.sauce).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
                 <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>
@@ -57,9 +57,9 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
         </ul>
         </div>
         <div className={burgerIngredientsStyles.main}>
-          <h2 className='text text_type_main-medium' id={TABS.main}>Начинки</h2>
+          <h2 className='text text_type_main-medium' id={TYPE.main}>Начинки</h2>
           <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(TABS.main).map((item) => (
+            {filterIngredients(TYPE.main).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
                 <Card item={item} onIngredientClick={onIngredientClick}/>
               </li>

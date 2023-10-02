@@ -17,6 +17,7 @@ const App = () => {
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
   const [apiErrorText, setApiErrorText] = useState('');
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const getProductData = () => {
     setIsLoading(true);
@@ -35,8 +36,9 @@ const App = () => {
     getProductData();
   }, []);
 
-  const openOrderModal = () => {
+  const openOrderModal = (number) => {
     setIsOrderModalOpen(true);
+    setOrderNumber(number);
   }
 
   const openIngredientsModal = (item) => {
@@ -76,7 +78,7 @@ const App = () => {
             <Modal
               onClose={closeModal}
             >
-              <OrderDetails />
+              <OrderDetails orderNumber={orderNumber}/>
             </Modal>
           }
 

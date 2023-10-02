@@ -3,6 +3,8 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 import {useEffect, useState, useMemo, useContext } from  'react';
 import PropTypes from 'prop-types';
 import { ingredientsContext } from '../../context/ingredientsContext';
+import { TYPE } from '../../constants/constants';
+import { sendOrder } from '../../utils/api';
 
 const BurgerConstructor = ({ onOrderClick }) => {
 
@@ -17,17 +19,28 @@ const BurgerConstructor = ({ onOrderClick }) => {
 
   const filterEndIngredient = useMemo(
     () => {
-      return ingredients.filter(item => item.name === 'Краторная булка N-200i')[0];
+      return ingredients.filter(item => item.type === TYPE.bun)[0];
     },
     [ingredients]
   );
 
   const filterMiddleIngredient = useMemo(
     () => {
-      return ingredients.filter(item => item.name !== 'Краторная булка N-200i');
+      return ingredients.filter(item => item.type !== TYPE.bun);
     },
     [ingredients]
   );
+
+  const handleSendOrder = () => {
+    const ingredientsInOrder = ingredients.map(item => item._id);
+    sendOrder(ingredientsInOrder)
+    .then((res) => {
+      onOrderClick(res.order.number);
+    })
+    .catch((err)=> {
+      console.log(err);
+    })
+  }
 
   return (
     <section className={burgerConstructorStyles.column}>
@@ -68,7 +81,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
           <span className='text text_type_digits-medium'>610</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={onOrderClick}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleSendOrder}>
           Оформить заказ
         </Button>
       </div>
