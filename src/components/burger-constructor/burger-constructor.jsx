@@ -3,6 +3,7 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 import { useEffect, useState, useMemo, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { ingredientsContext } from '../../context/ingredientsContext';
+import { orderContext } from '../../context/orderContext';
 import { TYPE } from '../../constants/constants';
 import { sendOrder } from '../../utils/api';
 
@@ -24,6 +25,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
   const [orderTotalState, orderTotalDispatcher] = useReducer(reducer, orderTotalInitialState, undefined);
 
   const ingredients = useContext(ingredientsContext);
+  const {setOrderNumber} = useContext(orderContext);
 
   useEffect(()=> {
     setEndIngredient(filterEndIngredient);
@@ -59,7 +61,8 @@ const BurgerConstructor = ({ onOrderClick }) => {
     const ingredientsInOrder = ingredients.map(item => item._id);
     sendOrder(ingredientsInOrder)
     .then((res) => {
-      onOrderClick(res.order.number);
+      onOrderClick();
+      setOrderNumber(res.order.number);
     })
     .catch((err)=> {
       console.log(err);

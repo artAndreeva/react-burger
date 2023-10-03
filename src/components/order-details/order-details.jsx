@@ -1,7 +1,11 @@
 import orderDetailsStyles from './order-details.module.css';
-import PropTypes from 'prop-types';
+import { orderContext } from '../../context/orderContext';
+import { useContext } from 'react';
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+
+  const {orderNumber} = useContext(orderContext);
+
   return (
     <div className={orderDetailsStyles.container}>
       <h3 className='text text_type_digits-large mb-8'>{orderNumber}</h3>
@@ -12,10 +16,5 @@ const OrderDetails = ({ orderNumber }) => {
     </div>
   )
 }
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired
-};
-
 
 export default OrderDetails;
