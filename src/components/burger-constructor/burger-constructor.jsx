@@ -1,15 +1,28 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import {useEffect, useState, useMemo, useContext } from  'react';
+import { useEffect, useState, useMemo, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { ingredientsContext } from '../../context/ingredientsContext';
 import { TYPE } from '../../constants/constants';
 import { sendOrder } from '../../utils/api';
 
+const orderTotalInitialState = { total: 0 };
+
+function reducer (state, action) {
+  switch (action.type) {
+    case 'set':
+      return { total: action.payload };
+    default:
+      return orderTotalInitialState;
+  };
+};
+
 const BurgerConstructor = ({ onOrderClick }) => {
 
   const [endIngredient, setEndIngredient] = useState({});
   const [middleIngredient, setMiddleIngredient] = useState([]);
+  const [orderTotalState, orderTotalDispatcher] = useReducer(reducer, orderTotalInitialState, undefined);
+
   const ingredients = useContext(ingredientsContext);
 
   useEffect(()=> {
@@ -30,6 +43,17 @@ const BurgerConstructor = ({ onOrderClick }) => {
     },
     [ingredients]
   );
+
+  useEffect(()=> {
+    orderTotalDispatcher({ type: 'set', payload: countTotalPrice()})
+  }, [endIngredient, middleIngredient]);
+
+
+  const countTotalPrice = () => {
+    const totalPrice = middleIngredient.reduce(((previousValue, item) => previousValue + item.price), 0) +
+    ((endIngredient.price * 2) || 0);
+    return totalPrice;
+  }
 
   const handleSendOrder = () => {
     const ingredientsInOrder = ingredients.map(item => item._id);
@@ -78,7 +102,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
       </div>
       <div className={burgerConstructorStyles.summary}>
         <div className={burgerConstructorStyles.price}>
-          <span className='text text_type_digits-medium'>610</span>
+          <span className='text text_type_digits-medium'>{orderTotalState.total}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="large" onClick={handleSendOrder}>
