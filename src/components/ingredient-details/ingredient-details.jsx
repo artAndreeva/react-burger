@@ -1,7 +1,10 @@
 import ingredientDetailStyles from './ingredient-details.module.css';
 import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
+import { useSelector } from 'react-redux';
 
-const IngredientsDetails = ({ selectedIngredient }) => {
+const IngredientsDetails = () => {
+  const selectedIngredient = useSelector(store => store.ingredientModal.selectedIngredient)
+
   return (
     <div className={ingredientDetailStyles.container}>
       <img

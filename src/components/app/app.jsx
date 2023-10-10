@@ -6,28 +6,36 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useState } from 'react';
 import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
+import { useDispatch } from 'react-redux';
+import { CLOSE_INGREDIENT } from '../../services/actions/ingredient-modal';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientsModalOpen, setIngredientsIsModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState({});
   const [apiErrorText, setApiErrorText] = useState('');
+
+  const dispatch = useDispatch();
 
   const openOrderModal = () => {
     setIsOrderModalOpen(true);
   }
 
-  const openIngredientsModal = (item) => {
-    setSelectedIngredient(item);
+  const openIngredientsModal = () => {
     setIngredientsIsModalOpen(true);
   }
 
   const closeModal = () => {
     setIsOrderModalOpen(false);
-    setIngredientsIsModalOpen(false);
     setApiErrorModalOpen(false);
+  }
+
+  const closeIngredientModal = () => {
+    setIngredientsIsModalOpen(false);
+    dispatch({
+      type: CLOSE_INGREDIENT
+    })
   }
 
   return (
@@ -41,10 +49,10 @@ const App = () => {
               />
             {isIngredientsModalOpen &&
               <Modal
-                onClose={closeModal}
+                onClose={closeIngredientModal}
                 header={INGREDIENT_MODAL_HEADER}
               >
-                <IngredientsDetails selectedIngredient={selectedIngredient}/>
+                <IngredientsDetails />
               </Modal>
             }
 

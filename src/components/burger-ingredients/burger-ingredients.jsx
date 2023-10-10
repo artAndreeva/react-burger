@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
-import Card from '../card/card';
+import Ingredient from '../ingredient/ingredient';
 import { TYPE } from '../../constants/constants';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
@@ -49,7 +49,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
           <ul className={burgerIngredientsStyles.list}>
             {filterIngredients(TYPE.bun).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Card item={item} onIngredientClick={onIngredientClick}/>
+                <Ingredient item={item} onIngredientClick={onIngredientClick}/>
               </li>
             ))}
         </ul>
@@ -59,7 +59,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
           <ul className={burgerIngredientsStyles.list}>
             {filterIngredients(TYPE.sauce).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Card item={item} onIngredientClick={onIngredientClick}/>
+                <Ingredient item={item} onIngredientClick={onIngredientClick}/>
               </li>
             ))}
         </ul>
@@ -69,7 +69,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
           <ul className={burgerIngredientsStyles.list}>
             {filterIngredients(TYPE.main).map((item) => (
               <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Card item={item} onIngredientClick={onIngredientClick}/>
+                <Ingredient item={item} onIngredientClick={onIngredientClick}/>
               </li>
             ))}
         </ul>

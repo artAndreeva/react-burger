@@ -19,8 +19,8 @@ const Modal = ({ children, header, onClose }) => {
   const handleEscClose = (e) => {
     if (e.key === 'Escape') {
       onClose();
-    }
-  };
+    };
+  }
 
   return ReactDOM.createPortal(
     (

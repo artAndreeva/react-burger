@@ -1,12 +1,19 @@
 import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import cardStyles from './card.module.css';
+import cardStyles from './ingredient.module.css';
 import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
+import { useDispatch } from 'react-redux';
+import { GET_INGREDIENT } from '../../services/actions/ingredient-modal';
 
-const Card = ({ item, onIngredientClick }) => {
+const Ingredient = ({ item, onIngredientClick }) => {
+  const dispatch = useDispatch();
 
   const handleIngredientClick = () => {
-    onIngredientClick(item);
+    onIngredientClick();
+    dispatch({
+      type: GET_INGREDIENT,
+      selectedIngredient: item
+    })
   };
 
   return (
@@ -22,9 +29,9 @@ const Card = ({ item, onIngredientClick }) => {
   );
 };
 
-Card.propTypes = {
+Ingredient.propTypes = {
   item: INGREDIENS_PROP_TYPES.isRequired,
   onIngredientClick: PropTypes.func.isRequired,
 };
 
-export default Card;
+export default Ingredient;
