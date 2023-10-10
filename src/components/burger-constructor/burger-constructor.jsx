@@ -1,72 +1,34 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import { useEffect, useState, useMemo, useContext, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientsContext } from '../../context/ingredientsContext';
-import { orderContext } from '../../context/orderContext';
-import { TYPE } from '../../constants/constants';
-import { sendOrder } from '../../utils/api';
-
-const orderTotalInitialState = { total: 0 };
-
-function reducer (state, action) {
-  switch (action.type) {
-    case 'set':
-      return { total: action.payload };
-    default:
-      return orderTotalInitialState;
-  };
-};
+import { useSelector, useDispatch } from 'react-redux';
+import { GET_BURGER_INGREDIENTS } from '../../services/actions/burger-ingredients';
 
 const BurgerConstructor = ({ onOrderClick }) => {
 
-  const [endIngredient, setEndIngredient] = useState({});
-  const [middleIngredient, setMiddleIngredient] = useState([]);
-  const [orderTotalState, orderTotalDispatcher] = useReducer(reducer, orderTotalInitialState, undefined);
+  const [orderTotal, setOrderTotal] = useState(0);
 
-  const ingredients = useContext(ingredientsContext);
-  const {setOrderNumber} = useContext(orderContext);
-
-  useEffect(()=> {
-    setEndIngredient(filterEndIngredient);
-    setMiddleIngredient(filterMiddleIngredient);
-  }, []);
-
-  const filterEndIngredient = useMemo(
-    () => {
-      return ingredients.filter(item => item.type === TYPE.bun)[0];
-    },
-    [ingredients]
-  );
-
-  const filterMiddleIngredient = useMemo(
-    () => {
-      return ingredients.filter(item => item.type !== TYPE.bun);
-    },
-    [ingredients]
-  );
+  const ingredients = useSelector(store => store.ingredients.ingredients)
+  const { endIngredients, middleIngredients } = useSelector(store => store.burgerIngredients)
+  const dispatch = useDispatch();
 
   useEffect(()=> {
-    orderTotalDispatcher({ type: 'set', payload: countTotalPrice()})
-  }, [endIngredient, middleIngredient]);
+    dispatch({
+      type: GET_BURGER_INGREDIENTS,
+      ingredients
+    })
+  }, [ingredients]);
+
+  useEffect(()=> {
+    setOrderTotal(countTotalPrice())
+  }, [endIngredients, middleIngredients]);
 
 
   const countTotalPrice = () => {
-    const totalPrice = middleIngredient.reduce(((previousValue, item) => previousValue + item.price), 0) +
-    ((endIngredient.price * 2) || 0);
+    const totalPrice = middleIngredients.reduce(((previousValue, item) => previousValue + item.price), 0) +
+    ((endIngredients.price * 2) || 0);
     return totalPrice;
-  }
-
-  const handleSendOrder = () => {
-    const ingredientsInOrder = ingredients.map(item => item._id);
-    sendOrder(ingredientsInOrder)
-    .then((res) => {
-      onOrderClick();
-      setOrderNumber(res.order.number);
-    })
-    .catch((err)=> {
-      console.log(err);
-    })
   }
 
   return (
@@ -76,13 +38,13 @@ const BurgerConstructor = ({ onOrderClick }) => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${endIngredient.name} (верх)`}
-            price={endIngredient.price}
-            thumbnail={endIngredient.image}
+            text={`${endIngredients.name} (верх)`}
+            price={endIngredients.price}
+            thumbnail={endIngredients.image}
           />
         </div>
         <ul className={burgerConstructorStyles.list}>
-            {middleIngredient.map((item) => (
+            {middleIngredients.map((item) => (
               <li key={item._id} className={burgerConstructorStyles.item}>
                 <DragIcon type="primary" />
                 <ConstructorElement
@@ -97,18 +59,18 @@ const BurgerConstructor = ({ onOrderClick }) => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${endIngredient.name} (низ)`}
-            price={endIngredient.price}
-            thumbnail={endIngredient.image}
+            text={`${endIngredients.name} (низ)`}
+            price={endIngredients.price}
+            thumbnail={endIngredients.image}
           />
         </div>
       </div>
       <div className={burgerConstructorStyles.summary}>
         <div className={burgerConstructorStyles.price}>
-          <span className='text text_type_digits-medium'>{orderTotalState.total}</span>
+          <span className='text text_type_digits-medium'>{orderTotal}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={handleSendOrder}>
+        <Button htmlType="button" type="primary" size="large" onClick={onOrderClick}>
           Оформить заказ
         </Button>
       </div>

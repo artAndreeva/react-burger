@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import Card from '../card/card';
 import { TYPE } from '../../constants/constants';
-import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/ingredients';
 
-const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
+const BurgerIngredients = ({ onIngredientClick }) => {
+  const ingredients = useSelector(store => store.ingredients.ingredients)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch])
 
   const [current, setCurrent] = useState(TYPE.bun);
 
@@ -72,7 +80,6 @@ const BurgerIngredients = ({ ingredients, onIngredientClick }) => {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(INGREDIENS_PROP_TYPES).isRequired,
   onIngredientClick: PropTypes.func.isRequired
 };
 

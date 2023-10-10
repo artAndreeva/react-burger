@@ -1,10 +1,18 @@
 import orderDetailsStyles from './order-details.module.css';
-import { orderContext } from '../../context/orderContext';
-import { useContext } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { sendOrder } from '../../services/actions/order';
 
 const OrderDetails = () => {
 
-  const {orderNumber} = useContext(orderContext);
+  const orderNumber = useSelector(store => store.order.orderNumber);
+  const ingredients = useSelector(store => store.ingredients.ingredients);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(sendOrder(ingredients.map(item => item._id)))
+  }, [dispatch])
 
   return (
     <div className={orderDetailsStyles.container}>
