@@ -1,22 +1,45 @@
+import update from 'immutability-helper';
 import {
-  GET_BURGER_INGREDIENTS,
-  ADD_BURGER_INGREDIENT,
-  DELETE_BURGER_INGREDIENT
+  ADD_BUN,
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
+  SORT_INGREDIENTS
 } from '../actions/burger-ingredients';
-import { TYPE } from '../../constants/constants';
 
 const initialState = {
-  endIngredients: {},
-  middleIngredients: [],
+  buns: {},
+  ingredients: []
 }
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_BURGER_INGREDIENTS: {
+    case ADD_BUN: {
       return {
         ...state,
-        endIngredients: {...action.ingredients.filter(item => item.type === TYPE.bun)[0]},
-        middleIngredients: [...action.ingredients.filter(item => item.type !== TYPE.bun)],
+        buns: action.buns,
+      }
+    }
+    case ADD_INGREDIENT: {
+      return {
+        ...state,
+        ingredients: [...state.ingredients, action.ingredients],
+      }
+    }
+    case DELETE_INGREDIENT: {
+      return {
+        ...state,
+        ingredients: [...state.ingredients].filter(item => item.id !== action.id)
+      }
+    }
+    case SORT_INGREDIENTS: {
+      return {
+        ...state,
+        ingredients: update(state.ingredients, {
+          $splice: [
+            [action.index.dragIndex, 1],
+            [action.index.hoverIndex, 0, state.ingredients[action.index.dragIndex]],
+          ],
+        }),
       }
     }
     default: {

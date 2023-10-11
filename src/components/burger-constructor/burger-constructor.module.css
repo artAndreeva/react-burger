@@ -41,11 +41,11 @@
   background: #8585AD;
 }
 
-.item {
+/* .item {
   display: flex;
   align-items: center;
   gap: 8px;
-}
+} */
 
 .summary {
   display: flex;
