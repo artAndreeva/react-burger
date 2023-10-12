@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/burger-ingredients';
 import { TYPE } from '../../constants/constants';
 import { sendOrder } from '../../services/actions/order';
 import { v4 as uuidv4 } from 'uuid';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
+import { addBun, addIngredient } from '../../services/actions/burger-ingredients';
 
 const BurgerConstructor = ({ onOrderClick }) => {
 
@@ -16,15 +16,9 @@ const BurgerConstructor = ({ onOrderClick }) => {
     accept: 'ingredient',
     drop(item) {
       if(item.type === TYPE.bun) {
-        dispatch({
-          type: ADD_BUN,
-          buns: item
-        })
+        dispatch(addBun(item))
       } else {
-        dispatch({
-          type: ADD_INGREDIENT,
-          ingredients: {...item, id: uuidv4()}
-        })
+        dispatch(addIngredient({...item, uniqId: uuidv4()}))
       }
     }
   });
@@ -54,31 +48,48 @@ const BurgerConstructor = ({ onOrderClick }) => {
     <section className={burgerConstructorStyles.column} ref={dropTarget}>
       <div className={burgerConstructorStyles.container}>
         <div className={burgerConstructorStyles.end}>
-          <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${buns.name} (верх)`}
-          price={buns.price}
-          thumbnail={buns.image}
-          />
-        </div>
-        <ul className={burgerConstructorStyles.list}>
-          {ingredients.map((item, index) => (
-            <ConstructorIngredient
-              item={item}
-              index={index}
-              key={item.id}
+          {Object.keys(buns).length !== 0
+          ? <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${buns.name} (верх)`}
+            price={buns.price}
+            thumbnail={buns.image}
             />
-          ))}
-        </ul>
+          : <div className={burgerConstructorStyles.placeholderTop}>
+              <span className='text text_type_main-default'>Место для булки</span>
+            </div>
+          }
+        </div>
+
+        {ingredients.length !== 0
+        ? <ul className={burgerConstructorStyles.list}>
+            {ingredients.map((item, index) => (
+              <ConstructorIngredient
+                item={item}
+                index={index}
+                key={item.uniqId}
+              />
+            ))}
+          </ul>
+        : <div className={burgerConstructorStyles.placeholderMiddle}>
+            <span className='text text_type_main-default'>Место для ингредиентов</span>
+          </div>
+        }
+
         <div className={burgerConstructorStyles.end}>
-          <ConstructorElement
+        {Object.keys(buns).length !== 0
+          ? <ConstructorElement
             type="bottom"
             isLocked={true}
             text={`${buns.name} (низ)`}
             price={buns.price}
             thumbnail={buns.image}
-          />
+            />
+          : <div className={burgerConstructorStyles.placeholderBottom}>
+              <span className='text text_type_main-default'>Место для булки</span>
+            </div>
+          }
         </div>
       </div>
       <div className={burgerConstructorStyles.summary}>

@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { useRef } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DELETE_INGREDIENT, SORT_INGREDIENTS } from '../../services/actions/burger-ingredients';
 import constructorIngredientStyles from './constructor-ingredient.module.css';
 import { useDrag, useDrop } from 'react-dnd';
+import { deleteIngredient, sortIngredients } from '../../services/actions/burger-ingredients';
 
 const ConstructorIngredient = ({ item, index }) => {
 
-  const { id } = item;
+  const { uniqId } = item;
 
   const ref = useRef();
 
@@ -16,7 +16,7 @@ const ConstructorIngredient = ({ item, index }) => {
   const [{ isDragging }, dragRef] = useDrag({
     type: 'list',
     item: () => {
-      return { id, index}
+      return {uniqId, index}
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -42,39 +42,28 @@ const ConstructorIngredient = ({ item, index }) => {
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
-
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-
       const clientOffset = monitor.getClientOffset()
-
       const hoverClientY = clientOffset.y - hoverBoundingRect.top
-
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
       }
-
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return
       }
 
-      dispatch({
-        type: SORT_INGREDIENTS,
-        index: {dragIndex, hoverIndex}
-      })
+      dispatch(sortIngredients({dragIndex, hoverIndex}))
 
       item.index = hoverIndex
     },
   })
 
   const opacity = isDragging ? 0 : 1
-  
+
   dragRef(dropTarget(ref))
 
-  const handleClose = (id) => {
-    dispatch({
-      type: DELETE_INGREDIENT,
-      id
-    })
+  const handleClose = (uniqId) => {
+    dispatch(deleteIngredient(uniqId))
   }
 
   return (
@@ -84,7 +73,7 @@ const ConstructorIngredient = ({ item, index }) => {
           text={item.name}
           price={item.price}
           thumbnail={item.image}
-          handleClose={() => handleClose(item.id)}
+          handleClose={() => handleClose(item.uniqId)}
         />
       </li>
   );

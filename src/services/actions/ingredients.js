@@ -13,7 +13,7 @@ export const getIngredients = () => {
     .then((res) => {
       dispatch({
         type: GET_INGREDIENTS_SUCCESS,
-        ingredients: res.data
+        payload: res.data
       });
     })
     .catch(() => {

@@ -16,19 +16,19 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
     case ADD_BUN: {
       return {
         ...state,
-        buns: action.buns,
+        buns: action.payload,
       }
     }
     case ADD_INGREDIENT: {
       return {
         ...state,
-        ingredients: [...state.ingredients, action.ingredients],
+        ingredients: [...state.ingredients, action.payload],
       }
     }
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        ingredients: [...state.ingredients].filter(item => item.id !== action.id)
+        ingredients: [...state.ingredients].filter(item => item.uniqId !== action.payload)
       }
     }
     case SORT_INGREDIENTS: {
@@ -36,8 +36,8 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         ingredients: update(state.ingredients, {
           $splice: [
-            [action.index.dragIndex, 1],
-            [action.index.hoverIndex, 0, state.ingredients[action.index.dragIndex]],
+            [action.payload.dragIndex, 1],
+            [action.payload.hoverIndex, 0, state.ingredients[action.payload.dragIndex]],
           ],
         }),
       }

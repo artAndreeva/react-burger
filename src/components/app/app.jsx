@@ -7,7 +7,7 @@ import OrderDetails from '../order-details/order-details';
 import { useState } from 'react';
 import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
 import { useDispatch } from 'react-redux';
-import { CLOSE_INGREDIENT } from '../../services/actions/ingredient-modal';
+import { closeIngredient } from '../../services/actions/ingredient-modal';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,9 +33,7 @@ const App = () => {
 
   const closeIngredientModal = () => {
     setIngredientsIsModalOpen(false);
-    dispatch({
-      type: CLOSE_INGREDIENT
-    })
+    dispatch(closeIngredient())
   }
 
   return (

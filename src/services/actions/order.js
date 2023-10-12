@@ -13,7 +13,7 @@ export const sendOrder = (arr) => {
     .then((res) => {
       dispatch({
         type: SEND_ORDER_SUCCESS,
-        number: res.order.number
+        payload: res.order.number
       });
     })
     .catch(() => {
