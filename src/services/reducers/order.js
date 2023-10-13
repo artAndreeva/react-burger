@@ -30,7 +30,8 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         sendOrderRequest: false,
-        sendOrderFailed: true
+        sendOrderFailed: true,
+        orderNumber: 0,
       };
     }
     default: {

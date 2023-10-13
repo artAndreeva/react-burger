@@ -16,16 +16,15 @@ const App = () => {
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [apiErrorText, setApiErrorText] = useState('');
   const ingredientsFailed = useSelector(store => store.ingredients.ingredientsFailed);
-  const sendOrderFailed = useSelector(store => store.order.sendOrderFailed);
 
   const dispatch = useDispatch();
 
   useEffect(()=> {
-    if (ingredientsFailed || sendOrderFailed) {
+    if (ingredientsFailed) {
       setApiErrorModalOpen(true);
       setApiErrorText(API_ERROR);
     }
-  }, [ingredientsFailed, sendOrderFailed])
+  }, [ingredientsFailed])
 
   const openOrderModal = () => {
     setIsOrderModalOpen(true);

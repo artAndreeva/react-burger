@@ -30,7 +30,8 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsRequest: false,
-        ingredientsFailed: true
+        ingredientsFailed: true,
+        ingredients: []
       };
     }
     default: {
