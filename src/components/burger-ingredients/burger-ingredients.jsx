@@ -6,9 +6,21 @@ import { TYPE } from '../../constants/constants';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
+import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = ({ onIngredientClick }) => {
   const ingredients = useSelector(store => store.ingredients.ingredients)
+  const ingredientsRequest = useSelector(store => store.ingredients.ingredientsRequest)
+
+  const [bunRef, bunInView] = useInView({
+    threshold: 0
+  });
+  const [sauceRef, sauceInView] = useInView({
+    threshold: 0
+  });
+  const [mainRef, mainInView] = useInView({
+    threshold: 0
+  });
 
   const dispatch = useDispatch();
 
@@ -18,7 +30,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
 
   const [current, setCurrent] = useState(TYPE.bun);
 
-  const setTab = (tab) => {
+   const setTab = (tab) => {
     setCurrent(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -28,6 +40,21 @@ const BurgerIngredients = ({ onIngredientClick }) => {
     const filteredIngredients = ingredients.filter(item => item.type === id)
     return filteredIngredients;
   };
+
+  useEffect(()=> {
+    if (bunInView && sauceInView) {
+      setCurrent(TYPE.bun);
+    }
+    if (!bunInView && sauceInView) {
+      setCurrent(TYPE.sauce);
+    }
+    if (sauceInView && mainInView) {
+      setCurrent(TYPE.sauce);
+    }
+    if (!sauceInView && mainInView) {
+      setCurrent(TYPE.main);
+    }
+  }, [bunInView, sauceInView, mainInView]);
 
   return (
     <section className={burgerIngredientsStyles.column}>
@@ -43,38 +70,42 @@ const BurgerIngredients = ({ onIngredientClick }) => {
           Начинки
         </Tab>
       </div>
-      <div className={burgerIngredientsStyles.ingredients}>
-        <div className={burgerIngredientsStyles.buns}>
-          <h2 className='text text_type_main-medium' id={TYPE.bun}>Булки</h2>
-          <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(TYPE.bun).map((item) => (
-              <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Ingredient item={item} onIngredientClick={onIngredientClick}/>
-              </li>
-            ))}
-        </ul>
-        </div>
-        <div className={burgerIngredientsStyles.sauce}>
-          <h2 className='text text_type_main-medium' id={TYPE.sauce}>Соусы</h2>
-          <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(TYPE.sauce).map((item) => (
-              <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Ingredient item={item} onIngredientClick={onIngredientClick}/>
-              </li>
-            ))}
-        </ul>
-        </div>
-        <div className={burgerIngredientsStyles.main}>
-          <h2 className='text text_type_main-medium' id={TYPE.main}>Начинки</h2>
-          <ul className={burgerIngredientsStyles.list}>
-            {filterIngredients(TYPE.main).map((item) => (
-              <li key={item._id} className={burgerIngredientsStyles.item}>
-                <Ingredient item={item} onIngredientClick={onIngredientClick}/>
-              </li>
-            ))}
-        </ul>
-        </div>
-      </div>
+      {!ingredientsRequest &&
+        <>
+          <div className={burgerIngredientsStyles.ingredients}>
+            <div className={burgerIngredientsStyles.buns}>
+              <h2 className='text text_type_main-medium' id={TYPE.bun} ref={bunRef}>Булки</h2>
+              <ul className={burgerIngredientsStyles.list}>
+                {filterIngredients(TYPE.bun).map((item) => (
+                  <li key={item._id} className={burgerIngredientsStyles.item}>
+                    <Ingredient item={item} onIngredientClick={onIngredientClick}/>
+                  </li>
+                ))}
+            </ul>
+            </div>
+            <div className={burgerIngredientsStyles.sauce}>
+              <h2 className='text text_type_main-medium' id={TYPE.sauce} ref={sauceRef}>Соусы</h2>
+              <ul className={burgerIngredientsStyles.list}>
+                {filterIngredients(TYPE.sauce).map((item) => (
+                  <li key={item._id} className={burgerIngredientsStyles.item}>
+                    <Ingredient item={item} onIngredientClick={onIngredientClick}/>
+                  </li>
+                ))}
+            </ul>
+            </div>
+            <div className={burgerIngredientsStyles.main}>
+              <h2 className='text text_type_main-medium' id={TYPE.main} ref={mainRef}>Начинки</h2>
+              <ul className={burgerIngredientsStyles.list}>
+                {filterIngredients(TYPE.main).map((item) => (
+                  <li key={item._id} className={burgerIngredientsStyles.item}>
+                    <Ingredient item={item} onIngredientClick={onIngredientClick}/>
+                  </li>
+                ))}
+            </ul>
+            </div>
+          </div>
+        </>
+      }
     </section>
   );
 }

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openIngredient } from '../../services/actions/ingredient-modal';
 import { useDrag } from 'react-dnd';
 import { useState, useEffect } from 'react';
+import { TYPE } from '../../constants/constants';
 
 const Ingredient = ({ item, onIngredientClick }) => {
 
@@ -25,7 +26,7 @@ const Ingredient = ({ item, onIngredientClick }) => {
 
   useEffect(() => {
     const quantityArr = [...[buns], ...ingredients].filter((ingr) => ingr._id === item._id);
-    if (item.type === 'bun') {
+    if (item.type === TYPE.bun) {
       setQuantity(quantityArr.length * 2);
     } else {
       setQuantity(quantityArr.length);

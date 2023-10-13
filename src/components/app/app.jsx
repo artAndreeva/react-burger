@@ -4,19 +4,28 @@ import Main from '../main/main';
 import IngredientsDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeIngredient } from '../../services/actions/ingredient-modal';
+import { API_ERROR } from '../../constants/constants';
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [isIngredientsModalOpen, setIngredientsIsModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [apiErrorText, setApiErrorText] = useState('');
+  const ingredientsFailed = useSelector(store => store.ingredients.ingredientsFailed);
+  const sendOrderFailed = useSelector(store => store.order.sendOrderFailed);
 
   const dispatch = useDispatch();
+
+  useEffect(()=> {
+    if (ingredientsFailed || sendOrderFailed) {
+      setApiErrorModalOpen(true);
+      setApiErrorText(API_ERROR);
+    }
+  }, [ingredientsFailed, sendOrderFailed])
 
   const openOrderModal = () => {
     setIsOrderModalOpen(true);
@@ -38,38 +47,34 @@ const App = () => {
 
   return (
     <div className={appStyles.content}>
-      {!isLoading &&
-        <>
-            <AppHeader />
-              <Main
-                onIngredientClick={openIngredientsModal}
-                onOrderClick={openOrderModal}
-              />
-            {isIngredientsModalOpen &&
-              <Modal
-                onClose={closeIngredientModal}
-                header={INGREDIENT_MODAL_HEADER}
-              >
-                <IngredientsDetails />
-              </Modal>
-            }
+      <AppHeader />
+        <Main
+          onIngredientClick={openIngredientsModal}
+          onOrderClick={openOrderModal}
+        />
+      {isIngredientsModalOpen &&
+        <Modal
+          onClose={closeIngredientModal}
+          header={INGREDIENT_MODAL_HEADER}
+        >
+          <IngredientsDetails />
+        </Modal>
+      }
 
-            {isOrderModalOpen &&
-              <Modal
-                onClose={closeModal}
-              >
-                <OrderDetails />
-              </Modal>
-            }
+      {isOrderModalOpen &&
+        <Modal
+          onClose={closeModal}
+        >
+          <OrderDetails />
+        </Modal>
+      }
 
-            {isApiErrorModalOpen &&
-              <Modal
-                onClose={closeModal}
-              >
-                <p className='text text_type_main-large mt-6'>{apiErrorText}</p>
-              </Modal>
-            }
-        </>
+      {isApiErrorModalOpen &&
+        <Modal
+          onClose={closeModal}
+        >
+          <p className='text text_type_main-large mt-6'>{apiErrorText}</p>
+        </Modal>
       }
     </div>
   );
