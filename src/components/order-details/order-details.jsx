@@ -1,18 +1,22 @@
 import orderDetailsStyles from './order-details.module.css';
-import { orderContext } from '../../context/orderContext';
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
 
-  const {orderNumber} = useContext(orderContext);
+  const { orderNumber, sendOrderRequest } = useSelector(store => store.order);
 
   return (
     <div className={orderDetailsStyles.container}>
-      <h3 className='text text_type_digits-large mb-8'>{orderNumber}</h3>
-      <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
-      <div className={orderDetailsStyles.image}></div>
-      <p className='text text_type_main-default mt-15 mb-2'>Ваш заказ начали готовить</p>
-      <p className='text text_type_main-default text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
+    {!sendOrderRequest
+      ? <>
+          <h3 className='text text_type_digits-large mb-8'>{orderNumber}</h3>
+          <p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
+          <div className={orderDetailsStyles.image}></div>
+          <p className='text text_type_main-default mt-15 mb-2'>Ваш заказ начали готовить</p>
+          <p className='text text_type_main-default text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
+        </>
+      : <span className='text text_type_main-medium mb-15'>...Загрузка...</span>
+    }
     </div>
   )
 }

@@ -1,20 +1,22 @@
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import mainStyles from './main.module.css';
-import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 import PropTypes from 'prop-types';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const Main = ({ ingredients, onIngredientClick, onOrderClick }) => {
+const Main = ({ onIngredientClick, onOrderClick }) => {
   return (
-    <main className={mainStyles.main}>
-      <BurgerIngredients ingredients={ingredients} onIngredientClick={onIngredientClick} />
-      <BurgerConstructor onOrderClick={onOrderClick}/>
-    </main>
+    <DndProvider backend={HTML5Backend}>
+      <main className={mainStyles.main}>
+        <BurgerIngredients onIngredientClick={onIngredientClick} />
+        <BurgerConstructor onOrderClick={onOrderClick}/>
+      </main>
+    </DndProvider>
   );
 }
 
 Main.propTypes = {
-  ingredients: PropTypes.arrayOf(INGREDIENS_PROP_TYPES).isRequired,
   onIngredientClick: PropTypes.func.isRequired,
   onOrderClick: PropTypes.func.isRequired
 };

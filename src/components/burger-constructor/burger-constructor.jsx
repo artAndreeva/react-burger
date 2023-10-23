@@ -1,114 +1,101 @@
-import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import { useEffect, useState, useMemo, useContext, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientsContext } from '../../context/ingredientsContext';
-import { orderContext } from '../../context/orderContext';
-import { TYPE } from '../../constants/constants';
-import { sendOrder } from '../../utils/api';
-
-const orderTotalInitialState = { total: 0 };
-
-function reducer (state, action) {
-  switch (action.type) {
-    case 'set':
-      return { total: action.payload };
-    default:
-      return orderTotalInitialState;
-  };
-};
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { TYPE, PLACEHOLDER_TEXT } from '../../constants/constants';
+import { sendOrder } from '../../services/actions/order';
+import { v4 as uuidv4 } from 'uuid';
+import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
+import { addBun, addIngredient } from '../../services/actions/burger-ingredients';
+import ConstructorPlaceholder from '../constructor-placeholder/constructor-placeholder';
 
 const BurgerConstructor = ({ onOrderClick }) => {
 
-  const [endIngredient, setEndIngredient] = useState({});
-  const [middleIngredient, setMiddleIngredient] = useState([]);
-  const [orderTotalState, orderTotalDispatcher] = useReducer(reducer, orderTotalInitialState, undefined);
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(item) {
+      if(item.type === TYPE.bun) {
+        dispatch(addBun(item))
+      } else {
+        dispatch(addIngredient({...item, uniqId: uuidv4()}))
+      }
+    }
+  });
 
-  const ingredients = useContext(ingredientsContext);
-  const {setOrderNumber} = useContext(orderContext);
+  const [orderTotal, setOrderTotal] = useState(0);
 
-  useEffect(()=> {
-    setEndIngredient(filterEndIngredient);
-    setMiddleIngredient(filterMiddleIngredient);
-  }, []);
-
-  const filterEndIngredient = useMemo(
-    () => {
-      return ingredients.filter(item => item.type === TYPE.bun)[0];
-    },
-    [ingredients]
-  );
-
-  const filterMiddleIngredient = useMemo(
-    () => {
-      return ingredients.filter(item => item.type !== TYPE.bun);
-    },
-    [ingredients]
-  );
+  const { buns, ingredients } = useSelector(store => store.burgerIngredients)
+  const dispatch = useDispatch();
 
   useEffect(()=> {
-    orderTotalDispatcher({ type: 'set', payload: countTotalPrice()})
-  }, [endIngredient, middleIngredient]);
+    setOrderTotal(countTotalPrice())
+  }, [buns, ingredients]);
 
 
   const countTotalPrice = () => {
-    const totalPrice = middleIngredient.reduce(((previousValue, item) => previousValue + item.price), 0) +
-    ((endIngredient.price * 2) || 0);
+    const totalPrice = ingredients.reduce(((previousValue, item) => previousValue + item.price), 0) +
+    ((buns.price * 2) || 0);
     return totalPrice;
   }
 
-  const handleSendOrder = () => {
-    const ingredientsInOrder = ingredients.map(item => item._id);
-    sendOrder(ingredientsInOrder)
-    .then((res) => {
+  const handleOrderClick = () => {
+    if (Object.keys(buns).length !== 0 || ingredients.length !== 0) {
       onOrderClick();
-      setOrderNumber(res.order.number);
-    })
-    .catch((err)=> {
-      console.log(err);
-    })
+      dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
+    }
+    return
   }
 
   return (
-    <section className={burgerConstructorStyles.column}>
+    <section className={burgerConstructorStyles.column} ref={dropTarget}>
       <div className={burgerConstructorStyles.container}>
         <div className={burgerConstructorStyles.end}>
-          <ConstructorElement
+          {Object.keys(buns).length !== 0
+          ? <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${endIngredient.name} (верх)`}
-            price={endIngredient.price}
-            thumbnail={endIngredient.image}
-          />
+            text={`${buns.name} (верх)`}
+            price={buns.price}
+            thumbnail={buns.image}
+            />
+          : <ConstructorPlaceholder top={true} text={PLACEHOLDER_TEXT.top}/>
+          }
         </div>
-        <ul className={burgerConstructorStyles.list}>
-            {middleIngredient.map((item) => (
-              <li key={item._id} className={burgerConstructorStyles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                />
-              </li>
+
+        {ingredients.length !== 0
+        ? <ul className={burgerConstructorStyles.list}>
+            {ingredients.map((item, index) => (
+              <ConstructorIngredient
+                item={item}
+                index={index}
+                key={item.uniqId}
+              />
             ))}
-        </ul>
+          </ul>
+        : <ConstructorPlaceholder middle={true} text={PLACEHOLDER_TEXT.middle}/>
+        }
+
         <div className={burgerConstructorStyles.end}>
-          <ConstructorElement
+        {Object.keys(buns).length !== 0
+          ? <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${endIngredient.name} (низ)`}
-            price={endIngredient.price}
-            thumbnail={endIngredient.image}
-          />
+            text={`${buns.name} (низ)`}
+            price={buns.price}
+            thumbnail={buns.image}
+            />
+          : <ConstructorPlaceholder bottom={true} text={PLACEHOLDER_TEXT.bottom}/>
+          }
         </div>
       </div>
       <div className={burgerConstructorStyles.summary}>
         <div className={burgerConstructorStyles.price}>
-          <span className='text text_type_digits-medium'>{orderTotalState.total}</span>
+          <span className='text text_type_digits-medium'>{orderTotal}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={handleSendOrder}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick}>
           Оформить заказ
         </Button>
       </div>
