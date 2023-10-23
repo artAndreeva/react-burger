@@ -7,6 +7,8 @@ import OrderDetails from '../order-details/order-details';
 import { useEffect, useState } from 'react';
 import { getIngredients } from '../../utils/api'
 import { INGREDIENT_MODAL_HEADER, API_ERROR } from '../../constants/constants';
+import { ingredientsContext } from '../../context/ingredientsContext';
+import { orderContext } from '../../context/orderContext';
 
 const App = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -16,6 +18,7 @@ const App = () => {
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
   const [apiErrorText, setApiErrorText] = useState('');
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const getProductData = () => {
     setIsLoading(true);
@@ -53,37 +56,41 @@ const App = () => {
     <div className={appStyles.content}>
       {!isLoading &&
         <>
-          <AppHeader />
-          <Main
-            ingredients={ingredients}
-            onIngredientClick={openIngredientsModal}
-            onOrderClick={openOrderModal}/>
+          <orderContext.Provider value={{orderNumber, setOrderNumber}}>
+            <AppHeader />
+            <ingredientsContext.Provider value={ingredients}>
+              <Main
+                ingredients={ingredients}
+                onIngredientClick={openIngredientsModal}
+                onOrderClick={openOrderModal}
+              />
+            </ingredientsContext.Provider>
 
-          {isIngredientsModalOpen &&
-            <Modal
-              onClose={closeModal}
-              header={INGREDIENT_MODAL_HEADER}
-            >
-              <IngredientsDetails selectedIngredient={selectedIngredient}/>
-            </Modal>
-          }
+            {isIngredientsModalOpen &&
+              <Modal
+                onClose={closeModal}
+                header={INGREDIENT_MODAL_HEADER}
+              >
+                <IngredientsDetails selectedIngredient={selectedIngredient}/>
+              </Modal>
+            }
 
-          {isOrderModalOpen &&
-            <Modal
-              onClose={closeModal}
-            >
-              <OrderDetails />
-            </Modal>
-          }
+            {isOrderModalOpen &&
+              <Modal
+                onClose={closeModal}
+              >
+                <OrderDetails />
+              </Modal>
+            }
 
-          {isApiErrorModalOpen &&
-            <Modal
-              onClose={closeModal}
-            >
-              <p className='text text_type_main-large mt-6'>{apiErrorText}</p>
-            </Modal>
-          }
-
+            {isApiErrorModalOpen &&
+              <Modal
+                onClose={closeModal}
+              >
+                <p className='text text_type_main-large mt-6'>{apiErrorText}</p>
+              </Modal>
+            }
+          </orderContext.Provider>
         </>
       }
     </div>

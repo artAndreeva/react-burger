@@ -13,10 +13,22 @@ const request = (url, options) => {
 }
 
 export const getIngredients = () => {
-  return request(`${BASE_URL}`, {
+  return request(`${BASE_URL}/api/ingredients`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     }
+  })
+}
+
+export const sendOrder = (data) => {
+  return request(`${BASE_URL}/api/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ingredients: data
+    })
   })
 }

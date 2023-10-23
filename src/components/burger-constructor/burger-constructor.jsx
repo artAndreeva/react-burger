@@ -1,13 +1,31 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import {useEffect, useState, useMemo } from  'react';
+import { useEffect, useState, useMemo, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
+import { ingredientsContext } from '../../context/ingredientsContext';
+import { orderContext } from '../../context/orderContext';
+import { TYPE } from '../../constants/constants';
+import { sendOrder } from '../../utils/api';
 
-const BurgerConstructor = ({ ingredients, onOrderClick }) => {
+const orderTotalInitialState = { total: 0 };
+
+function reducer (state, action) {
+  switch (action.type) {
+    case 'set':
+      return { total: action.payload };
+    default:
+      return orderTotalInitialState;
+  };
+};
+
+const BurgerConstructor = ({ onOrderClick }) => {
 
   const [endIngredient, setEndIngredient] = useState({});
   const [middleIngredient, setMiddleIngredient] = useState([]);
+  const [orderTotalState, orderTotalDispatcher] = useReducer(reducer, orderTotalInitialState, undefined);
+
+  const ingredients = useContext(ingredientsContext);
+  const {setOrderNumber} = useContext(orderContext);
 
   useEffect(()=> {
     setEndIngredient(filterEndIngredient);
@@ -16,17 +34,40 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 
   const filterEndIngredient = useMemo(
     () => {
-      return ingredients.filter(item => item.name === 'Краторная булка N-200i')[0];
+      return ingredients.filter(item => item.type === TYPE.bun)[0];
     },
     [ingredients]
   );
 
   const filterMiddleIngredient = useMemo(
     () => {
-      return ingredients.filter(item => item.name !== 'Краторная булка N-200i');
+      return ingredients.filter(item => item.type !== TYPE.bun);
     },
     [ingredients]
   );
+
+  useEffect(()=> {
+    orderTotalDispatcher({ type: 'set', payload: countTotalPrice()})
+  }, [endIngredient, middleIngredient]);
+
+
+  const countTotalPrice = () => {
+    const totalPrice = middleIngredient.reduce(((previousValue, item) => previousValue + item.price), 0) +
+    ((endIngredient.price * 2) || 0);
+    return totalPrice;
+  }
+
+  const handleSendOrder = () => {
+    const ingredientsInOrder = ingredients.map(item => item._id);
+    sendOrder(ingredientsInOrder)
+    .then((res) => {
+      onOrderClick();
+      setOrderNumber(res.order.number);
+    })
+    .catch((err)=> {
+      console.log(err);
+    })
+  }
 
   return (
     <section className={burgerConstructorStyles.column}>
@@ -64,10 +105,10 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
       </div>
       <div className={burgerConstructorStyles.summary}>
         <div className={burgerConstructorStyles.price}>
-          <span className='text text_type_digits-medium'>610</span>
+          <span className='text text_type_digits-medium'>{orderTotalState.total}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={onOrderClick}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleSendOrder}>
           Оформить заказ
         </Button>
       </div>
@@ -76,7 +117,6 @@ const BurgerConstructor = ({ ingredients, onOrderClick }) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(INGREDIENS_PROP_TYPES).isRequired,
   onOrderClick: PropTypes.func.isRequired
 };
 
