@@ -9,6 +9,14 @@ import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeIngredient } from '../../services/actions/ingredient-modal';
 import { API_ERROR } from '../../constants/constants';
+import { Routes, Route } from 'react-router-dom';
+import Login from '../pages/login/login';
+import Register from '../pages/register/register';
+import ForgotPassword from '../pages/forgot-password/forgot-password';
+import ResetPassword from '../pages/reset-password/reset-password';
+import Profile from '../pages/profile/profile';
+import Ingredients from '../pages/ingredients/ingredients';
+import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 const App = () => {
   const [isIngredientsModalOpen, setIngredientsIsModalOpen] = useState(false);
@@ -47,10 +55,22 @@ const App = () => {
   return (
     <div className={appStyles.content}>
       <AppHeader />
-        <Main
+      <Routes>
+        <Route path='/' element={
+          <Main
           onIngredientClick={openIngredientsModal}
           onOrderClick={openOrderModal}
+          />}
         />
+        <Route path='/login' element={<Login />}/>
+        <Route path='/register' element={<Register />}/>
+        <Route path='/forgot-password' element={<ForgotPassword />}/>
+        <Route path='/reset-password' element={<ResetPassword />}/>
+        <Route path='/profile' element={<Profile />}/>
+        <Route path='/ingredients/:id' element={<Ingredients />}/>
+        <Route path='*' element={<NotFoundPage />}/>
+      </Routes>
+
       {isIngredientsModalOpen &&
         <Modal
           onClose={closeIngredientModal}

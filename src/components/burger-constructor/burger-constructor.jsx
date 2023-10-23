@@ -41,11 +41,8 @@ const BurgerConstructor = ({ onOrderClick }) => {
   }
 
   const handleOrderClick = () => {
-    if (Object.keys(buns).length !== 0 || ingredients.length !== 0) {
-      onOrderClick();
-      dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
-    }
-    return
+    onOrderClick();
+    dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
   }
 
   return (
@@ -95,7 +92,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
           <span className='text text_type_digits-medium'>{orderTotal}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick} disabled={Object.keys(buns).length === 0 && ingredients.length === 0}>
           Оформить заказ
         </Button>
       </div>

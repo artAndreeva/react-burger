@@ -32,3 +32,74 @@ export const sendOrder = (data) => {
     })
   })
 }
+
+export const register = (data) => {
+  return request('api/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+      name: data.name
+    })
+  })
+}
+
+export const login = (data) => {
+  return request('api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+    })
+  })
+}
+
+export const refreshToken = (refreshToken) => {
+  return request('api/auth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      token: refreshToken
+    })
+  })
+}
+
+export const logout = (refreshToken) => {
+  return request('api/auth/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      token: refreshToken
+    })
+  })
+}
+
+export const getUser = (token) => {
+  return request('api/auth/user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+}
+
+export const updateUser = (token) => {
+  return request('api/auth/user', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+}

@@ -1,7 +1,11 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeaderStyles from './app-header.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
 const AppHeader = () => {
+
+  const { pathname } = useLocation();
+
   return (
     <header className={appHeaderStyles.header}>
       <div className={appHeaderStyles.container}>
@@ -25,15 +29,17 @@ const AppHeader = () => {
             </li>
           </ul>
         </nav>
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
         <div className={appHeaderStyles.containerProfile}>
           <div className={appHeaderStyles.profile}>
-            <a href='#' className={appHeaderStyles.link}>
-              <ProfileIcon type="secondary" />
-              <span className='text text_type_main-default text_color_inactive'>
+            <Link to='/profile' className={appHeaderStyles.link}>
+              <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
+              <span className={`text text_type_main-default ${pathname !== '/profile' ? 'text_color_inactive' : ''}`}>
               Личный кабинет
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
