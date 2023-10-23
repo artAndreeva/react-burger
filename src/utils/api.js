@@ -8,12 +8,12 @@ const handleResponse = (res) => {
 }
 
 const request = (url, options) => {
-  return fetch(url, options)
+  return fetch(`${BASE_URL}/${url}`, options)
   .then(handleResponse)
 }
 
 export const getIngredients = () => {
-  return request(`${BASE_URL}/api/ingredients`, {
+  return request('api/ingredients', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ export const getIngredients = () => {
 }
 
 export const sendOrder = (data) => {
-  return request(`${BASE_URL}/api/orders`, {
+  return request('api/orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

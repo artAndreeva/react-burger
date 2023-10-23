@@ -1,4 +1,5 @@
 import * as api from '../../utils/api';
+import { deleteAllIngredients } from './burger-ingredients';
 
 export const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
@@ -15,6 +16,7 @@ export const sendOrder = (arr) => {
         type: SEND_ORDER_SUCCESS,
         payload: res.order.number
       });
+      dispatch(deleteAllIngredients())
     })
     .catch(() => {
       dispatch({

@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { TYPE } from '../../constants/constants';
+import { TYPE, PLACEHOLDER_TEXT } from '../../constants/constants';
 import { sendOrder } from '../../services/actions/order';
 import { v4 as uuidv4 } from 'uuid';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 import { addBun, addIngredient } from '../../services/actions/burger-ingredients';
+import ConstructorPlaceholder from '../constructor-placeholder/constructor-placeholder';
 
 const BurgerConstructor = ({ onOrderClick }) => {
 
@@ -40,8 +41,11 @@ const BurgerConstructor = ({ onOrderClick }) => {
   }
 
   const handleOrderClick = () => {
-    onOrderClick();
-    dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
+    if (Object.keys(buns).length !== 0 || ingredients.length !== 0) {
+      onOrderClick();
+      dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
+    }
+    return
   }
 
   return (
@@ -56,9 +60,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
             price={buns.price}
             thumbnail={buns.image}
             />
-          : <div className={burgerConstructorStyles.placeholderTop}>
-              <span className='text text_type_main-default'>Место для булки</span>
-            </div>
+          : <ConstructorPlaceholder top={true} text={PLACEHOLDER_TEXT.top}/>
           }
         </div>
 
@@ -72,9 +74,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
               />
             ))}
           </ul>
-        : <div className={burgerConstructorStyles.placeholderMiddle}>
-            <span className='text text_type_main-default'>Место для ингредиентов</span>
-          </div>
+        : <ConstructorPlaceholder middle={true} text={PLACEHOLDER_TEXT.middle}/>
         }
 
         <div className={burgerConstructorStyles.end}>
@@ -86,9 +86,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
             price={buns.price}
             thumbnail={buns.image}
             />
-          : <div className={burgerConstructorStyles.placeholderBottom}>
-              <span className='text text_type_main-default'>Место для булки</span>
-            </div>
+          : <ConstructorPlaceholder bottom={true} text={PLACEHOLDER_TEXT.bottom}/>
           }
         </div>
       </div>

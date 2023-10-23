@@ -3,7 +3,8 @@ import {
   ADD_BUN,
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
-  SORT_INGREDIENTS
+  SORT_INGREDIENTS,
+  DELETE_ALL_INGREDIENTS
 } from '../actions/burger-ingredients';
 
 const initialState = {
@@ -40,6 +41,13 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
             [action.payload.hoverIndex, 0, state.ingredients[action.payload.dragIndex]],
           ],
         }),
+      }
+    }
+    case DELETE_ALL_INGREDIENTS: {
+      return {
+        ...state,
+        buns: {},
+        ingredients: []
       }
     }
     default: {
