@@ -17,6 +17,10 @@ import ResetPassword from '../pages/reset-password/reset-password';
 import Profile from '../pages/profile/profile';
 import Ingredients from '../pages/ingredients/ingredients';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
+import Orders from '../pages/orders/orders';
+import OrdersHistory from '../pages/orders-history/orders-history';
+import { getUser } from '../../services/actions/auth';
+import { getIngredients } from '../../services/actions/ingredients';
 
 const App = () => {
   const [isIngredientsModalOpen, setIngredientsIsModalOpen] = useState(false);
@@ -33,6 +37,11 @@ const App = () => {
       setApiErrorText(API_ERROR);
     }
   }, [ingredientsFailed])
+
+  useEffect(()=> {
+    dispatch(getUser());
+    dispatch(getIngredients())
+  }, [dispatch])
 
   const openOrderModal = () => {
     setIsOrderModalOpen(true);
@@ -68,6 +77,8 @@ const App = () => {
         <Route path='/reset-password' element={<ResetPassword />}/>
         <Route path='/profile' element={<Profile />}/>
         <Route path='/ingredients/:id' element={<Ingredients />}/>
+        <Route path='/profile/orders' element={<OrdersHistory />}/>
+        <Route path='/profile/orders/:id' element={<Orders />}/>
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
 

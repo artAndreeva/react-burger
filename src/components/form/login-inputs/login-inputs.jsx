@@ -14,6 +14,7 @@ const LoginInputs = ({ onChange, values }) => {
         name={'email'}
         placeholder="E-mail"
       />
+
       <PasswordInput
         onChange={handleOnChange}
         value={values.password || ''}

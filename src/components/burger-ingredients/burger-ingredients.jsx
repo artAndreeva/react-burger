@@ -4,8 +4,7 @@ import burgerIngredientsStyles from './burger-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient';
 import { TYPE } from '../../constants/constants';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = ({ onIngredientClick }) => {
@@ -21,12 +20,6 @@ const BurgerIngredients = ({ onIngredientClick }) => {
   const [mainRef, mainInView] = useInView({
     threshold: 0
   });
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch])
 
   const [current, setCurrent] = useState(TYPE.bun);
 

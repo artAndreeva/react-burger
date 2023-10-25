@@ -27,6 +27,7 @@ const ProfileInputs = ({ onChange, values }) => {
         onIconClick={onIconClick}
         disabled={true}
       />
+
       <EmailInput
         onChange={onChange}
         value={values.email || ''}
@@ -34,6 +35,7 @@ const ProfileInputs = ({ onChange, values }) => {
         placeholder="Логин"
         isIcon={true}
       />
+
       <PasswordInput
         onChange={onChange}
         value={values.password || ''}

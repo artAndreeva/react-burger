@@ -1,13 +1,12 @@
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './auth-form.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import AuthText from '../auth-text/auth-text';
 import RegisterInputs from '../../form/register-inputs/register-inputs';
 import LoginInputs from '../../form/login-inputs/login-inputs';
 import ForgotPasswordInputs from '../../form/forgot-password-inputs/forgot-password-inputs';
 import ResetPasswordInputs from '../../form/reset-password-inputs/reset-password-inputs';
-import ProfileInputs from '../../form/profile-inputs/profile-inputs';
 
 const AuthForm = ({
   title,
@@ -18,32 +17,31 @@ const AuthForm = ({
   restoreText,
   restoreLinkText,
   restoreLink,
+  onSubmit
 }) => {
 
   const [values, setValues] = useState({});
 
   const { pathname } = useLocation();
 
-  const navigate = useNavigate();
-
   const handleOnChange = (e) => {
     const { name, value } = e.target
     setValues({ ...values, [name]: value });
   };
 
-  const handleOnClick = () => {
-    if (pathname === '/forgot-password') {
-      navigate('/reset-password');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(values);
   }
 
   return (
     <div className={styles.container}>
-      {pathname !== '/profile' && <h2 className="text text_type_main-medium mb-6">{title}</h2>}
+      <h2 className="text text_type_main-medium mb-6">{title}</h2>
 
         <form
-        name='auth-form'
-        className={styles.form}
+          name='auth-form'
+          className={styles.form}
+          onSubmit={handleSubmit}
         >
           <fieldset className={styles.fieldset}>
 
@@ -75,25 +73,15 @@ const AuthForm = ({
               />
             }
 
-            {pathname === '/profile' &&
-              <ProfileInputs
-                values={values}
-                onChange={handleOnChange}
-              />
-            }
-
           </fieldset>
 
-          {pathname !== '/profile' &&
-            <Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
-              {buttonText}
-            </Button>
-          }
+          <Button htmlType="submit" type="primary" size="medium" >
+            {buttonText}
+          </Button>
 
         </form>
 
-        {pathname !== '/profile' &&
-          <div className={styles.text}>
+        <div className={styles.text}>
           <AuthText
             text={text}
             linkText={linkText}
@@ -107,7 +95,6 @@ const AuthForm = ({
             />
           }
         </div>
-        }
 
     </div>
   )

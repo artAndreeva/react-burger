@@ -14,12 +14,13 @@ const ResetPasswordInputs = ({ onChange, values }) => {
         name={'password'}
         placeholder={'Введите новый пароль'}
       />
+      
       <Input
         type={'text'}
         placeholder={'Введите код из письма'}
         onChange={handleOnChange}
-        value={values.name || ''}
-        name={'name'}
+        value={values.token || ''}
+        name={'token'}
       />
     </>
   )

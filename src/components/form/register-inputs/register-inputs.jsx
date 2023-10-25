@@ -15,12 +15,14 @@ const RegisterInputs = ({ onChange, values }) => {
         value={values.name || ''}
         name={'name'}
       />
+
       <EmailInput
         onChange={onChange}
         value={values.email || ''}
         name={'email'}
         placeholder="E-mail"
       />
+      
       <PasswordInput
         onChange={onChange}
         value={values.password || ''}
