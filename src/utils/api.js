@@ -77,7 +77,7 @@ export const logout = () => {
   return request('api/auth/logout', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
@@ -129,8 +129,8 @@ export const updateUser = (data) => {
     },
     body: JSON.stringify({
       email: data.email,
-      password: data.password,
-      name: data.name
+      name: data.name,
+      password: data.name
     })
   })
 }

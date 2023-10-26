@@ -1,14 +1,14 @@
 import styles from './profile.module.css';
-import ProfileForm from '../../form/profile-form/profile-form';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../services/actions/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useMatch } from 'react-router-dom';
 
 const Profile = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const match = useMatch('/profile');
 
   const handleLogout = () => {
     dispatch(logout(redirect));
@@ -25,7 +25,7 @@ const Profile = () => {
           <li className={styles.item}>
             <NavLink
               to='/profile'
-              className={({isActive}) => `text text_type_main-medium text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`}
+              className={`text text_type_main-medium text_color_inactive ${styles.link} ${match ? styles.active : ''}`}
             >
               Профиль
             </NavLink>
@@ -39,21 +39,24 @@ const Profile = () => {
             </NavLink>
           </li>
           <li className={styles.item}>
-            <Link
+            <NavLink
               to='/profile'
               className={`text text_type_main-medium text_color_inactive ${styles.link}`}
               onClick={handleLogout}
             >
               Выход
-            </Link>
+            </NavLink>
           </li>
         </ul>
-        <p className={`text text_type_main-default ${styles.text}`}>
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
+        {match &&
+          <p className={`text text_type_main-default ${styles.text}`}>
+            В этом разделе вы можете
+            изменить свои персональные данные
+          </p>
+        }
       </nav>
       <div>
-        <ProfileForm />
+        <Outlet />
       </div>
     </main>
   )

@@ -22,3 +22,7 @@
   border: 0;
   gap: 24px;
 }
+
+.buttons {
+  align-self: end;
+}

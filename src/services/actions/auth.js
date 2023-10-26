@@ -1,5 +1,6 @@
 import * as api from '../../utils/api';
-import { setCookie, removeCookie } from '../../utils/cookie';
+import { setCookie, removeCookie, getCookie } from '../../utils/cookie';
+
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -31,22 +32,22 @@ export const register = (data, redirect) => {
       type: REGISTER_REQUEST
     });
     api.register(data)
-    .then((res) => {
-      localStorage.setItem('refreshToken', res.refreshToken);
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.user
-      });
-    })
-    .then(() => {
-      redirect();
-    })
-    .catch(() => {
-      dispatch({
-        type: REGISTER_FAILED
+      .then((res) => {
+        localStorage.setItem('refreshToken', res.refreshToken);
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: res.user
+        });
       })
-    });
+      .then(() => {
+        redirect();
+      })
+      .catch(() => {
+        dispatch({
+          type: REGISTER_FAILED
+        })
+      });
   }
 }
 
@@ -56,22 +57,22 @@ export const login = (data, redirect) => {
       type: LOGIN_REQUEST
     });
     api.login(data)
-    .then((res) => {
-      localStorage.setItem('refreshToken', res.refreshToken);
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.user
-      });
-    })
-    .then(() => {
-      redirect();
-    })
-    .catch(() => {
-      dispatch({
-        type: LOGIN_FAILED
+      .then((res) => {
+        localStorage.setItem('refreshToken', res.refreshToken);
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.user
+        });
       })
-    });
+      .then(() => {
+        redirect();
+      })
+      .catch(() => {
+        dispatch({
+          type: LOGIN_FAILED
+        })
+      });
   }
 }
 
@@ -81,21 +82,21 @@ export const refreshToken = () => {
       type: REFRESH_TOKEN_REQUEST
     });
     api.refreshToken()
-    .then((res) => {
-      localStorage.setItem('refreshToken', res.refreshToken);
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-      dispatch({
-        type: REFRESH_TOKEN_SUCCESS,
-        payload: res
-      });
-    })
-    .then(() => {
-      dispatch(getUser());
-    })
-    .catch(() => {
-      dispatch({
-        type: REFRESH_TOKEN_FAILED
+      .then((res) => {
+        localStorage.setItem('refreshToken', res.refreshToken);
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+        dispatch({
+          type: REFRESH_TOKEN_SUCCESS,
+          payload: res
+        });
       })
+     .then(() => {
+        dispatch(getUser());
+      })
+      .catch(() => {
+        dispatch({
+          type: REFRESH_TOKEN_FAILED
+        })
     });
   }
 }
@@ -106,22 +107,22 @@ export const logout = (redirect) => {
       type: LOGOUT_REQUEST
     });
     api.logout()
-    .then((res) => {
-      localStorage.removeItem('refreshToken');
-      removeCookie('accessToken');
-      dispatch({
-        type: LOGOUT_SUCCESS,
-        payload: res
-      });
-    })
-    .then(() => {
-      redirect();
-    })
-    .catch(() => {
-      dispatch({
-        type: LOGOUT_FAILED
+      .then((res) => {
+        localStorage.removeItem('refreshToken');
+        removeCookie('accessToken');
+        dispatch({
+          type: LOGOUT_SUCCESS,
+          payload: res
+        });
       })
-    });
+      .then(() => {
+        redirect();
+      })
+      .catch(() => {
+        dispatch({
+          type: LOGOUT_FAILED
+        })
+      });
   }
 }
 
@@ -131,18 +132,18 @@ export const getUser = () => {
       type: GET_USER_REQUEST
     });
     api.getUser()
-    .then((res) => {
-      dispatch({
-        type: GET_USER_SUCCESS,
-        payload: res.user
+      .then((res) => {
+        dispatch({
+          type: GET_USER_SUCCESS,
+          payload: res.user
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_USER_FAILED
+        });
+        dispatch(refreshToken());
       });
-    })
-    .catch(() => {
-      dispatch({
-        type: GET_USER_FAILED
-      });
-      dispatch(refreshToken());
-    });
   }
 }
 
@@ -152,16 +153,16 @@ export const updateUser = (data) => {
       type: UPDATE_USER_REQUEST
     });
     api.updateUser(data)
-    .then((res) => {
-      dispatch({
-        type: UPDATE_USER_SUCCESS,
-        payload: res.user
+      .then((res) => {
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: res.user
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: UPDATE_USER_FAILED
+        });
       });
-    })
-    .catch(() => {
-      dispatch({
-        type: UPDATE_USER_FAILED
-      });
-    });
   }
 }

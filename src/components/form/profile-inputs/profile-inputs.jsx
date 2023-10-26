@@ -1,5 +1,5 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const ProfileInputs = ({ onChange, values }) => {
 
@@ -7,11 +7,21 @@ const ProfileInputs = ({ onChange, values }) => {
     onChange(e);
   }
 
+  const [disabled, setDisabled] = useState(true);
   const inputRef = useRef(null);
 
   const onIconClick = () => {
-    inputRef.current.focus();
-    inputRef.current.disabled = false;
+    setDisabled(false);
+  }
+
+  useEffect(() => {
+    if (!disabled) {
+      inputRef.current.focus();
+    }
+  }, [disabled]);
+
+  const handleOnBlur = () => {
+    setDisabled(true);
   }
 
   return (
@@ -25,7 +35,8 @@ const ProfileInputs = ({ onChange, values }) => {
         icon="EditIcon"
         ref={inputRef}
         onIconClick={onIconClick}
-        disabled={true}
+        disabled={disabled}
+        onBlur={handleOnBlur}
       />
 
       <EmailInput
