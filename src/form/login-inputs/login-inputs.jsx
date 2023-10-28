@@ -1,4 +1,5 @@
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 const LoginInputs = ({ onChange, values }) => {
 
@@ -23,6 +24,11 @@ const LoginInputs = ({ onChange, values }) => {
     </>
   )
 }
+
+LoginInputs.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  values: PropTypes.object.isRequired
+};
 
 export default LoginInputs;
 

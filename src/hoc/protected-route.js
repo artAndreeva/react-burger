@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const ProtectedRouteElement = ({ onlyUnAuth, element, onlyAfterGetCode }) => {
 
@@ -22,5 +23,12 @@ const ProtectedRouteElement = ({ onlyUnAuth, element, onlyAfterGetCode }) => {
 
   return element;
 }
+
+ProtectedRouteElement.propTypes = {
+  onlyUnAuth: PropTypes.bool,
+  onlyAfterGetCode: PropTypes.bool,
+  element: PropTypes.object.isRequired
+};
+
 
 export default ProtectedRouteElement;

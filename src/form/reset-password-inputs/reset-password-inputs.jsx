@@ -1,4 +1,5 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 const ResetPasswordInputs = ({ onChange, values }) => {
 
@@ -25,6 +26,11 @@ const ResetPasswordInputs = ({ onChange, values }) => {
     </>
   )
 }
+
+ResetPasswordInputs.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  values: PropTypes.object.isRequired
+};
 
 export default ResetPasswordInputs;
 

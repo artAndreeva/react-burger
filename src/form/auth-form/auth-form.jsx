@@ -7,6 +7,7 @@ import RegisterInputs from '../../form/register-inputs/register-inputs';
 import LoginInputs from '../../form/login-inputs/login-inputs';
 import ForgotPasswordInputs from '../../form/forgot-password-inputs/forgot-password-inputs';
 import ResetPasswordInputs from '../../form/reset-password-inputs/reset-password-inputs';
+import PropTypes from 'prop-types';
 
 const AuthForm = ({
   title,
@@ -99,5 +100,17 @@ const AuthForm = ({
     </div>
   )
 }
+
+AuthForm.propTypes = {
+  title: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  restoreText: PropTypes.string,
+  restoreLinkText: PropTypes.string,
+  restoreLink: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired
+};
 
 export default AuthForm;

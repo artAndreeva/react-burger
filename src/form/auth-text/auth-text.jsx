@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './auth-text.module.css';
+import PropTypes from 'prop-types';
 
 const AuthText = ({ text, linkText, link }) => {
   return (
@@ -14,5 +15,11 @@ const AuthText = ({ text, linkText, link }) => {
     </div>
   )
 }
+
+AuthText.propTypes = {
+  text: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired
+};
 
 export default AuthText;
