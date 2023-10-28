@@ -1,7 +1,7 @@
 import AuthForm from '../../form/auth-form/auth-form';
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../services/actions/auth';
+import { login } from '../../services/actions/auth';
 
 const Login = () => {
 

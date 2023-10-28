@@ -1,5 +1,5 @@
 import styles from './ingredients.module.css';
-import IngredientsDetails from '../../ingredient-details/ingredient-details';
+import IngredientsDetails from '../../components/ingredient-details/ingredient-details';
 
 const Ingredients = () => {
   return (

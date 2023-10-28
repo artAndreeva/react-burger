@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ProfileInputs from '../profile-inputs/profile-inputs';
 import { useSelector } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { updateUser } from '../../../services/actions/auth';
+import { updateUser } from '../../services/actions/auth';
 import { useDispatch } from 'react-redux';
 
 const ProfileForm = () => {

@@ -9,18 +9,18 @@ import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { API_ERROR } from '../../constants/constants';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Login from '../pages/login/login';
-import Register from '../pages/register/register';
-import ForgotPassword from '../pages/forgot-password/forgot-password';
-import ResetPassword from '../pages/reset-password/reset-password';
-import Profile from '../pages/profile/profile';
-import NotFoundPage from '../pages/not-found-page/not-found-page';
-import Orders from '../pages/orders/orders';
-import OrdersHistory from '../pages/orders-history/orders-history';
+import Login from '../../pages/login/login';
+import Register from '../../pages/register/register';
+import ForgotPassword from '../../pages/forgot-password/forgot-password';
+import ResetPassword from '../../pages/reset-password/reset-password';
+import Profile from '../../pages/profile/profile';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import Orders from '../../pages/orders/orders';
+import OrdersHistory from '../../pages/orders-history/orders-history';
 import { getUser } from '../../services/actions/auth';
 import { getIngredients } from '../../services/actions/ingredients';
-import ProfileForm from '../form/profile-form/profile-form';
-import Ingredients from '../pages/ingredients/ingredients';
+import ProfileForm from '../../form/profile-form/profile-form';
+import Ingredients from '../../pages/ingredients/ingredients';
 import ProtectedRouteElement from '../../hoc/protected-route';
 
 const App = () => {

@@ -1,7 +1,7 @@
 import AuthForm from '../../form/auth-form/auth-form';
 import styles from './register.module.css';
 import { useDispatch } from 'react-redux';
-import { register } from '../../../services/actions/auth';
+import { register } from '../../services/actions/auth';
 
 const Register = () => {
 

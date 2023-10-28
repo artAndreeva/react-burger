@@ -1,7 +1,7 @@
 import styles from './profile.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../../services/actions/auth';
+import { logout } from '../../services/actions/auth';
 import { useMatch } from 'react-router-dom';
 
 const Profile = () => {
