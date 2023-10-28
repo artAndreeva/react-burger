@@ -30,5 +30,4 @@ ProtectedRouteElement.propTypes = {
   element: PropTypes.element.isRequired
 };
 
-
 export default ProtectedRouteElement;
