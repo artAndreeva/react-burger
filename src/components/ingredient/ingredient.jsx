@@ -29,7 +29,7 @@ const Ingredient = ({ item }) => {
   }, [buns, ingredients])
 
   return (
-    <Link to={`/ingredients/${item._id}`} className={styles.link} state={{ background: location }}>
+    <Link to={`/ingredients/${item._id}`} className={styles.link} state={{ backgroundLocation: location }}>
       <div className={styles.card} ref={dragRef}>
         {quantity
         ? <Counter count={quantity} size="default" />

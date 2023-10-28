@@ -14,7 +14,7 @@ const ResetPassword = () => {
   }
 
   const redirect = () => {
-    navigate('/login');
+    navigate('/login', { replace: true });
   }
 
   return (

@@ -21,6 +21,7 @@ import { getUser } from '../../services/actions/auth';
 import { getIngredients } from '../../services/actions/ingredients';
 import ProfileForm from '../form/profile-form/profile-form';
 import Ingredients from '../pages/ingredients/ingredients';
+import ProtectedRouteElement from '../../hoc/protected-route';
 
 const App = () => {
 
@@ -41,8 +42,8 @@ const App = () => {
   }, [ingredientsFailed])
 
   useEffect(()=> {
-    dispatch(getUser());
     dispatch(getIngredients())
+    dispatch(getUser());
   }, [dispatch])
 
   const openOrderModal = () => {
@@ -61,26 +62,22 @@ const App = () => {
   return (
     <div className={appStyles.content}>
       <AppHeader />
-      <Routes location={(location.state && location.state.background) || location}>
-        <Route path='/' element={
-          <Main
-          onOrderClick={openOrderModal}
-          />}
-        />
-        <Route path='/login' element={<Login />}/>
-        <Route path='/register' element={<Register />}/>
-        <Route path='/forgot-password' element={<ForgotPassword />}/>
-        <Route path='/reset-password' element={<ResetPassword />}/>
-        <Route path='/profile' element={<Profile />}>
-          <Route path='' element={<ProfileForm />}/>
-          <Route path='orders' element={<OrdersHistory />}/>
+      <Routes location={location.state?.backgroundLocation || location}>
+        <Route path='/' element={<Main onOrderClick={openOrderModal} />} />
+        <Route path='/login' element={<ProtectedRouteElement onlyUnAuth={true} element={<Login />} />} />
+        <Route path='/register' element={<ProtectedRouteElement onlyUnAuth element={<Register />} />} />
+        <Route path='/forgot-password' element={<ProtectedRouteElement onlyUnAuth element={<ForgotPassword />} />} />
+        <Route path='/reset-password' element={<ProtectedRouteElement onlyUnAuth onlyAfterGetCode element={<ResetPassword />} />} />
+        <Route path='/profile' element={<ProtectedRouteElement element={<Profile />} />}>
+          <Route path='' element={<ProtectedRouteElement element={<ProfileForm />} />}/>
+          <Route path='orders' element={<ProtectedRouteElement element={<OrdersHistory />} />}/>
         </Route>
         <Route path="/ingredients/:id" element={<Ingredients />} />
         <Route path='/profile/orders/:id' element={<Orders />}/>
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
 
-      {location.state && location.state.background && (
+      {location.state?.backgroundLocation && (
         <Routes>
           <Route
             path="/ingredients/:id"

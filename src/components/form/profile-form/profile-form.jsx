@@ -19,7 +19,7 @@ const ProfileForm = () => {
     setValues({ ...values, [name]: value });
     setIsButtonVisible(true);
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (values.password === '******') {

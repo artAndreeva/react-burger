@@ -1,6 +1,5 @@
 import * as api from '../../utils/api';
-import { setCookie, removeCookie, getCookie } from '../../utils/cookie';
-
+import { setCookie, removeCookie } from '../../utils/cookie';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -26,7 +25,7 @@ export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 
-export const register = (data, redirect) => {
+export const register = (data) => {
   return (dispatch) => {
     dispatch({
       type: REGISTER_REQUEST
@@ -40,9 +39,6 @@ export const register = (data, redirect) => {
           payload: res.user
         });
       })
-      .then(() => {
-        redirect();
-      })
       .catch(() => {
         dispatch({
           type: REGISTER_FAILED
@@ -51,7 +47,7 @@ export const register = (data, redirect) => {
   }
 }
 
-export const login = (data, redirect) => {
+export const login = (data) => {
   return (dispatch) => {
     dispatch({
       type: LOGIN_REQUEST
@@ -64,9 +60,6 @@ export const login = (data, redirect) => {
           type: LOGIN_SUCCESS,
           payload: res.user
         });
-      })
-      .then(() => {
-        redirect();
       })
       .catch(() => {
         dispatch({
@@ -101,22 +94,18 @@ export const refreshToken = () => {
   }
 }
 
-export const logout = (redirect) => {
+export const logout = () => {
   return (dispatch) => {
     dispatch({
       type: LOGOUT_REQUEST
     });
     api.logout()
-      .then((res) => {
+      .then(() => {
         localStorage.removeItem('refreshToken');
         removeCookie('accessToken');
         dispatch({
           type: LOGOUT_SUCCESS,
-          payload: res
         });
-      })
-      .then(() => {
-        redirect();
       })
       .catch(() => {
         dispatch({
@@ -138,7 +127,7 @@ export const getUser = () => {
           payload: res.user
         });
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({
           type: GET_USER_FAILED
         });

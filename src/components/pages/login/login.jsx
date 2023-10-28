@@ -2,19 +2,13 @@ import AuthForm from '../../form/auth-form/auth-form';
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../services/actions/auth';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = (values) => {
-    dispatch(login(values, redirect))
-  }
-
-  const redirect = () => {
-    navigate('/');
+    dispatch(login(values))
   }
 
   return (

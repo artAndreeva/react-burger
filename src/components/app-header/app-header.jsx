@@ -29,7 +29,7 @@ const AppHeader = () => {
 
             <li className={styles.item}>
             <NavLink
-                to='/profile/orders'
+                to='/orders-list'
                 className={setActive}
               >
                 {({isActive}) => (

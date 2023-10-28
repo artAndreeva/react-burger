@@ -88,17 +88,18 @@ export const authReducer = (state = initialState, action) => {
     }
     case REFRESH_TOKEN_SUCCESS: {
       return {
-        ...state
+        ...state,
       }
     }
     case REFRESH_TOKEN_FAILED: {
       return {
-        ...state
+        ...state,
+        isLoggedIn: false
       }
     }
     case LOGOUT_REQUEST: {
       return {
-        ...state
+        ...state,
       }
     }
     case LOGOUT_SUCCESS: {
@@ -113,12 +114,17 @@ export const authReducer = (state = initialState, action) => {
     }
     case LOGOUT_FAILED: {
       return {
-        ...state
+        ...state,
+        isLoggedIn: true
       }
     }
     case GET_USER_REQUEST: {
       return {
-        ...state
+        ...state,
+        user: {
+          name: '',
+          email: ''
+        }
       }
     }
     case GET_USER_SUCCESS: {
@@ -127,7 +133,8 @@ export const authReducer = (state = initialState, action) => {
         user: {
           name: action.payload.name,
           email: action.payload.email
-        }
+        },
+        isLoggedIn: true
       }
     }
     case GET_USER_FAILED: {
@@ -136,7 +143,8 @@ export const authReducer = (state = initialState, action) => {
         user: {
           name: '',
           email: ''
-        }
+        },
+        isLoggedIn: false
       }
     }
     case UPDATE_USER_REQUEST: {

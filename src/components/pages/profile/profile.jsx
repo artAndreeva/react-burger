@@ -2,20 +2,15 @@ import styles from './profile.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../services/actions/auth';
-import { useNavigate, useMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 
 const Profile = () => {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const match = useMatch('/profile');
 
   const handleLogout = () => {
-    dispatch(logout(redirect));
-  }
-
-  const redirect = () => {
-    navigate('/login');
+    dispatch(logout());
   }
 
   return (

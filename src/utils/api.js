@@ -26,7 +26,8 @@ export const sendOrder = (data) => {
   return request('api/orders', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getCookie('accessToken')
     },
     body: JSON.stringify({
       ingredients: data
@@ -130,7 +131,7 @@ export const updateUser = (data) => {
     body: JSON.stringify({
       email: data.email,
       name: data.name,
-      password: data.name
+      password: data.password
     })
   })
 }
