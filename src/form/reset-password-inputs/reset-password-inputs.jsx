@@ -29,7 +29,10 @@ const ResetPasswordInputs = ({ onChange, values }) => {
 
 ResetPasswordInputs.propTypes = {
   onChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.shape({
+    password: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default ResetPasswordInputs;

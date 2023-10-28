@@ -27,7 +27,10 @@ const LoginInputs = ({ onChange, values }) => {
 
 LoginInputs.propTypes = {
   onChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string
+  }).isRequired
 };
 
 export default LoginInputs;

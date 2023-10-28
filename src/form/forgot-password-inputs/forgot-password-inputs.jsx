@@ -21,7 +21,9 @@ const ForgotPasswordInputs = ({ onChange, values }) => {
 
 ForgotPasswordInputs.propTypes = {
   onChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+  }).isRequired
 };
 
 export default ForgotPasswordInputs;

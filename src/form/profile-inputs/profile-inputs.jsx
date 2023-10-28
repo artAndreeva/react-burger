@@ -60,7 +60,11 @@ const ProfileInputs = ({ onChange, values }) => {
 
 ProfileInputs.propTypes = {
   onChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    password: PropTypes.string
+  }).isRequired
 };
 
 export default ProfileInputs;

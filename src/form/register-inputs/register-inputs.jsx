@@ -35,7 +35,11 @@ const RegisterInputs = ({ onChange, values }) => {
 
 RegisterInputs.propTypes = {
   onChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default RegisterInputs;

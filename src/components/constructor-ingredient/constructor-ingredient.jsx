@@ -4,6 +4,8 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import constructorIngredientStyles from './constructor-ingredient.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { deleteIngredient, sortIngredients } from '../../services/actions/burger-ingredients';
+import PropTypes from 'prop-types';
+import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 
 const ConstructorIngredient = ({ item, index }) => {
 
@@ -78,5 +80,10 @@ const ConstructorIngredient = ({ item, index }) => {
       </li>
   );
 }
+
+ConstructorIngredient.propTypes = {
+  index: PropTypes.string.isRequired,
+  item: INGREDIENS_PROP_TYPES.isRequired
+};
 
 export default ConstructorIngredient;

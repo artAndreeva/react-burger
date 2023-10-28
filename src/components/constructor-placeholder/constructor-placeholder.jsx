@@ -1,4 +1,5 @@
 import styles from './constructor-placeholder.module.css';
+import PropTypes from 'prop-types';
 
 const ConstructorPlaceholder = ({top, middle, bottom, text}) => {
   return (
@@ -7,5 +8,13 @@ const ConstructorPlaceholder = ({top, middle, bottom, text}) => {
     </div>
   );
 }
+
+ConstructorPlaceholder.propTypes = {
+  top: PropTypes.bool,
+  middle: PropTypes.bool,
+  bottom: PropTypes.bool,
+  text: PropTypes.string.isRequired
+};
+
 
 export default ConstructorPlaceholder;

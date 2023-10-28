@@ -27,7 +27,7 @@ const ProtectedRouteElement = ({ onlyUnAuth, element, onlyAfterGetCode }) => {
 ProtectedRouteElement.propTypes = {
   onlyUnAuth: PropTypes.bool,
   onlyAfterGetCode: PropTypes.bool,
-  element: PropTypes.object.isRequired
+  element: PropTypes.element.isRequired
 };
 
 
