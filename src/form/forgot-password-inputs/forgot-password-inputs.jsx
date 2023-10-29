@@ -22,7 +22,7 @@ const ForgotPasswordInputs = ({ onChange, values }) => {
 ForgotPasswordInputs.propTypes = {
   onChange: PropTypes.func.isRequired,
   values: PropTypes.shape({
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
   }).isRequired
 };
 

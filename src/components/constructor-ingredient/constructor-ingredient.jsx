@@ -82,7 +82,7 @@ const ConstructorIngredient = ({ item, index }) => {
 }
 
 ConstructorIngredient.propTypes = {
-  index: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   item: INGREDIENS_PROP_TYPES.isRequired
 };
 

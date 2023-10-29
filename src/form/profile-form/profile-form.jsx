@@ -5,18 +5,18 @@ import { useSelector } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/auth';
 import { useDispatch } from 'react-redux';
+import { useForm } from '../../hooks/use-form';
 
 const ProfileForm = () => {
 
   const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
-  const [values, setValues] = useState({});
+  const { values, handleChange, setValues } = useForm();
   const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   const handleOnChange = (e) => {
-    const { name, value } = e.target
-    setValues({ ...values, [name]: value });
+    handleChange(e);
     setIsButtonVisible(true);
   };
 

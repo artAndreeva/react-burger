@@ -1,13 +1,13 @@
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './auth-form.module.css';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import AuthText from '../auth-text/auth-text';
 import RegisterInputs from '../../form/register-inputs/register-inputs';
 import LoginInputs from '../../form/login-inputs/login-inputs';
 import ForgotPasswordInputs from '../../form/forgot-password-inputs/forgot-password-inputs';
 import ResetPasswordInputs from '../../form/reset-password-inputs/reset-password-inputs';
 import PropTypes from 'prop-types';
+import { useForm } from '../../hooks/use-form';
 
 const AuthForm = ({
   title,
@@ -21,14 +21,9 @@ const AuthForm = ({
   onSubmit
 }) => {
 
-  const [values, setValues] = useState({});
+  const { values, handleChange } = useForm();
 
   const { pathname } = useLocation();
-
-  const handleOnChange = (e) => {
-    const { name, value } = e.target
-    setValues({ ...values, [name]: value });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,28 +44,28 @@ const AuthForm = ({
             {pathname === '/login' &&
               <LoginInputs
                 values={values}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             }
 
             {pathname === '/register' &&
               <RegisterInputs
                 values={values}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             }
 
             {pathname === '/forgot-password' &&
               <ForgotPasswordInputs
                 values={values}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             }
 
             {pathname === '/reset-password' &&
               <ResetPasswordInputs
                 values={values}
-                onChange={handleOnChange}
+                onChange={handleChange}
               />
             }
 
