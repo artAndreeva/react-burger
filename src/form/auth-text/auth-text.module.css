@@ -1,0 +1,9 @@
+.button {
+  padding: 0;
+}
+
+.text {
+  display: flex;
+  gap: 8px;
+}
+

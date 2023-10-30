@@ -3,12 +3,10 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient';
 import { TYPE } from '../../constants/constants';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 
-const BurgerIngredients = ({ onIngredientClick }) => {
+const BurgerIngredients = () => {
   const ingredients = useSelector(store => store.ingredients.ingredients)
   const ingredientsRequest = useSelector(store => store.ingredients.ingredientsRequest)
 
@@ -21,12 +19,6 @@ const BurgerIngredients = ({ onIngredientClick }) => {
   const [mainRef, mainInView] = useInView({
     threshold: 0
   });
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch])
 
   const [current, setCurrent] = useState(TYPE.bun);
 
@@ -78,7 +70,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
               <ul className={burgerIngredientsStyles.list}>
                 {filterIngredients(TYPE.bun).map((item) => (
                   <li key={item._id} className={burgerIngredientsStyles.item}>
-                    <Ingredient item={item} onIngredientClick={onIngredientClick}/>
+                    <Ingredient item={item} />
                   </li>
                 ))}
             </ul>
@@ -88,7 +80,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
               <ul className={burgerIngredientsStyles.list}>
                 {filterIngredients(TYPE.sauce).map((item) => (
                   <li key={item._id} className={burgerIngredientsStyles.item}>
-                    <Ingredient item={item} onIngredientClick={onIngredientClick}/>
+                    <Ingredient item={item} />
                   </li>
                 ))}
             </ul>
@@ -98,7 +90,7 @@ const BurgerIngredients = ({ onIngredientClick }) => {
               <ul className={burgerIngredientsStyles.list}>
                 {filterIngredients(TYPE.main).map((item) => (
                   <li key={item._id} className={burgerIngredientsStyles.item}>
-                    <Ingredient item={item} onIngredientClick={onIngredientClick}/>
+                    <Ingredient item={item} />
                   </li>
                 ))}
             </ul>
@@ -109,9 +101,5 @@ const BurgerIngredients = ({ onIngredientClick }) => {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  onIngredientClick: PropTypes.func.isRequired
-};
 
 export default BurgerIngredients;

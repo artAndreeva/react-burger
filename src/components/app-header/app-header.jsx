@@ -1,41 +1,72 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import appHeaderStyles from './app-header.module.css';
+import styles from './app-header.module.css';
+import { Link, NavLink } from 'react-router-dom';
 
 const AppHeader = () => {
+
+  const setActive = ({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`;
+
   return (
-    <header className={appHeaderStyles.header}>
-      <div className={appHeaderStyles.container}>
-        <nav className={appHeaderStyles.menu}>
-          <ul className={appHeaderStyles.list}>
-            <li className={appHeaderStyles.item}>
-              <a href='#' className={appHeaderStyles.link}>
-                <BurgerIcon type="primary" />
-                <span className='text text_type_main-default'>
-                  Конструктор
-                </span>
-              </a>
+    <header className={styles.header}>
+      <div className={styles.container}>
+        <nav className={styles.menu}>
+          <ul className={styles.list}>
+            <li className={styles.item}>
+              <NavLink
+                to='/'
+                className={setActive}
+              >
+                {({isActive}) => (
+                  <>
+                    <BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+                    <span>
+                      Конструктор
+                    </span>
+                  </>
+                )}
+              </NavLink>
             </li>
-            <li className={appHeaderStyles.item}>
-              <a href='#' className={appHeaderStyles.link}>
-                <ListIcon type="secondary" />
-                <span className='text text_type_main-default text_color_inactive'>
-                  Лента заказов
-                </span>
-              </a>
+
+            <li className={styles.item}>
+            <NavLink
+                to='/orders-list'
+                className={setActive}
+              >
+                {({isActive}) => (
+                  <>
+                    <ListIcon type={isActive ? 'primary' : 'secondary'} />
+                    <span>
+                      Лента заказов
+                    </span>
+                  </>
+                )}
+              </NavLink>
             </li>
           </ul>
         </nav>
-        <Logo />
-        <div className={appHeaderStyles.containerProfile}>
-          <div className={appHeaderStyles.profile}>
-            <a href='#' className={appHeaderStyles.link}>
-              <ProfileIcon type="secondary" />
-              <span className='text text_type_main-default text_color_inactive'>
-              Личный кабинет
-              </span>
-            </a>
+
+        <Link to='/'>
+          <Logo />
+        </Link>
+
+        <div className={styles.containerProfile}>
+          <div className={styles.profile}>
+            <NavLink
+              to='/profile'
+              className={setActive}
+            >
+              {({isActive}) => (
+                <>
+                  <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+                  <span>
+                    Личный кабинет
+                  </span>
+                </>
+              )}
+            </NavLink>
           </div>
         </div>
+
       </div>
     </header>
   )
