@@ -64,7 +64,7 @@ const App = () => {
       <AppHeader />
       <Routes location={location.state?.backgroundLocation || location}>
         <Route path='/' element={<Main onOrderClick={openOrderModal} />} />
-        <Route path='/login' element={<ProtectedRouteElement onlyUnAuth={true} element={<Login />} />} />
+        <Route path='/login' element={<ProtectedRouteElement onlyUnAuth element={<Login />} />} />
         <Route path='/register' element={<ProtectedRouteElement onlyUnAuth element={<Register />} />} />
         <Route path='/forgot-password' element={<ProtectedRouteElement onlyUnAuth element={<ForgotPassword />} />} />
         <Route path='/reset-password' element={<ProtectedRouteElement onlyUnAuth onlyAfterGetCode element={<ResetPassword />} />} />
