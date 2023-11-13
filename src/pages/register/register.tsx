@@ -3,12 +3,16 @@ import styles from './register.module.css';
 import { useDispatch } from 'react-redux';
 import { register } from '../../services/actions/auth';
 
+interface IValues {
+  [name: string]: string;
+}
+
 const Register = () => {
 
   const dispatch = useDispatch();
 
-  const handleRegister = (values) => {
-    dispatch(register(values));
+  const handleRegister = (values: IValues) => {
+    dispatch<any>(register(values));
   }
 
   return (

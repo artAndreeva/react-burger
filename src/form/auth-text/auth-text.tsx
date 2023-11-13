@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './auth-text.module.css';
-import PropTypes from 'prop-types';
+import { FunctionComponent } from 'react';
 
-const AuthText = ({ text, linkText, link }) => {
+interface IAuthTextProps {
+  text: string;
+  linkText: string;
+  link: string;
+}
+
+const AuthText: FunctionComponent<IAuthTextProps> = ({ text, linkText, link }) => {
   return (
     <div className={styles.text}>
       <span className="text text_type_main-default text_color_inactive">{text}</span>
@@ -15,11 +21,5 @@ const AuthText = ({ text, linkText, link }) => {
     </div>
   )
 }
-
-AuthText.propTypes = {
-  text: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired
-};
 
 export default AuthText;

@@ -1,9 +1,18 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { ChangeEvent, FunctionComponent } from 'react';
 
-const RegisterInputs = ({ onChange, values }) => {
+interface IRegisterInputsProps {
+  onChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
+  values: IValues;
+}
 
-  const handleOnChange = (e) => {
+interface IValues {
+  [name: string]: string;
+}
+
+const RegisterInputs: FunctionComponent<IRegisterInputsProps> = ({ onChange, values }) => {
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e);
   }
 
@@ -32,14 +41,5 @@ const RegisterInputs = ({ onChange, values }) => {
     </>
   )
 }
-
-RegisterInputs.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  values: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-    password: PropTypes.string
-  }).isRequired
-};
 
 export default RegisterInputs;

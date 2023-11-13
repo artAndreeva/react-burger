@@ -4,7 +4,8 @@ import { Link, NavLink } from 'react-router-dom';
 
 const AppHeader = () => {
 
-  const setActive = ({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`;
+  //const setActive = ({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`;
+  //const setActive = ({isActive}: {isActive: boolean}): string => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`;
 
   return (
     <header className={styles.header}>
@@ -14,7 +15,7 @@ const AppHeader = () => {
             <li className={styles.item}>
               <NavLink
                 to='/'
-                className={setActive}
+                className={({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`}
               >
                 {({isActive}) => (
                   <>
@@ -30,7 +31,7 @@ const AppHeader = () => {
             <li className={styles.item}>
             <NavLink
                 to='/orders-list'
-                className={setActive}
+                className={({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`}
               >
                 {({isActive}) => (
                   <>
@@ -53,7 +54,7 @@ const AppHeader = () => {
           <div className={styles.profile}>
             <NavLink
               to='/profile'
-              className={setActive}
+              className={({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`}
             >
               {({isActive}) => (
                 <>

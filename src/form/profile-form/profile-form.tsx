@@ -6,26 +6,31 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/auth';
 import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/use-form';
+import { ChangeEvent, FormEvent } from 'react';
+
+interface IValues {
+  [name: string]: string;
+}
 
 const ProfileForm = () => {
 
-  const { user } = useSelector(store => store.auth);
+  const { user } = useSelector((store: any) => store.auth);
   const dispatch = useDispatch();
 
   const { values, handleChange, setValues } = useForm();
   const [isButtonVisible, setIsButtonVisible] = useState(false);
 
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
     setIsButtonVisible(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.password === '******') {
-      dispatch(updateUser({...values, password: ''}));
+      dispatch<any>(updateUser({...values, password: ''}));
     } else {
-      dispatch(updateUser(values));
+      dispatch<any>(updateUser(values));
     }
     setIsButtonVisible(false);
   }

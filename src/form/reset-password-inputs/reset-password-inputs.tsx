@@ -1,9 +1,18 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { ChangeEvent, FunctionComponent } from 'react';
 
-const ResetPasswordInputs = ({ onChange, values }) => {
+interface IResetPasswordInputsProps {
+  onChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
+  values: IValues;
+}
 
-  const handleOnChange = (e) => {
+interface IValues {
+  [name: string]: string;
+}
+
+const ResetPasswordInputs: FunctionComponent<IResetPasswordInputsProps> = ({ onChange, values }) => {
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e);
   }
 
@@ -26,14 +35,6 @@ const ResetPasswordInputs = ({ onChange, values }) => {
     </>
   )
 }
-
-ResetPasswordInputs.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  values: PropTypes.shape({
-    password: PropTypes.string,
-    token: PropTypes.string
-  }).isRequired
-};
 
 export default ResetPasswordInputs;
 

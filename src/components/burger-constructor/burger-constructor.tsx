@@ -1,7 +1,6 @@
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState, FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { TYPE, PLACEHOLDER_TEXT } from '../../constants/constants';
@@ -12,32 +11,52 @@ import { addBun, addIngredient } from '../../services/actions/burger-ingredients
 import ConstructorPlaceholder from '../constructor-placeholder/constructor-placeholder';
 import { useNavigate } from 'react-router-dom';
 
-const BurgerConstructor = ({ onOrderClick }) => {
+interface IIngredient {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+  uniqId: number;
+}
+
+interface IBurgerConstructorProps {
+  onOrderClick: () => void;
+}
+
+const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrderClick }) => {
 
   const [orderTotal, setOrderTotal] = useState(0);
-  const { buns, ingredients } = useSelector(store => store.burgerIngredients)
-  const isLoggedIn = useSelector(store => store.auth.isLoggedIn)
+  const { buns, ingredients } = useSelector((store: any) => store.burgerIngredients)
+  const isLoggedIn = useSelector((store: any) => store.auth.isLoggedIn)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item) {
+    drop(item: IIngredient) {
       if(item.type === TYPE.bun) {
-        dispatch(addBun(item))
+        dispatch<any>(addBun(item))
       } else {
-        dispatch(addIngredient({...item, uniqId: uuidv4()}))
+        dispatch<any>(addIngredient({...item, uniqId: uuidv4()}))
       }
     }
   });
 
-  useEffect(()=> {
+  useEffect(() => {
     setOrderTotal(countTotalPrice())
   }, [buns, ingredients]);
 
 
-  const countTotalPrice = () => {
-    const totalPrice = ingredients.reduce(((previousValue, item) => previousValue + item.price), 0) +
+  const countTotalPrice = (): number => {
+    const totalPrice = ingredients.reduce(((previousValue: number, item: IIngredient) => previousValue + item.price), 0) +
     ((buns.price * 2) || 0);
     return totalPrice;
   }
@@ -45,7 +64,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
   const handleOrderClick = () => {
     if (isLoggedIn) {
       onOrderClick();
-      dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
+      dispatch<any>(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
     } else {
       navigate('/login');
     }
@@ -69,7 +88,7 @@ const BurgerConstructor = ({ onOrderClick }) => {
 
         {ingredients.length !== 0
         ? <ul className={burgerConstructorStyles.list}>
-            {ingredients.map((item, index) => (
+            {ingredients.map((item: IIngredient, index: number) => (
               <ConstructorIngredient
                 item={item}
                 index={index}
@@ -111,9 +130,5 @@ const BurgerConstructor = ({ onOrderClick }) => {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  onOrderClick: PropTypes.func.isRequired
-};
 
 export default BurgerConstructor;

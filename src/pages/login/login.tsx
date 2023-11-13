@@ -3,12 +3,16 @@ import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../../services/actions/auth';
 
+interface IValues {
+  [name: string]: string;
+}
+
 const Login = () => {
 
   const dispatch = useDispatch();
 
-  const handleLogin = (values) => {
-    dispatch(login(values))
+  const handleLogin = (values: IValues) => {
+    dispatch<any>(login(values))
   }
 
   return (

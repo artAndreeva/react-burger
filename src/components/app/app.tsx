@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { API_ERROR } from '../../constants/constants';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, Location } from 'react-router-dom';
 import Login from '../../pages/login/login';
 import Register from '../../pages/register/register';
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
@@ -28,11 +28,12 @@ const App = () => {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [apiErrorText, setApiErrorText] = useState('');
-  const ingredientsFailed = useSelector(store => store.ingredients.ingredientsFailed);
+  const ingredientsFailed = useSelector((store: any) => store.ingredients.ingredientsFailed);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const locationState = location.state as { backgroundLocation : Location };
 
   useEffect(()=> {
     if (ingredientsFailed) {
@@ -42,8 +43,8 @@ const App = () => {
   }, [ingredientsFailed])
 
   useEffect(()=> {
-    dispatch(getIngredients())
-    dispatch(getUser());
+    dispatch<any>(getIngredients())
+    dispatch<any>(getUser());
   }, [dispatch])
 
   const openOrderModal = () => {
@@ -62,7 +63,7 @@ const App = () => {
   return (
     <div className={appStyles.content}>
       <AppHeader />
-      <Routes location={location.state?.backgroundLocation || location}>
+      <Routes location={locationState?.backgroundLocation || location}>
         <Route path='/' element={<Main onOrderClick={openOrderModal} />} />
         <Route path='/login' element={<ProtectedRouteElement onlyUnAuth element={<Login />} />} />
         <Route path='/register' element={<ProtectedRouteElement onlyUnAuth element={<Register />} />} />
@@ -77,7 +78,7 @@ const App = () => {
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
 
-      {location.state?.backgroundLocation && (
+      {locationState?.backgroundLocation && (
         <Routes>
           <Route
             path="/ingredients/:id"

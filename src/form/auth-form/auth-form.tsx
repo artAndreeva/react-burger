@@ -2,14 +2,30 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './auth-form.module.css';
 import { useLocation } from 'react-router-dom';
 import AuthText from '../auth-text/auth-text';
-import RegisterInputs from '../../form/register-inputs/register-inputs';
-import LoginInputs from '../../form/login-inputs/login-inputs';
-import ForgotPasswordInputs from '../../form/forgot-password-inputs/forgot-password-inputs';
-import ResetPasswordInputs from '../../form/reset-password-inputs/reset-password-inputs';
-import PropTypes from 'prop-types';
+import RegisterInputs from '../register-inputs/register-inputs';
+import LoginInputs from '../login-inputs/login-inputs';
+import ForgotPasswordInputs from '../forgot-password-inputs/forgot-password-inputs';
+import ResetPasswordInputs from '../reset-password-inputs/reset-password-inputs';
 import { useForm } from '../../hooks/use-form';
+import { FormEvent, FunctionComponent } from 'react';
 
-const AuthForm = ({
+interface IAuthFormProps {
+  title: string;
+  buttonText: string;
+  text: string;
+  linkText: string;
+  link: string;
+  restoreText?: string;
+  restoreLinkText?: string;
+  restoreLink?: string;
+  onSubmit: (arg0: IValues) => void;
+}
+
+interface IValues {
+  [name: string]: string;
+}
+
+const AuthForm: FunctionComponent<IAuthFormProps> = ({
   title,
   buttonText,
   text,
@@ -25,7 +41,7 @@ const AuthForm = ({
 
   const { pathname } = useLocation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(values);
   }
@@ -85,9 +101,9 @@ const AuthForm = ({
           />
           {pathname === '/login' &&
             <AuthText
-              text={restoreText}
-              linkText={restoreLinkText}
-              link={restoreLink}
+              text={restoreText || ''}
+              linkText={restoreLinkText || ''}
+              link={restoreLink || ''}
             />
           }
         </div>
@@ -95,17 +111,5 @@ const AuthForm = ({
     </div>
   )
 }
-
-AuthForm.propTypes = {
-  title: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  restoreText: PropTypes.string,
-  restoreLinkText: PropTypes.string,
-  restoreLink: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired
-};
 
 export default AuthForm;

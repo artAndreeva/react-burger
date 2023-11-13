@@ -10,7 +10,7 @@ const Profile = () => {
   const match = useMatch('/profile');
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch<any>(logout());
   }
 
   return (

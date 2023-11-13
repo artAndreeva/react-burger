@@ -1,9 +1,18 @@
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { ChangeEvent, FunctionComponent } from 'react';
 
-const LoginInputs = ({ onChange, values }) => {
+interface ILoginInputsProps {
+  onChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
+  values: IValues;
+}
 
-  const handleOnChange = (e) => {
+interface IValues {
+  [name: string]: string;
+}
+
+const LoginInputs: FunctionComponent<ILoginInputsProps> = ({ onChange, values }) => {
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e);
   }
 
@@ -24,14 +33,6 @@ const LoginInputs = ({ onChange, values }) => {
     </>
   )
 }
-
-LoginInputs.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  values: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string
-  }).isRequired
-};
 
 export default LoginInputs;
 

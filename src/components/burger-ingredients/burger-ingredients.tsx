@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
-  const ingredients = useSelector(store => store.ingredients.ingredients)
-  const ingredientsRequest = useSelector(store => store.ingredients.ingredientsRequest)
+  const ingredients = useSelector((store: any) => store.ingredients.ingredients)
+  const ingredientsRequest = useSelector((store: any) => store.ingredients.ingredientsRequest)
 
   const [bunRef, bunInView] = useInView({
     threshold: 0
@@ -22,7 +22,7 @@ const BurgerIngredients = () => {
 
   const [current, setCurrent] = useState(TYPE.bun);
 
-   const setTab = (tab) => {
+  const setTab = (tab) => {
     setCurrent(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: "smooth" });
