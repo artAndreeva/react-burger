@@ -8,10 +8,6 @@ import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/use-form';
 import { ChangeEvent, FormEvent } from 'react';
 
-interface IValues {
-  [name: string]: string;
-}
-
 const ProfileForm = () => {
 
   const { user } = useSelector((store: any) => store.auth);

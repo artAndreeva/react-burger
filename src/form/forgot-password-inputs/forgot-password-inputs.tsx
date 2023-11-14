@@ -2,7 +2,7 @@ import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FunctionComponent } from 'react';
 
 interface IForgotPasswordInputsProps {
-  onChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   values: IValues;
 }
 

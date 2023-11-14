@@ -1,18 +1,22 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient.module.css';
-import { INGREDIENS_PROP_TYPES } from '../../constants/constants';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FunctionComponent } from 'react';
 import { TYPE } from '../../constants/constants';
 import { Link, useLocation } from 'react-router-dom';
+import { IIngredient } from '../../types/types';
 
-const Ingredient = ({ item }) => {
+interface IIngredientProps {
+  item: IIngredient;
+}
+
+const Ingredient: FunctionComponent<IIngredientProps> = ({ item }) => {
 
   const location = useLocation();
 
   const [quantity, setQuantity] = useState(0);
-  const { buns, ingredients } = useSelector(store => store.burgerIngredients)
+  const { buns, ingredients } = useSelector((store: any) => store.burgerIngredients)
 
   const [, dragRef] = useDrag({
     type: 'ingredient',
@@ -38,16 +42,12 @@ const Ingredient = ({ item }) => {
         <img src={item.image} alt={item.name} className={styles.image}/>
         <div className={styles.price}>
           <span className="text text_type_digits-default">{item.price}</span>
-          <CurrencyIcon />
+          <CurrencyIcon type='primary'/>
         </div>
         <p className='text text_type_main-default'>{item.name}</p>
       </div>
     </Link>
   );
-};
-
-Ingredient.propTypes = {
-  item: INGREDIENS_PROP_TYPES.isRequired,
 };
 
 export default Ingredient;

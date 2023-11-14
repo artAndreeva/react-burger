@@ -10,22 +10,7 @@ import ConstructorIngredient from '../constructor-ingredient/constructor-ingredi
 import { addBun, addIngredient } from '../../services/actions/burger-ingredients';
 import ConstructorPlaceholder from '../constructor-placeholder/constructor-placeholder';
 import { useNavigate } from 'react-router-dom';
-
-interface IIngredient {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  uniqId: number;
-}
+import { IIngredient } from '../../types/types';
 
 interface IBurgerConstructorProps {
   onOrderClick: () => void;

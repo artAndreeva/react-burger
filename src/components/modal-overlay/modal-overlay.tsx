@@ -1,9 +1,13 @@
 import overlayStyles from './modal-overlay.module.css';
-import PropTypes from 'prop-types';
+import { FunctionComponent, SyntheticEvent } from 'react';
 
-const ModalOverlay = ({ onClose }) => {
+interface IModalOverlayProps {
+  onClose: () => void;
+}
 
-  const handleOverlayClick = (e) => {
+const ModalOverlay: FunctionComponent<IModalOverlayProps> = ({ onClose }) => {
+
+  const handleOverlayClick = (e: SyntheticEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -13,9 +17,5 @@ const ModalOverlay = ({ onClose }) => {
     <div className={overlayStyles.background} onClick={handleOverlayClick}></div>
   );
 }
-
-ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired
-};
 
 export default ModalOverlay;

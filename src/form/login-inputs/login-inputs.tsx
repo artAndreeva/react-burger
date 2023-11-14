@@ -1,13 +1,10 @@
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FunctionComponent } from 'react';
+import { IInputValues } from '../../types/types';
 
 interface ILoginInputsProps {
-  onChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
-  values: IValues;
-}
-
-interface IValues {
-  [name: string]: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  values: IInputValues;
 }
 
 const LoginInputs: FunctionComponent<ILoginInputsProps> = ({ onChange, values }) => {

@@ -1,14 +1,10 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef, useState, useEffect } from 'react';
-import { ChangeEvent, FunctionComponent } from 'react';
+import { useRef, useState, useEffect, ChangeEvent, FunctionComponent } from 'react';
+import { IInputValues } from '../../types/types';
 
 interface IProfileInputsProps {
-  onChange: (arg0: ChangeEvent<HTMLInputElement>) => void;
-  values: IValues;
-}
-
-interface IValues {
-  [name: string]: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  values: IInputValues;
 }
 
 const ProfileInputs: FunctionComponent<IProfileInputsProps> = ({ onChange, values }) => {
@@ -18,14 +14,14 @@ const ProfileInputs: FunctionComponent<IProfileInputsProps> = ({ onChange, value
   }
 
   const [disabled, setDisabled] = useState(true);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
     setDisabled(false);
   }
 
   useEffect(() => {
-    if (!disabled) {
+    if (!disabled && inputRef && inputRef.current) {
       inputRef.current.focus();
     }
   }, [disabled]);

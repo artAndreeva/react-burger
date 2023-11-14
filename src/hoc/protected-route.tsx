@@ -1,12 +1,18 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { FunctionComponent, ReactElement } from 'react';
 
-const ProtectedRouteElement = ({ onlyUnAuth, element, onlyAfterGetCode }) => {
+interface IProtectedRouteProps {
+  onlyUnAuth?: boolean;
+  onlyAfterGetCode?: boolean;
+  element: ReactElement;
+}
+
+const ProtectedRouteElement: FunctionComponent<IProtectedRouteProps> = ({ onlyUnAuth = false, onlyAfterGetCode = false, element }) => {
 
   const location = useLocation();
-  const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
-  const isResetPassword = useSelector(store => store.resetPassword.isResetPassword);
+  const isLoggedIn = useSelector((store: any) => store.auth.isLoggedIn);
+  const isResetPassword = useSelector((store: any) => store.resetPassword.isResetPassword);
   const fromPage = location.state?.from?.pathname || '/';
 
   if (onlyUnAuth && isLoggedIn) {
@@ -23,11 +29,4 @@ const ProtectedRouteElement = ({ onlyUnAuth, element, onlyAfterGetCode }) => {
 
   return element;
 }
-
-ProtectedRouteElement.propTypes = {
-  onlyUnAuth: PropTypes.bool,
-  onlyAfterGetCode: PropTypes.bool,
-  element: PropTypes.element.isRequired
-};
-
 export default ProtectedRouteElement;

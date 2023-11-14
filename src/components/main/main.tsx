@@ -1,11 +1,15 @@
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import mainStyles from './main.module.css';
-import PropTypes from 'prop-types';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { FunctionComponent } from 'react';
 
-const Main = ({ onOrderClick }) => {
+interface IMainProps {
+  onOrderClick: () => void;
+}
+
+const Main: FunctionComponent<IMainProps> = ({ onOrderClick }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <main className={mainStyles.main}>
@@ -15,10 +19,5 @@ const Main = ({ onOrderClick }) => {
     </DndProvider>
   );
 }
-
-Main.propTypes = {
-  onOrderClick: PropTypes.func.isRequired
-};
-
 
 export default Main;

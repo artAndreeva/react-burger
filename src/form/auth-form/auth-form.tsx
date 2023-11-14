@@ -18,7 +18,7 @@ interface IAuthFormProps {
   restoreText?: string;
   restoreLinkText?: string;
   restoreLink?: string;
-  onSubmit: (arg0: IValues) => void;
+  onSubmit: (values: IValues) => void;
 }
 
 interface IValues {
