@@ -1,20 +1,29 @@
 import { BASE_URL } from '../constants/constants';
-import { getCookie } from '../utils/cookie';
+import * as type from '../types/types';
+import { getCookie } from './cookie';
 
-const handleResponse = (res) => {
-  if (res.ok && (() => res.json().success)) {
+const handleResponse = <T>(res: Response): Promise<T> => {
+  if (res.ok) {
     return res.json();
   }
   return Promise.reject(res.status);
 }
 
-const request = (url, options) => {
-  return fetch(`${BASE_URL}/${url}`, options)
-  .then(handleResponse)
+const handleCheckSuccess = <T>(res: T | any): T => {
+  if (res && res.success) {
+    return res;
+  }
+  throw new Error('Ошибка');
 }
 
-export const getIngredients = () => {
-  return request('api/ingredients', {
+const request = <T>(url: RequestInfo, options: RequestInit): Promise<T> => {
+  return fetch(`${BASE_URL}/${url}`, options)
+  .then((res: Response) => handleResponse<T>(res))
+  .then((res: T) => handleCheckSuccess<T>(res))
+}
+
+export const getIngredients = (): Promise<type.TGetIngredientsRes> => {
+  return request<type.TGetIngredientsRes>('api/ingredients', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -22,8 +31,8 @@ export const getIngredients = () => {
   })
 }
 
-export const sendOrder = (data) => {
-  return request('api/orders', {
+export const sendOrder = (data: type.TSendOrder): Promise<type.TSendOrderRes> => {
+  return request<type.TSendOrderRes>('api/orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,8 +44,8 @@ export const sendOrder = (data) => {
   })
 }
 
-export const register = (data) => {
-  return request('api/auth/register', {
+export const register = (data: type.TRegisterValues): Promise<type.TRegisterRes> => {
+  return request<type.TRegisterRes>('api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -49,8 +58,8 @@ export const register = (data) => {
   })
 }
 
-export const login = (data) => {
-  return request('api/auth/login', {
+export const login = (data: type.TLoginValues): Promise<type.TLoginRes> => {
+  return request<type.TLoginRes>('api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -62,8 +71,8 @@ export const login = (data) => {
   })
 }
 
-export const refreshToken = () => {
-  return request('api/auth/token', {
+export const refreshToken = (): Promise<type.TRefreshTokenRes> => {
+  return request<type.TRefreshTokenRes>('api/auth/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -74,8 +83,8 @@ export const refreshToken = () => {
   })
 }
 
-export const logout = () => {
-  return request('api/auth/logout', {
+export const logout = (): Promise<type.TLogoutRes> => {
+  return request<type.TLogoutRes>('api/auth/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -86,8 +95,8 @@ export const logout = () => {
   })
 }
 
-export const resetPassword = (data) => {
-  return request('api/password-reset', {
+export const resetPassword = (data: type.TResetPasswordValues): Promise<type.TResetPasswordRes> => {
+  return request<type.TResetPasswordRes>('api/password-reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -98,8 +107,8 @@ export const resetPassword = (data) => {
   })
 }
 
-export const reset = (data) => {
-  return request('api/password-reset/reset', {
+export const reset = (data: type.TResetValues): Promise<type.TResetRes> => {
+  return request<type.TResetRes>('api/password-reset/reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -111,8 +120,8 @@ export const reset = (data) => {
   })
 }
 
-export const getUser = () => {
-  return request('api/auth/user', {
+export const getUser = (): Promise<type.TGetUserRes> => {
+  return request<type.TGetUserRes>('api/auth/user', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -121,8 +130,8 @@ export const getUser = () => {
   })
 }
 
-export const updateUser = (data) => {
-  return request('api/auth/user', {
+export const updateUser = (data: type.TProfileValues): Promise<type.TUpdateUserRes> => {
+  return request<type.TUpdateUserRes>('api/auth/user', {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

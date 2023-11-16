@@ -2,16 +2,13 @@ import AuthForm from '../../form/auth-form/auth-form';
 import styles from './register.module.css';
 import { useDispatch } from 'react-redux';
 import { register } from '../../services/actions/auth';
-
-interface IValues {
-  [name: string]: string;
-}
+import { TRegisterValues } from '../../types/types';
 
 const Register = () => {
 
   const dispatch = useDispatch();
 
-  const handleRegister = (values: IValues) => {
+  const handleRegister = (values: TRegisterValues) => {
     dispatch<any>(register(values));
   }
 

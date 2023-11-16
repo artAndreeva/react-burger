@@ -1,16 +1,13 @@
 import ingredientDetailStyles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { TIngredient } from '../../types/types';
 
 const IngredientsDetails = () => {
-  const ingredients = useSelector(store => store.ingredients.ingredients);
+  const ingredients = useSelector((store: any) => store.ingredients.ingredients);
   const { id } = useParams();
-  const [selectedIngredient, setSelectedIngredient] = useState({});
 
-  useEffect(() => {
-   setSelectedIngredient(ingredients.find(ingr => ingr._id === id));
-  }, [ingredients])
+  const selectedIngredient = (ingredients.find((ingr: TIngredient) => ingr._id === id));
 
   return (
     <>

@@ -2,16 +2,13 @@ import AuthForm from '../../form/auth-form/auth-form';
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../../services/actions/auth';
-
-interface IValues {
-  [name: string]: string;
-}
+import { TLoginValues } from '../../types/types';
 
 const Login = () => {
 
   const dispatch = useDispatch();
 
-  const handleLogin = (values: IValues) => {
+  const handleLogin = (values: TLoginValues) => {
     dispatch<any>(login(values))
   }
 

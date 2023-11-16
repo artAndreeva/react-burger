@@ -5,7 +5,7 @@ import Ingredient from '../ingredient/ingredient';
 import { TYPE } from '../../constants/constants';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
-import { IIngredient } from '../../types/types';
+import { TIngredient } from '../../types/types';
 
 const BurgerIngredients = () => {
   const ingredients = useSelector((store: any) => store.ingredients.ingredients)
@@ -30,7 +30,7 @@ const BurgerIngredients = () => {
   };
 
   const filterIngredients = (id: string) => {
-    const filteredIngredients = ingredients.filter((item: IIngredient) => item.type === id)
+    const filteredIngredients = ingredients.filter((item: TIngredient) => item.type === id)
     return filteredIngredients;
   };
 
@@ -69,7 +69,7 @@ const BurgerIngredients = () => {
             <div className={burgerIngredientsStyles.buns}>
               <h2 className='text text_type_main-medium' id={TYPE.bun} ref={bunRef}>Булки</h2>
               <ul className={burgerIngredientsStyles.list}>
-                {filterIngredients(TYPE.bun).map((item: IIngredient) => (
+                {filterIngredients(TYPE.bun).map((item: TIngredient) => (
                   <li key={item._id} className={burgerIngredientsStyles.item}>
                     <Ingredient item={item} />
                   </li>
@@ -79,7 +79,7 @@ const BurgerIngredients = () => {
             <div className={burgerIngredientsStyles.sauce}>
               <h2 className='text text_type_main-medium' id={TYPE.sauce} ref={sauceRef}>Соусы</h2>
               <ul className={burgerIngredientsStyles.list}>
-                {filterIngredients(TYPE.sauce).map((item: IIngredient) => (
+                {filterIngredients(TYPE.sauce).map((item: TIngredient) => (
                   <li key={item._id} className={burgerIngredientsStyles.item}>
                     <Ingredient item={item} />
                   </li>
@@ -89,7 +89,7 @@ const BurgerIngredients = () => {
             <div className={burgerIngredientsStyles.main}>
               <h2 className='text text_type_main-medium' id={TYPE.main} ref={mainRef}>Начинки</h2>
               <ul className={burgerIngredientsStyles.list}>
-                {filterIngredients(TYPE.main).map((item: IIngredient) => (
+                {filterIngredients(TYPE.main).map((item: TIngredient) => (
                   <li key={item._id} className={burgerIngredientsStyles.item}>
                     <Ingredient item={item} />
                   </li>

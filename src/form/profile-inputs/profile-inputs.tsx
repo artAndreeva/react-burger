@@ -1,10 +1,10 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef, useState, useEffect, ChangeEvent, FunctionComponent } from 'react';
-import { IInputValues } from '../../types/types';
+import { TProfileValues } from '../../types/types';
 
 interface IProfileInputsProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  values: IInputValues;
+  values: TProfileValues;
 }
 
 const ProfileInputs: FunctionComponent<IProfileInputsProps> = ({ onChange, values }) => {

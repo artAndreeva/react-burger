@@ -3,17 +3,14 @@ import styles from './reset-password.module.css';
 import { useDispatch } from 'react-redux';
 import { reset } from '../../services/actions/reset-password';
 import { useNavigate } from 'react-router-dom';
-
-interface IValues {
-  [name: string]: string;
-}
+import { TResetValues } from '../../types/types';
 
 const ResetPassword = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleReset = (values: IValues) => {
+  const handleReset = (values: TResetValues) => {
     dispatch<any>(reset(values, redirect));
   }
 

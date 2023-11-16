@@ -10,7 +10,7 @@ import ConstructorIngredient from '../constructor-ingredient/constructor-ingredi
 import { addBun, addIngredient } from '../../services/actions/burger-ingredients';
 import ConstructorPlaceholder from '../constructor-placeholder/constructor-placeholder';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient } from '../../types/types';
+import { TIngredient } from '../../types/types';
 
 interface IBurgerConstructorProps {
   onOrderClick: () => void;
@@ -26,7 +26,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item: IIngredient) {
+    drop(item: TIngredient) {
       if(item.type === TYPE.bun) {
         dispatch<any>(addBun(item))
       } else {
@@ -41,7 +41,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
 
 
   const countTotalPrice = (): number => {
-    const totalPrice = ingredients.reduce(((previousValue: number, item: IIngredient) => previousValue + item.price), 0) +
+    const totalPrice = ingredients.reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) +
     ((buns.price * 2) || 0);
     return totalPrice;
   }
@@ -73,9 +73,9 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
 
         {ingredients.length !== 0
         ? <ul className={burgerConstructorStyles.list}>
-            {ingredients.map((item: IIngredient, index: number) => (
+            {ingredients.map((item: TIngredient, index: number) => (
               <ConstructorIngredient
-                item={item}
+                ingredient={item}
                 index={index}
                 key={item.uniqId}
               />

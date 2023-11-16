@@ -1,10 +1,10 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FunctionComponent } from 'react';
-import { IInputValues } from '../../types/types';
+import { TRegisterValues } from '../../types/types';
 
 interface IRegisterInputsProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  values: IInputValues;
+  values: TRegisterValues;
 }
 
 const RegisterInputs: FunctionComponent<IRegisterInputsProps> = ({ onChange, values }) => {

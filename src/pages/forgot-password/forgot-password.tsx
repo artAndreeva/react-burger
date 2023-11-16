@@ -3,17 +3,14 @@ import styles from './forgot-password.module.css';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../services/actions/reset-password';
 import { useNavigate } from 'react-router-dom';
-
-interface IValues {
-  [name: string]: string;
-}
+import { TResetPasswordValues } from '../../types/types';
 
 const ForgotPassword = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleResetPassword = (values: IValues) => {
+  const handleResetPassword = (values: TResetPasswordValues) => {
     dispatch<any>(resetPassword(values, redirect));
   }
 

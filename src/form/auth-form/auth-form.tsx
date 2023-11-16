@@ -18,11 +18,7 @@ interface IAuthFormProps {
   restoreText?: string;
   restoreLinkText?: string;
   restoreLink?: string;
-  onSubmit: (values: IValues) => void;
-}
-
-interface IValues {
-  [name: string]: string;
+  onSubmit: (values: any) => void;
 }
 
 const AuthForm: FunctionComponent<IAuthFormProps> = ({

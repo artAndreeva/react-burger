@@ -5,10 +5,10 @@ import { useDrag } from 'react-dnd';
 import { useState, useEffect, FunctionComponent } from 'react';
 import { TYPE } from '../../constants/constants';
 import { Link, useLocation } from 'react-router-dom';
-import { IIngredient } from '../../types/types';
+import { TIngredient } from '../../types/types';
 
 interface IIngredientProps {
-  item: IIngredient;
+  item: TIngredient;
 }
 
 const Ingredient: FunctionComponent<IIngredientProps> = ({ item }) => {

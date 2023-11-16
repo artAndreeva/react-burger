@@ -1,13 +1,10 @@
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FunctionComponent } from 'react';
+import { TResetPasswordValues } from '../../types/types';
 
 interface IForgotPasswordInputsProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  values: IValues;
-}
-
-interface IValues {
-  [name: string]: string;
+  values: TResetPasswordValues;
 }
 
 const ForgotPasswordInputs: FunctionComponent<IForgotPasswordInputsProps> = ({ onChange, values }) => {

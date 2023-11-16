@@ -1,11 +1,10 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FunctionComponent } from 'react';
-import { IInputValues } from '../../types/types';
-
+import { TResetValues } from '../../types/types';
 
 interface IResetPasswordInputsProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  values: IInputValues;
+  values: TResetValues;
 }
 
 const ResetPasswordInputs: FunctionComponent<IResetPasswordInputsProps> = ({ onChange, values }) => {
