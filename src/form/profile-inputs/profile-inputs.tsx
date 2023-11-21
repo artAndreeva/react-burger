@@ -9,10 +9,6 @@ interface IProfileInputsProps {
 
 const ProfileInputs: FunctionComponent<IProfileInputsProps> = ({ onChange, values }) => {
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-  }
-
   const [disabled, setDisabled] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -35,7 +31,7 @@ const ProfileInputs: FunctionComponent<IProfileInputsProps> = ({ onChange, value
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.name || ''}
         name={'name'}
         icon="EditIcon"

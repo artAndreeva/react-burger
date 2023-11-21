@@ -9,14 +9,10 @@ interface IForgotPasswordInputsProps {
 
 const ForgotPasswordInputs: FunctionComponent<IForgotPasswordInputsProps> = ({ onChange, values }) => {
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-  }
-
   return (
     <>
       <EmailInput
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.email || ''}
         name={'email'}
         placeholder="Укажите e-mail"

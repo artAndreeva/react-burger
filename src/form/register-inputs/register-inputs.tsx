@@ -9,16 +9,12 @@ interface IRegisterInputsProps {
 
 const RegisterInputs: FunctionComponent<IRegisterInputsProps> = ({ onChange, values }) => {
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-  }
-
   return (
     <>
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.name || ''}
         name={'name'}
       />

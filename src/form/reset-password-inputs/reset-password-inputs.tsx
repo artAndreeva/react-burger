@@ -9,14 +9,10 @@ interface IResetPasswordInputsProps {
 
 const ResetPasswordInputs: FunctionComponent<IResetPasswordInputsProps> = ({ onChange, values }) => {
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-  }
-
   return (
     <>
       <PasswordInput
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.password || ''}
         name={'password'}
         placeholder={'Введите новый пароль'}
@@ -25,7 +21,7 @@ const ResetPasswordInputs: FunctionComponent<IResetPasswordInputsProps> = ({ onC
       <Input
         type={'text'}
         placeholder={'Введите код из письма'}
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.token || ''}
         name={'token'}
       />

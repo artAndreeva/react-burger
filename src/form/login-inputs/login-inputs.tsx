@@ -9,21 +9,17 @@ interface ILoginInputsProps {
 
 const LoginInputs: FunctionComponent<ILoginInputsProps> = ({ onChange, values }) => {
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-  }
-
   return (
     <>
       <EmailInput
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.email || ''}
         name={'email'}
         placeholder="E-mail"
       />
 
       <PasswordInput
-        onChange={handleOnChange}
+        onChange={onChange}
         value={values.password || ''}
         name={'password'}
       />
