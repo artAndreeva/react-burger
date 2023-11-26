@@ -1,16 +1,15 @@
 import styles from './profile-form.module.css';
 import { useEffect, useState } from 'react';
 import ProfileInputs from '../profile-inputs/profile-inputs';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/auth';
-import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/use-form';
 import { ChangeEvent, FormEvent } from 'react';
 
 const ProfileForm = () => {
 
-  const { user } = useSelector((store: any) => store.auth);
+  const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
   const { values, handleChange, setValues } = useForm();
@@ -24,9 +23,9 @@ const ProfileForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.password === '******') {
-      dispatch<any>(updateUser({...values, password: ''}));
+      dispatch(updateUser({...values, password: ''}));
     } else {
-      dispatch<any>(updateUser(values));
+      dispatch(updateUser(values));
     }
     setIsButtonVisible(false);
   }

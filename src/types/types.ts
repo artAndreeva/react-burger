@@ -14,6 +14,64 @@ export type TIngredient = {
   uniqId?: string;
 };
 
+export type TUser = {
+  email: string;
+  name: string;
+};
+
+export type TOrder = {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TIndex = {
+  dragIndex: number;
+  hoverIndex: number
+}
+
+//WS Response
+
+export type TWSOrdersRes = {
+  success: boolean;
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+}
+
+//Values
+
+export type TRegisterValues = {
+  email: string;
+  password: string;
+  name: string;
+};
+
+export type TLoginValues = {
+  email: string;
+  password: string;
+};
+
+export type TResetPasswordValues = {
+  email: string;
+};
+
+export type TResetValues = {
+  password: string;
+  token: string;
+};
+
+export type TProfileValues = {
+  email: string;
+  name: string;
+  password: string;
+};
+
+//Server Response
+
 export type TServerRes<T> = {
   success: boolean;
 } & T;
@@ -22,24 +80,10 @@ export type TGetIngredientsRes = TServerRes<{
   data: TIngredient[];
 }>;
 
-export type TSendOrder = {
-  ingredients: TIngredient[];
-};
-
 export type TSendOrderRes = TServerRes<{
   name: string;
   order: TOrder;
 }>;
-
-export type TOrder = {
-  number: number;
-};
-
-export type TRegisterValues = {
-  email: string;
-  password: string;
-  name: string;
-};
 
 export type TRegisterRes = TServerRes<{
   user: TUser;
@@ -47,21 +91,11 @@ export type TRegisterRes = TServerRes<{
   accessToken: string;
 }>;
 
-export type TLoginValues = {
-  email: string;
-  password: string;
-};
-
 export type TLoginRes = TServerRes<{
   user: TUser;
   refreshToken: string;
   accessToken: string;
 }>;
-
-export type TUser = {
-  email: string;
-  name: string;
-};
 
 export type TRefreshTokenRes = TServerRes<{
   refreshToken: string;
@@ -72,18 +106,9 @@ export type TLogoutRes = TServerRes<{
   message: string;
 }>;
 
-export type TResetPasswordValues = {
-  email: string;
-};
-
 export type TResetPasswordRes = TServerRes<{
   message: string;
 }>;
-
-export type TResetValues = {
-  password: string;
-  token: string;
-};
 
 export type TResetRes = TServerRes<{
   message: string;
@@ -92,12 +117,6 @@ export type TResetRes = TServerRes<{
 export type TGetUserRes = TServerRes<{
   user: TUser;
 }>
-
-export type TProfileValues = {
-  email: string;
-  name: string;
-  password: string;
-};
 
 export type TUpdateUserRes = TServerRes<{
   user: TUser;

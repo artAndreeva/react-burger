@@ -31,7 +31,7 @@ export const getIngredients = (): Promise<type.TGetIngredientsRes> => {
   })
 }
 
-export const sendOrder = (data: type.TSendOrder): Promise<type.TSendOrderRes> => {
+export const sendOrder = (data: type.TIngredient[]): Promise<type.TSendOrderRes> => {
   return request<type.TSendOrderRes>('api/orders', {
     method: 'POST',
     headers: {

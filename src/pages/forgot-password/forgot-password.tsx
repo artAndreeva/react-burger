@@ -1,6 +1,6 @@
 import AuthForm from '../../form/auth-form/auth-form';
 import styles from './forgot-password.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { resetPassword } from '../../services/actions/reset-password';
 import { useNavigate } from 'react-router-dom';
 import { TResetPasswordValues } from '../../types/types';
@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
 
   const handleResetPassword = (values: TResetPasswordValues) => {
-    dispatch<any>(resetPassword(values, redirect));
+    dispatch(resetPassword(values, redirect));
   }
 
   const redirect = () => {

@@ -3,7 +3,7 @@ interface IProps {
   path?: string;
 }
 
-export function setCookie(name: string, value: string, props: IProps) {
+export function setCookie(name: string, value: string, props?: IProps) {
   props = {
     path: "/",
     ...props,

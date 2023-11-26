@@ -6,7 +6,6 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useState, useEffect } from 'react';
 import { INGREDIENT_MODAL_HEADER } from '../../constants/constants';
-import { useDispatch, useSelector } from 'react-redux';
 import { API_ERROR } from '../../constants/constants';
 import { Routes, Route, useLocation, useNavigate, Location } from 'react-router-dom';
 import Login from '../../pages/login/login';
@@ -22,13 +21,14 @@ import { getIngredients } from '../../services/actions/ingredients';
 import ProfileForm from '../../form/profile-form/profile-form';
 import Ingredients from '../../pages/ingredients/ingredients';
 import ProtectedRouteElement from '../../hoc/protected-route';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 const App = () => {
 
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isApiErrorModalOpen, setApiErrorModalOpen] = useState(false);
   const [apiErrorText, setApiErrorText] = useState('');
-  const ingredientsFailed = useSelector((store: any) => store.ingredients.ingredientsFailed);
+  const ingredientsFailed = useSelector(store => store.ingredients.ingredientsFailed);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,8 +43,8 @@ const App = () => {
   }, [ingredientsFailed])
 
   useEffect(()=> {
-    dispatch<any>(getIngredients())
-    dispatch<any>(getUser());
+    dispatch(getIngredients())
+    dispatch(getUser());
   }, [dispatch])
 
   const openOrderModal = () => {

@@ -15,3 +15,5 @@ export const PLACEHOLDER_TEXT = {
   middle: 'Место для ингредиентов',
   bottom: 'Место для булки'
 }
+
+export const WS_URL = 'wss://norma.nomoreparties.space/orders';

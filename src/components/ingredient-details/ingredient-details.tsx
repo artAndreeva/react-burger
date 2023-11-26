@@ -1,10 +1,10 @@
 import ingredientDetailStyles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/types/hooks';
 import { useParams } from 'react-router-dom';
 import { TIngredient } from '../../types/types';
 
 const IngredientsDetails = () => {
-  const ingredients = useSelector((store: any) => store.ingredients.ingredients);
+  const ingredients = useSelector(store => store.ingredients.ingredients);
   const { id } = useParams();
 
   const selectedIngredient = (ingredients.find((ingr: TIngredient) => ingr._id === id));

@@ -1,6 +1,6 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/types/hooks';
 import { useDrag } from 'react-dnd';
 import { useState, useEffect, FunctionComponent } from 'react';
 import { TYPE } from '../../constants/constants';
@@ -16,7 +16,7 @@ const Ingredient: FunctionComponent<IIngredientProps> = ({ item }) => {
   const location = useLocation();
 
   const [quantity, setQuantity] = useState(0);
-  const { buns, ingredients } = useSelector((store: any) => store.burgerIngredients)
+  const { buns, ingredients } = useSelector(store => store.burgerIngredients)
 
   const [, dragRef] = useDrag({
     type: 'ingredient',

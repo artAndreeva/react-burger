@@ -1,6 +1,6 @@
 import AuthForm from '../../form/auth-form/auth-form';
 import styles from './register.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { register } from '../../services/actions/auth';
 import { TRegisterValues } from '../../types/types';
 
@@ -9,7 +9,7 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const handleRegister = (values: TRegisterValues) => {
-    dispatch<any>(register(values));
+    dispatch(register(values));
   }
 
   return (

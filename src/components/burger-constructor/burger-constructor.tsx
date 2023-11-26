@@ -1,7 +1,7 @@
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { useEffect, useState, FunctionComponent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
 import { TYPE, PLACEHOLDER_TEXT } from '../../constants/constants';
 import { sendOrder } from '../../services/actions/order';
@@ -19,8 +19,8 @@ interface IBurgerConstructorProps {
 const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrderClick }) => {
 
   const [orderTotal, setOrderTotal] = useState(0);
-  const { buns, ingredients } = useSelector((store: any) => store.burgerIngredients)
-  const isLoggedIn = useSelector((store: any) => store.auth.isLoggedIn)
+  const { buns, ingredients } = useSelector(store => store.burgerIngredients)
+  const isLoggedIn = useSelector(store => store.auth.isLoggedIn)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,9 +28,9 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
     accept: 'ingredient',
     drop(item: TIngredient) {
       if(item.type === TYPE.bun) {
-        dispatch<any>(addBun(item))
+        dispatch(addBun(item))
       } else {
-        dispatch<any>(addIngredient({...item, uniqId: uuidv4()}))
+        dispatch(addIngredient({...item, uniqId: uuidv4()}))
       }
     }
   });
@@ -49,7 +49,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
   const handleOrderClick = () => {
     if (isLoggedIn) {
       onOrderClick();
-      dispatch<any>(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
+      dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
     } else {
       navigate('/login');
     }
