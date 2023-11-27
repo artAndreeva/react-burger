@@ -1,6 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './root-reducer';
-import { wsMiddleware } from './middleware/wsMiddleware';
+import { wsMiddleware } from './middleware/ws-middleware';
 import { WS_URL } from '../constants/constants';
 import thunk from 'redux-thunk';
 

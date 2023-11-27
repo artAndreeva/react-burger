@@ -2,6 +2,7 @@ import type { Middleware, MiddlewareAPI } from 'redux';
 import type { AppDispatch, RootState } from '../types/index';
 import { TWSActions } from '../actions/ws';
 import { wsConnectionSuccessAction, wsConnectionErrorAction, wsConnectionClosedAction, wsGetOrdersAction } from '../actions/ws';
+import { getCookie } from '../../utils/cookie';
 
 export const wsMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -12,7 +13,7 @@ export const wsMiddleware = (wsUrl: string): Middleware => {
       const { type } = action;
 
       if (type === 'WS_CONNECTION_START') {
-        socket = new WebSocket(wsUrl);
+        socket = new WebSocket(`${wsUrl}?token=${getCookie('accessToken')}`);
       }
       if (socket) {
         socket.onopen = event => {

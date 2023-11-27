@@ -26,6 +26,7 @@ export type TOrder = {
   number: number;
   createdAt: string;
   updatedAt: string;
+  name: string;
 };
 
 export type TIndex = {

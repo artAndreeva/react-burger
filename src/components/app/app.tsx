@@ -14,14 +14,17 @@ import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import ResetPassword from '../../pages/reset-password/reset-password';
 import Profile from '../../pages/profile/profile';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import Orders from '../../pages/orders/orders';
 import OrdersHistory from '../../pages/orders-history/orders-history';
+import FeedList from '../../pages/feed-list/feed-list';
+import Feed from '../../pages/feed/feed';
 import { getUser } from '../../services/actions/auth';
 import { getIngredients } from '../../services/actions/ingredients';
 import ProfileForm from '../../form/profile-form/profile-form';
 import Ingredients from '../../pages/ingredients/ingredients';
 import ProtectedRouteElement from '../../hoc/protected-route';
 import { useSelector, useDispatch } from '../../services/types/hooks';
+import Order from '../../pages/order/order';
+import OrderInfo from '../order-info/order-info';
 
 const App = () => {
 
@@ -73,8 +76,10 @@ const App = () => {
           <Route path='' element={<ProtectedRouteElement element={<ProfileForm />} />}/>
           <Route path='orders' element={<ProtectedRouteElement element={<OrdersHistory />} />}/>
         </Route>
+        <Route path='/profile/orders/:number' element={<ProtectedRouteElement element={<Order />} />}/>
+        <Route path='/feed' element={<FeedList />} />
+        <Route path='/feed/:number' element={<Feed />} />
         <Route path="/ingredients/:id" element={<Ingredients />} />
-        <Route path='/profile/orders/:id' element={<Orders />}/>
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
 
@@ -84,8 +89,23 @@ const App = () => {
             path="/ingredients/:id"
             element={<Modal onClose={closeModal} header={INGREDIENT_MODAL_HEADER}><IngredientsDetails /></Modal>}/>
         </Routes>
-      )
-      }
+      )}
+
+      {locationState?.backgroundLocation && (
+        <Routes>
+          <Route
+            path="/profile/orders/:number"
+            element={<Modal onClose={closeModal} header=''><OrderInfo /></Modal>}/>
+        </Routes>
+      )}
+
+      {locationState?.backgroundLocation && (
+        <Routes>
+          <Route
+            path="/feed/:number"
+            element={<Modal onClose={closeModal} header=''><Feed /></Modal>}/>
+        </Routes>
+      )}
 
       {isOrderModalOpen &&
         <Modal

@@ -30,7 +30,7 @@ const AppHeader = () => {
 
             <li className={styles.item}>
             <NavLink
-                to='/orders-list'
+                to='/feed'
                 className={({isActive}) => `text text_type_main-default text_color_inactive ${styles.link} ${isActive ? styles.active : ''}`}
               >
                 {({isActive}) => (

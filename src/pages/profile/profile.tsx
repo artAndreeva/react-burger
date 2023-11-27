@@ -50,7 +50,7 @@ const Profile = () => {
           </p>
         }
       </nav>
-      <div>
+      <div className={styles.rightColumn}>
         <Outlet />
       </div>
     </main>
