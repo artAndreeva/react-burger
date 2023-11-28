@@ -27,8 +27,8 @@ export type TOrder = {
   createdAt: string;
   updatedAt: string;
   name: string;
-  owner: string;
-  __v: number;
+  owner?: string;
+  __v?: number;
 };
 
 export type TIndex = {

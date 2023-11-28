@@ -1,5 +1,5 @@
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerConstructorStyles from './burger-constructor.module.css';
+import styles from './burger-constructor.module.css';
 import { useEffect, useState, FunctionComponent } from 'react';
 import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
@@ -56,9 +56,9 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
   }
 
   return (
-    <section className={burgerConstructorStyles.column} ref={dropTarget}>
-      <div className={burgerConstructorStyles.container}>
-        <div className={burgerConstructorStyles.end}>
+    <section className={styles.column} ref={dropTarget}>
+      <div className={styles.container}>
+        <div className={styles.end}>
           {Object.keys(buns).length !== 0
           ? <ConstructorElement
             type="top"
@@ -66,13 +66,14 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
             text={`${buns.name} (верх)`}
             price={buns.price}
             thumbnail={buns.image}
+            extraClass={styles.color}
             />
           : <ConstructorPlaceholder top={true} text={PLACEHOLDER_TEXT.top}/>
           }
         </div>
 
         {ingredients.length !== 0
-        ? <ul className={burgerConstructorStyles.list}>
+        ? <ul className={styles.list}>
             {ingredients.map((item: TIngredient, index: number) => (
               <ConstructorIngredient
                 ingredient={item}
@@ -84,7 +85,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
         : <ConstructorPlaceholder middle={true} text={PLACEHOLDER_TEXT.middle}/>
         }
 
-        <div className={burgerConstructorStyles.end}>
+        <div className={styles.end}>
         {Object.keys(buns).length !== 0
           ? <ConstructorElement
             type="bottom"
@@ -92,13 +93,14 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
             text={`${buns.name} (низ)`}
             price={buns.price}
             thumbnail={buns.image}
+            extraClass={styles.color}
             />
           : <ConstructorPlaceholder bottom={true} text={PLACEHOLDER_TEXT.bottom}/>
           }
         </div>
       </div>
-      <div className={burgerConstructorStyles.summary}>
-        <div className={burgerConstructorStyles.price}>
+      <div className={styles.summary}>
+        <div className={styles.price}>
           <span className='text text_type_digits-medium'>{orderTotal}</span>
           <CurrencyIcon type="primary" />
         </div>

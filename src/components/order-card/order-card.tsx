@@ -6,10 +6,11 @@ import { useSelector } from '../../services/types/hooks';
 import { Link, useLocation } from 'react-router-dom';
 
 interface IOrderProps {
-  order: TOrder
+  order: TOrder,
+  url: string
 }
 
-const OrderCard: FunctionComponent<IOrderProps> = ({ order }) => {
+const OrderCard: FunctionComponent<IOrderProps> = ({ order, url }) => {
 
   const [ingredientsToRender, setIngredientsToRender] = useState<TIngredient[]>([]);
   const [itemPlus, setItemPlus] = useState<TIngredient[]>([]);
@@ -17,10 +18,10 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order }) => {
   const location = useLocation();
 
   useEffect(()=>{
-    getImages();
+    getIngredientsToRender();
   }, [])
 
-  const getImages = () => {
+  const getIngredientsToRender = () => {
     const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
     const singleIngredients = ingredientsWithoutNull.filter((item, index) => {return ingredientsWithoutNull.indexOf(item) === index});
     const foundedIngredients = singleIngredients.map((item: string) => ingredients.find((ingr: TIngredient) => ingr._id === item));
@@ -57,7 +58,7 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order }) => {
   }
 
   return (
-    <Link to={`/profile/orders/${order.number}`} className={styles.link} state={{ backgroundLocation: location }}>
+    <Link to={`${url}/${order.number}`} className={styles.link} state={{ backgroundLocation: location }}>
       <li className={styles.container}>
         <div className={styles.numberAndDate}>
           <span className='text text_type_digits-default'>#{order.number}</span>
@@ -65,7 +66,9 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order }) => {
         </div>
         <div className={styles.nameAndStatus}>
           <h3 className='text text_type_main-medium'>{order.name}</h3>
-          <span className={`text text_type_main-small ${order.status === 'done' ? styles.status : ''}`}>{getStatus()}</span>
+          {url !== '/feed' &&
+            <span className={`text text_type_main-small ${order.status === 'done' ? styles.status : ''}`}>{getStatus()}</span>
+          }
         </div>
         <div className={styles.imagesAndPrice}>
           <ul className={styles.list}>

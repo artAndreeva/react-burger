@@ -2,31 +2,37 @@ import { useEffect } from 'react';
 import OrderCard from '../../components/order-card/order-card';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 import { TOrder } from '../../types/types';
-import { wsConnectionEndAction, wsConnectionStartAction } from '../../services/actions/ws';
+import { wsAuthConnectionEndAction, wsAuthConnectionStartAction } from '../../services/actions/ws';
 import styles from './orders-history.module.css';
+import { useLocation } from 'react-router-dom';
 
 const OrdersHistory = () => {
 
-  const orders = useSelector(store => store.wsOrders.orders)
+  const { orders, error} = useSelector(store => store.wsOrders)
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const url = pathname;
 
   useEffect(() => {
-    dispatch(wsConnectionStartAction());
+    dispatch(wsAuthConnectionStartAction());
     return () => {
-      dispatch(wsConnectionEndAction());
+      dispatch(wsAuthConnectionEndAction());
     }
   }, [dispatch])
 
   return (
     <div className={styles.container}>
-      <ul className={styles.orders}>
-        {orders.map((order: TOrder) => (
-          <OrderCard
-            order={order}
-            key={order._id}
-          />
-        )).reverse()}
-      </ul>
+      {Object.keys(orders).length !== 0 &&
+        <ul className={styles.orders}>
+          {orders.map((order: TOrder) => (
+            <OrderCard
+              order={order}
+              key={order._id}
+              url={url}
+            />
+          )).reverse()}
+        </ul>
+      }
     </div>
   )
 }

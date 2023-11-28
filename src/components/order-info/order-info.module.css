@@ -48,6 +48,7 @@
   gap: 16px;
   align-items: center;
   justify-content: space-between;
+  margin-right: 24px;
 }
 
 .imageAndName {

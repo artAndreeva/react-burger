@@ -1,4 +1,6 @@
 import {
+  WS_AUTH_CONNECTION_START,
+  WS_AUTH_CONNECTION_END,
   WS_CONNECTION_START,
   WS_CONNECTION_END,
   WS_CONNECTION_SUCCESS,
@@ -6,7 +8,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS
 } from '../actions/ws';
-import type { TWSActions } from '../actions/ws';
+import type { TWSActions, TWSAuthActions } from '../actions/ws';
 import { TOrder } from '../../types/types';
 
 type TWSState = {
@@ -24,8 +26,18 @@ const initialState: TWSState = {
   totalToday: 0
 };
 
-export const wsReducer = (state = initialState, action: TWSActions): TWSState => {
+export const wsReducer = (state = initialState, action: TWSActions | TWSAuthActions): TWSState => {
   switch (action.type) {
+    case WS_AUTH_CONNECTION_START: {
+      return {
+        ...state,
+      }
+    }
+    case WS_AUTH_CONNECTION_END: {
+      return {
+        ...state,
+      }
+    }
     case WS_CONNECTION_START: {
       return {
         ...state,
@@ -54,7 +66,8 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
       return {
         ...state,
         error: undefined,
-        wsConnected: false
+        wsConnected: false,
+        orders: []
       }
     }
     case WS_GET_ORDERS: {

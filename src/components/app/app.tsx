@@ -15,7 +15,6 @@ import ResetPassword from '../../pages/reset-password/reset-password';
 import Profile from '../../pages/profile/profile';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OrdersHistory from '../../pages/orders-history/orders-history';
-import FeedList from '../../pages/feed-list/feed-list';
 import Feed from '../../pages/feed/feed';
 import { getUser } from '../../services/actions/auth';
 import { getIngredients } from '../../services/actions/ingredients';
@@ -77,8 +76,8 @@ const App = () => {
           <Route path='orders' element={<ProtectedRouteElement element={<OrdersHistory />} />}/>
         </Route>
         <Route path='/profile/orders/:number' element={<ProtectedRouteElement element={<Order />} />}/>
-        <Route path='/feed' element={<FeedList />} />
-        <Route path='/feed/:number' element={<Feed />} />
+        <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<Order />} />
         <Route path="/ingredients/:id" element={<Ingredients />} />
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
@@ -95,7 +94,7 @@ const App = () => {
         <Routes>
           <Route
             path="/profile/orders/:number"
-            element={<Modal onClose={closeModal} header=''><OrderInfo /></Modal>}/>
+            element={<Modal onClose={closeModal}><OrderInfo /></Modal>}/>
         </Routes>
       )}
 
@@ -103,7 +102,7 @@ const App = () => {
         <Routes>
           <Route
             path="/feed/:number"
-            element={<Modal onClose={closeModal} header=''><Feed /></Modal>}/>
+            element={<Modal onClose={closeModal}><OrderInfo /></Modal>}/>
         </Routes>
       )}
 
