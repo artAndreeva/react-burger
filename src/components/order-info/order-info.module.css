@@ -1,0 +1,97 @@
+.number {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin-bottom: 8px;
+}
+
+.status {
+  color: #00cccc;
+}
+
+.composition {
+  margin-top: 70px;
+}
+
+.list {
+  max-height: 320px;
+  margin: 24px 0 0 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+
+.item {
+  width: 608px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.imageAndName {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.border {
+  background: linear-gradient(to right top, #801ab2, #4c4cff);
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #131316;
+  object-fit: cover;
+  object-position: center;
+  box-sizing: border-box;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-basis: 192px;
+}
+
+.dataAndPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.totalPrice {
+  display: flex;
+  gap: 8px;
+}

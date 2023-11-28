@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import OrderCard from '../../components/order-card/order-card';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 import { TOrder } from '../../types/types';
-import { wsConnectionClosedAction, wsConnectionStartAction } from '../../services/actions/ws';
+import { wsConnectionEndAction, wsConnectionStartAction } from '../../services/actions/ws';
 import styles from './orders-history.module.css';
 
 const OrdersHistory = () => {
@@ -12,10 +12,10 @@ const OrdersHistory = () => {
 
   useEffect(() => {
     dispatch(wsConnectionStartAction());
-    //return () => {
-    //  dispatch(wsConnectionClosedAction(event));
-    //}
-  }, [])
+    return () => {
+      dispatch(wsConnectionEndAction());
+    }
+  }, [dispatch])
 
   return (
     <div className={styles.container}>

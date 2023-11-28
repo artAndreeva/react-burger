@@ -7,5 +7,5 @@ import { AppDispatch, AppThunk, RootState } from './index';
 
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
-export const useDispatch: () => AppDispatch | AppThunk = dispatchHook;
-
+//export const useDispatch: () => AppDispatch | AppThunk = dispatchHook;
+export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();

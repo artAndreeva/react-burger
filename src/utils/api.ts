@@ -144,3 +144,12 @@ export const updateUser = (data: type.TProfileValues): Promise<type.TUpdateUserR
     })
   })
 }
+
+export const getSelectedOrder = (number: number): Promise<type.TGetSelectedOrderRes> => {
+  return request<type.TGetSelectedOrderRes>(`api/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}

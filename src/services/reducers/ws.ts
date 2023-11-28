@@ -1,5 +1,6 @@
 import {
   WS_CONNECTION_START,
+  WS_CONNECTION_END,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
@@ -30,6 +31,11 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
         ...state,
       }
     }
+    case WS_CONNECTION_END: {
+      return {
+        ...state,
+      }
+    }
     case WS_CONNECTION_SUCCESS: {
       return {
         ...state,
@@ -55,9 +61,9 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
       return {
         ...state,
         error: undefined,
-        orders: action.receivedData.orders,
-        total: action.receivedData.total,
-        totalToday: action.receivedData.totalToday
+        orders: action.parsedData.orders,
+        total: action.parsedData.total,
+        totalToday: action.parsedData.totalToday
       }
     }
     default: {

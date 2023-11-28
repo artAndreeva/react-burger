@@ -27,6 +27,8 @@ export type TOrder = {
   createdAt: string;
   updatedAt: string;
   name: string;
+  owner: string;
+  __v: number;
 };
 
 export type TIndex = {
@@ -117,8 +119,12 @@ export type TResetRes = TServerRes<{
 
 export type TGetUserRes = TServerRes<{
   user: TUser;
-}>
+}>;
 
 export type TUpdateUserRes = TServerRes<{
   user: TUser;
+}>;
+
+export type TGetSelectedOrderRes = TServerRes<{
+  orders: TOrder[];
 }>;

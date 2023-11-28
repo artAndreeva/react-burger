@@ -170,7 +170,7 @@ export const refreshToken: AppThunk = () => {
         dispatch(refreshTokenSuccessAction());
       })
      .then(() => {
-        getUser();
+        dispatch(getUser());
       })
       .catch(() => {
         dispatch(refreshTokenFailedAction())
@@ -201,8 +201,8 @@ export const getUser: AppThunk = () => {
         dispatch(getUserSuccessAction(res.user));
       })
       .catch(() => {
+        dispatch(refreshToken());
         dispatch(getUserFailedAction());
-        refreshToken();
       });
   }
 }

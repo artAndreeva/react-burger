@@ -1,4 +1,4 @@
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
 import { store } from '../store';
 import { TAuthActions } from '../actions/auth';
