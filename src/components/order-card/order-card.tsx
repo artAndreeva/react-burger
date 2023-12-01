@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState, useCallback } from 'react';
 import { TIngredient, TOrder } from '../../types/types';
 import styles from './order-card.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -17,18 +17,22 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order, url }) => {
   const ingredients = useSelector(store => store.ingredients.ingredients)
   const location = useLocation();
 
+  const getIngredientsToRender = useCallback(
+    () => {
+      const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
+      const singleIngredients = ingredientsWithoutNull.filter((item, index) => {return ingredientsWithoutNull.indexOf(item) === index});
+      const foundedIngredients = singleIngredients.map((item) => ingredients.find((ingr) => ingr._id === item));
+      setItemPlus(foundedIngredients as TIngredient[]);
+      const slicedIngredients = foundedIngredients.slice(-6);
+      setIngredientsToRender(slicedIngredients as TIngredient[])
+    },
+    [ingredients, order],
+  )
+
   useEffect(()=>{
     getIngredientsToRender();
-  }, [])
+  }, [getIngredientsToRender])
 
-  const getIngredientsToRender = () => {
-    const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
-    const singleIngredients = ingredientsWithoutNull.filter((item, index) => {return ingredientsWithoutNull.indexOf(item) === index});
-    const foundedIngredients = singleIngredients.map((item) => ingredients.find((ingr) => ingr._id === item));
-    setItemPlus(foundedIngredients as TIngredient[]);
-    const slicedIngredients = foundedIngredients.slice(-6);
-    setIngredientsToRender(slicedIngredients as TIngredient[])
-  }
 
   const countTotalPrice = (): number => {
     const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);

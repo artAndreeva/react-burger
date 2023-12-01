@@ -79,39 +79,43 @@ const OrderInfo = () => {
 
   return (
     <div>
-      <div className={styles.number}>
-        <span className='text text_type_digits-default'>#{order.number}</span>
-      </div>
-      <h3 className={`text text_type_main-medium ${styles.title}`}>{order.name}</h3>
-      <span className={`text text_type_main-small ${order.status === 'done' ? styles.status : ''}`}>{status}</span>
-      <div className={styles.composition}>
-        <h4 className='text text_type_main-medium'>Состав:</h4>
-        <ul className={styles.list}>
-          {ingredientsToRender.map((item, index) => (
-            <li key={index}>
-              <div className={styles.item}>
-                <div className={styles.imageAndName}>
-                  <div className={styles.border}>
-                    <img src={item.image} alt={item.name} className={styles.image}/>
-                  </div>
-                  <span className='text text_type_main-small'>{item.name}</span>
-                </div>
-                <div className={styles.price}>
-                  <span className='text text_type_digits-default'>{countIngredientQuantity(item._id, item.type)} x {item.price}</span>
-                  <CurrencyIcon type="primary" />
-                </div>
-              </div>
-            </li>
-          )).reverse()}
-        </ul>
-      </div>
-      <div className={styles.dataAndPrice}>
-        <span className='text text_type_main-default text_color_inactive'>{<FormattedDate date={new Date(order.createdAt)} />}</span>
-        <div className={styles.totalPrice}>
-            <span className='text text_type_digits-default'>{totalPrice}</span>
-            <CurrencyIcon type="primary" />
+      {order && Object.keys(order).length !== 0 &&
+        <>
+          <div className={styles.number}>
+            <span className='text text_type_digits-default'>#{order.number}</span>
           </div>
-      </div>
+          <h3 className={`text text_type_main-medium ${styles.title}`}>{order.name}</h3>
+          <span className={`text text_type_main-small ${order.status === 'done' ? styles.status : ''}`}>{status}</span>
+          <div className={styles.composition}>
+            <h4 className='text text_type_main-medium'>Состав:</h4>
+            <ul className={styles.list}>
+              {ingredientsToRender.map((item, index) => (
+                <li key={index}>
+                  <div className={styles.item}>
+                    <div className={styles.imageAndName}>
+                      <div className={styles.border}>
+                        <img src={item.image} alt={item.name} className={styles.image}/>
+                      </div>
+                      <span className='text text_type_main-small'>{item.name}</span>
+                    </div>
+                    <div className={styles.price}>
+                      <span className='text text_type_digits-default'>{countIngredientQuantity(item._id, item.type)} x {item.price}</span>
+                      <CurrencyIcon type="primary" />
+                    </div>
+                  </div>
+                </li>
+              )).reverse()}
+            </ul>
+          </div>
+          <div className={styles.dataAndPrice}>
+            <span className='text text_type_main-default text_color_inactive'>{<FormattedDate date={new Date(order.createdAt)} />}</span>
+            <div className={styles.totalPrice}>
+                <span className='text text_type_digits-default'>{totalPrice}</span>
+                <CurrencyIcon type="primary" />
+              </div>
+          </div>
+        </>
+      }
     </div>
   )
 }
