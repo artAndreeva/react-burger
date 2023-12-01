@@ -1,6 +1,6 @@
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
-import { useEffect, useState, FunctionComponent } from 'react';
+import { useEffect, useState, FunctionComponent, useCallback } from 'react';
 import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
 import { TYPE, PLACEHOLDER_TEXT } from '../../constants/constants';
@@ -35,16 +35,19 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
     }
   });
 
+  const countTotalPrice = useCallback(
+    (): number => {
+      const totalPrice = ingredients.reduce(((previousValue, item) => previousValue + item.price), 0) +
+      ((buns.price * 2) || 0);
+      return totalPrice;
+    },
+    [ingredients, buns ],
+  )
+
   useEffect(() => {
     setOrderTotal(countTotalPrice())
-  }, [buns, ingredients]);
+  }, [buns, ingredients, countTotalPrice]);
 
-
-  const countTotalPrice = (): number => {
-    const totalPrice = ingredients.reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) +
-    ((buns.price * 2) || 0);
-    return totalPrice;
-  }
 
   const handleOrderClick = () => {
     if (isLoggedIn) {
@@ -74,7 +77,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
 
         {ingredients.length !== 0
         ? <ul className={styles.list}>
-            {ingredients.map((item: TIngredient, index: number) => (
+            {ingredients.map((item, index) => (
               <ConstructorIngredient
                 ingredient={item}
                 index={index}

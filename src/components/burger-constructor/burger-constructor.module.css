@@ -44,7 +44,7 @@
 .summary {
   display: flex;
   gap: 40px;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .price {

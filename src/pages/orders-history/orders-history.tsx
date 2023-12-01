@@ -5,7 +5,7 @@ import { TOrder } from '../../types/types';
 import { wsAuthConnectionEndAction, wsAuthConnectionStartAction } from '../../services/actions/ws';
 import styles from './orders-history.module.css';
 import { useLocation } from 'react-router-dom';
-import { WS_URL } from '../../constants/constants';
+import { WS_AUTH_URL } from '../../constants/constants';
 
 const OrdersHistory = () => {
 
@@ -15,7 +15,7 @@ const OrdersHistory = () => {
   const url = pathname;
 
   useEffect(() => {
-    dispatch(wsAuthConnectionStartAction(WS_URL));
+    dispatch(wsAuthConnectionStartAction(WS_AUTH_URL));
     return () => {
       dispatch(wsAuthConnectionEndAction());
     }

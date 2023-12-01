@@ -1,3 +1,5 @@
+import { getCookie } from "../utils/cookie";
+
 export const BASE_URL = 'https://norma.nomoreparties.space';
 
 export const TYPE = {
@@ -16,4 +18,5 @@ export const PLACEHOLDER_TEXT = {
   bottom: 'Место для булки'
 }
 
-export const WS_URL = 'wss://norma.nomoreparties.space/orders';
+export const WS_URL = 'wss://norma.nomoreparties.space/orders/all';
+export const WS_AUTH_URL = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`;

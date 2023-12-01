@@ -30,7 +30,6 @@ const Feed = () => {
       <h1 className='text text_type_main-large'>Лента заказов</h1>
       <div className={styles.columns}>
         <section className={styles.leftColumn}>
-        {orders && Object.keys(orders).length !== 0 &&
           <ul className={styles.orders}>
             {orders.map((order: TOrder) => (
               <OrderCard
@@ -40,7 +39,6 @@ const Feed = () => {
               />
             ))}
           </ul>
-        }
         </section>
         <section className={styles.rightColumn}>
           <div className={styles.orderStatus}>

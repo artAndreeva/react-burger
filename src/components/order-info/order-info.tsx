@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/types/hooks";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-info.module.css';
-import { useEffect, useState } from 'react';
-import { TIngredient, TOrder } from "../../types/types";
+import { useEffect, useState, useCallback } from 'react';
+import { TIngredient } from "../../types/types";
 import { getSelectedOrder } from "../../services/actions/selected-order";
 
 const OrderInfo = () => {
@@ -20,46 +20,55 @@ const OrderInfo = () => {
 
   useEffect(() => {
     dispatch(getSelectedOrder(number));
-  }, [dispatch])
+  }, [dispatch, number])
 
-  useEffect(()=>{
+  const getIngredientsToRender = useCallback(
+    () => {
+      const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
+      const singleIngredients = ingredientsWithoutNull.filter((item, index) => {return ingredientsWithoutNull.indexOf(item) === index});
+      const foundedIngredients = singleIngredients.map((item: string) => ingredients.find((ingr: TIngredient) => ingr._id === item));
+      setIngredientsToRender(foundedIngredients as TIngredient[])
+    },
+    [ingredients, order],
+  )
+
+  const countTotalPrice = useCallback(
+    () => {
+      const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
+      const foundedIngredients = ingredientsWithoutNull.map((item) => ingredients.find((ingr) => ingr._id === item));
+      const buns = foundedIngredients.filter((item) => item?.type === 'bun');
+      const otherIngredients = foundedIngredients.filter((item) => item?.type !== 'bun');
+      const totalPrice = (otherIngredients as TIngredient[]).reduce(((previousValue, item) => previousValue + item.price), 0) +
+      ((buns as TIngredient[]).reduce(((previousValue, item) => previousValue + item.price), 0) * 2);
+      setTotalPrice(totalPrice);
+    },
+    [ingredients, order],
+  )
+
+  const getStatus = useCallback(
+    () => {
+      if (order.status === 'done') {
+        setStatus('Выполнен');
+      }
+      if (order.status === 'pending') {
+        setStatus('Готовится');
+      }
+      if (order.status === 'created') {
+        setStatus('Создан');
+      }
+    },
+    [order],
+  )
+
+  useEffect(() => {
     if (Object.keys(order).length !== 0) {
       getIngredientsToRender();
       countTotalPrice();
       getStatus();
     }
-  }, [order])
+  }, [order, countTotalPrice, getIngredientsToRender, getStatus])
 
-  const getIngredientsToRender = () => {
-    const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
-    const singleIngredients = ingredientsWithoutNull.filter((item, index) => {return ingredientsWithoutNull.indexOf(item) === index});
-    const foundedIngredients = singleIngredients.map((item: string) => ingredients.find((ingr: TIngredient) => ingr._id === item));
-    setIngredientsToRender(foundedIngredients as TIngredient[])
-  }
-
-  const countTotalPrice = () => {
-    const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
-    const foundedIngredients = ingredientsWithoutNull.map((item: string) => ingredients.find((ingr: TIngredient) => ingr._id === item));
-    const buns = foundedIngredients.filter((item) => item?.type === 'bun');
-    const otherIngredients = foundedIngredients.filter((item) => item?.type !== 'bun');
-    const totalPrice = (otherIngredients as TIngredient[]).reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) +
-    ((buns as TIngredient[]).reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) * 2);
-    setTotalPrice(totalPrice);
-  }
-
-  const getStatus = () => {
-    if (order.status === 'done') {
-      setStatus('Выполнен');
-    }
-    if (order.status === 'pending') {
-      setStatus('Готовится');
-    }
-    if (order.status === 'created') {
-      setStatus('Создан');
-    }
-  }
-
-  const countIgredientQuantity = (id: string, type: string) => {
+  const countIngredientQuantity = (id: string, type: string) => {
     if (type === 'bun') {
       return 2;
     } else {
@@ -88,7 +97,7 @@ const OrderInfo = () => {
                   <span className='text text_type_main-small'>{item.name}</span>
                 </div>
                 <div className={styles.price}>
-                  <span className='text text_type_digits-default'>{countIgredientQuantity(item._id, item.type)} x {item.price}</span>
+                  <span className='text text_type_digits-default'>{countIngredientQuantity(item._id, item.type)} x {item.price}</span>
                   <CurrencyIcon type="primary" />
                 </div>
               </div>

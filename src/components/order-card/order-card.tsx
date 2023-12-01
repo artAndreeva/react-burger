@@ -24,7 +24,7 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order, url }) => {
   const getIngredientsToRender = () => {
     const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
     const singleIngredients = ingredientsWithoutNull.filter((item, index) => {return ingredientsWithoutNull.indexOf(item) === index});
-    const foundedIngredients = singleIngredients.map((item: string) => ingredients.find((ingr: TIngredient) => ingr._id === item));
+    const foundedIngredients = singleIngredients.map((item) => ingredients.find((ingr) => ingr._id === item));
     setItemPlus(foundedIngredients as TIngredient[]);
     const slicedIngredients = foundedIngredients.slice(-6);
     setIngredientsToRender(slicedIngredients as TIngredient[])
@@ -32,11 +32,11 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order, url }) => {
 
   const countTotalPrice = (): number => {
     const ingredientsWithoutNull = order.ingredients.filter((item) => item !== null);
-    const foundedIngredients = ingredientsWithoutNull.map((item: string) => ingredients.find((ingr: TIngredient) => ingr._id === item));
+    const foundedIngredients = ingredientsWithoutNull.map((item) => ingredients.find((ingr) => ingr._id === item));
     const buns = foundedIngredients.filter((item) => item?.type === 'bun');
     const otherIngredients = foundedIngredients.filter((item) => item?.type !== 'bun');
-    const totalPrice = (otherIngredients as TIngredient[]).reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) +
-    ((buns as TIngredient[]).reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) * 2);
+    const totalPrice = (otherIngredients as TIngredient[]).reduce(((previousValue, item) => previousValue + item.price), 0) +
+    ((buns as TIngredient[]).reduce(((previousValue, item) => previousValue + item.price), 0) * 2);
     return totalPrice;
   }
 
@@ -72,7 +72,7 @@ const OrderCard: FunctionComponent<IOrderProps> = ({ order, url }) => {
         </div>
         <div className={styles.imagesAndPrice}>
           <ul className={styles.list}>
-            {ingredientsToRender.map((item: TIngredient, index) => (
+            {ingredientsToRender.map((item, index) => (
               <li className={styles.item} key={index}>
                 <img src={item.image} alt={item.name} className={styles.image}/>
               </li>

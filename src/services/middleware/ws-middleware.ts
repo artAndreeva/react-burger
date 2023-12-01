@@ -1,6 +1,5 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { AppDispatch, RootState } from '../types/index';
-import { getCookie } from '../../utils/cookie';
 import {
   WS_AUTH_CONNECTION_START,
   WS_AUTH_CONNECTION_END,
@@ -10,7 +9,6 @@ import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
   WS_GET_ORDERS,
-  wsAuthConnectionStartAction
 } from '../actions/ws';
 import { refreshToken } from '../actions/auth';
 
@@ -42,13 +40,9 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
       const { type } = action;
       const { wsConnect, wsDisconnect, onOpen, onClose, onError, onMessage } = wsActions;
 
-      if (type === wsConnect && wsConnect === WS_CONNECTION_START) {
+      if (type === wsConnect) {
         wsUrl = action.wsUrl;
-        socket = new WebSocket(`${wsUrl}/all`);
-      }
-      if (type === wsConnect && wsConnect === WS_AUTH_CONNECTION_START) {
-        wsUrl = action.wsUrl;
-        socket = new WebSocket(`${wsUrl}?token=${getCookie('accessToken')}`);
+        socket = new WebSocket(wsUrl);
       }
 
       if (socket) {
