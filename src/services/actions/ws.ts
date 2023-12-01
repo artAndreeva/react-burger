@@ -12,12 +12,14 @@ export const WS_SEND_MESSAGE: 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
 
 interface IWSAuthConnectionStartAction {
   readonly type: typeof WS_AUTH_CONNECTION_START;
+  readonly wsUrl: string;
 }
 interface IWSAuthConnectionEndAction {
   readonly type: typeof WS_AUTH_CONNECTION_END;
 }
 interface IWSConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
+  readonly wsUrl: string;
 }
 interface IWSConnectionEndAction {
   readonly type: typeof WS_CONNECTION_END;
@@ -54,9 +56,9 @@ export type TWSActions =
   | IWSConnectionClosedAction
   | IWSGetOrdersAction;
 
-export const wsAuthConnectionStartAction = (): IWSAuthConnectionStartAction => ({ type: 'WS_AUTH_CONNECTION_START'});
+export const wsAuthConnectionStartAction = (wsUrl: string): IWSAuthConnectionStartAction => ({ type: 'WS_AUTH_CONNECTION_START', wsUrl});
 export const wsAuthConnectionEndAction = (): IWSAuthConnectionEndAction => ({ type: 'WS_AUTH_CONNECTION_END'});
 
-export const wsConnectionStartAction = (): IWSConnectionStartAction => ({ type: 'WS_CONNECTION_START'});
+export const wsConnectionStartAction = (wsUrl: string): IWSConnectionStartAction => ({ type: 'WS_CONNECTION_START', wsUrl});
 export const wsConnectionEndAction = (): IWSConnectionEndAction => ({ type: 'WS_CONNECTION_END'});
 

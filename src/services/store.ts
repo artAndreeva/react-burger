@@ -1,7 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './root-reducer';
 import { TWSStoreActions, TWSStoreAuthActions, socketMiddleware } from './middleware/ws-middleware';
-import { WS_URL } from '../constants/constants';
 import thunk from 'redux-thunk';
 import {
   WS_AUTH_CONNECTION_START,
@@ -37,6 +36,7 @@ const composeEnhancers =
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(WS_URL, wsAuthActions), socketMiddleware(WS_URL, wsActions)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsAuthActions), socketMiddleware(wsActions)));
 
 export const store = createStore(rootReducer, enhancer);
+

@@ -5,7 +5,7 @@ import { TAuthActions } from '../actions/auth';
 import { TIngredientsActions } from '../actions/ingredients';
 import { TOrderActions } from '../actions/order';
 import { TResetPasswordActions } from '../actions/reset-password';
-import { TWSActions } from '../actions/ws';
+import { TWSActions, TWSAuthActions } from '../actions/ws';
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -14,7 +14,8 @@ export type TApplicationActions =
   | TIngredientsActions
   | TOrderActions
   | TResetPasswordActions
-  | TWSActions;
+  | TWSActions
+  | TWSAuthActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>

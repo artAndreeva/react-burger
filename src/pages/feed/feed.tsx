@@ -5,6 +5,7 @@ import { wsConnectionEndAction, wsConnectionStartAction } from '../../services/a
 import styles from './feed.module.css';
 import OrderCard from '../../components/order-card/order-card';
 import { useLocation } from 'react-router-dom';
+import { WS_URL } from '../../constants/constants';
 
 const Feed = () => {
 
@@ -14,7 +15,7 @@ const Feed = () => {
   const url = pathname;
 
   useEffect(() => {
-    dispatch(wsConnectionStartAction());
+    dispatch(wsConnectionStartAction(WS_URL));
     return () => {
       dispatch(wsConnectionEndAction());
     }
@@ -29,7 +30,7 @@ const Feed = () => {
       <h1 className='text text_type_main-large'>Лента заказов</h1>
       <div className={styles.columns}>
         <section className={styles.leftColumn}>
-        {Object.keys(orders).length !== 0 &&
+        {orders && Object.keys(orders).length !== 0 &&
           <ul className={styles.orders}>
             {orders.map((order: TOrder) => (
               <OrderCard

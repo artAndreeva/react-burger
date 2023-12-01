@@ -1,6 +1,5 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { AppDispatch, RootState } from '../types/index';
-import { TWSActions } from '../actions/ws';
 import { getCookie } from '../../utils/cookie';
 import {
   WS_AUTH_CONNECTION_START,
@@ -10,8 +9,10 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
-  WS_GET_ORDERS
+  WS_GET_ORDERS,
+  wsAuthConnectionStartAction
 } from '../actions/ws';
+import { refreshToken } from '../actions/auth';
 
 export type TWSStoreActions = {
   wsConnect: typeof WS_CONNECTION_START,
@@ -31,19 +32,22 @@ export type TWSStoreAuthActions = {
   onMessage: typeof  WS_GET_ORDERS,
 };
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions | TWSStoreAuthActions): Middleware => {
+export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
+    let wsUrl = '';
 
-    return next => (action: TWSActions) => {
+    return next => (action) => {
       const { dispatch } = store;
       const { type } = action;
       const { wsConnect, wsDisconnect, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsConnect && wsConnect === WS_CONNECTION_START) {
+        wsUrl = action.wsUrl;
         socket = new WebSocket(`${wsUrl}/all`);
       }
-      if (type === wsConnect && wsConnect !== WS_CONNECTION_START) {
+      if (type === wsConnect && wsConnect === WS_AUTH_CONNECTION_START) {
+        wsUrl = action.wsUrl;
         socket = new WebSocket(`${wsUrl}?token=${getCookie('accessToken')}`);
       }
 
@@ -59,13 +63,18 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions | TWS
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          dispatch({ type: onMessage, parsedData });
+          if (parsedData.message === 'Invalid or missing token') {
+            dispatch(refreshToken());
+          } else {
+            dispatch({ type: onMessage, parsedData });
+          }
         };
 
         socket.onclose = () => {
           dispatch({ type: onClose });
         };
       }
+
       if (type === wsDisconnect) {
         socket?.close();
         dispatch({ type: onClose });
@@ -75,36 +84,3 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions | TWS
     };
   }) as Middleware;
 };
-
-/* export const wsMiddleware = (wsUrl: string): Middleware => {
-    return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-        let socket: WebSocket | null = null;
-
-    return next => (action: TWSActions) => {
-      const { dispatch } = store;
-      const { type } = action;
-
-      if (type === 'WS_CONNECTION_START') {
-        socket = new WebSocket(`${wsUrl}?token=${getCookie('accessToken')}`);
-      }
-      if (socket) {
-        socket.onopen = event => {
-          dispatch(wsConnectionSuccessAction(event));
-        };
-        socket.onerror = event => {
-          dispatch(wsConnectionErrorAction(event));
-        };
-        socket.onmessage = event => {
-          const { data } = event;
-          const receivedData = JSON.parse(data)
-          dispatch(wsGetOrdersAction(receivedData));
-        };
-        socket.onclose = event => {
-          dispatch(wsConnectionClosedAction(event));
-        };
-      }
-
-      next(action);
-    };
-    }) as Middleware;
-}; */

@@ -5,16 +5,17 @@ import { TOrder } from '../../types/types';
 import { wsAuthConnectionEndAction, wsAuthConnectionStartAction } from '../../services/actions/ws';
 import styles from './orders-history.module.css';
 import { useLocation } from 'react-router-dom';
+import { WS_URL } from '../../constants/constants';
 
 const OrdersHistory = () => {
 
-  const { orders, error} = useSelector(store => store.wsOrders)
+  const { orders } = useSelector(store => store.wsOrders)
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const url = pathname;
 
   useEffect(() => {
-    dispatch(wsAuthConnectionStartAction());
+    dispatch(wsAuthConnectionStartAction(WS_URL));
     return () => {
       dispatch(wsAuthConnectionEndAction());
     }
@@ -22,7 +23,7 @@ const OrdersHistory = () => {
 
   return (
     <div className={styles.container}>
-      {Object.keys(orders).length !== 0 &&
+      {orders && Object.keys(orders).length !== 0 &&
         <ul className={styles.orders}>
           {orders.map((order: TOrder) => (
             <OrderCard
