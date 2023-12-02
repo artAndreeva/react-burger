@@ -6,30 +6,37 @@ import {
   SORT_INGREDIENTS,
   DELETE_ALL_INGREDIENTS
 } from '../actions/burger-ingredients';
+import { TIngredient } from '../../types/types';
+import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
 
-const initialState = {
-  buns: {},
+type TBurgerIngredientsState = {
+  buns: TIngredient,
+  ingredients: TIngredient[]
+}
+
+const initialState: TBurgerIngredientsState = {
+  buns: {} as TIngredient,
   ingredients: []
 }
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions): TBurgerIngredientsState => {
   switch (action.type) {
     case ADD_BUN: {
       return {
         ...state,
-        buns: action.payload,
+        buns: action.item,
       }
     }
     case ADD_INGREDIENT: {
       return {
         ...state,
-        ingredients: [...state.ingredients, action.payload],
+        ingredients: [...state.ingredients, action.item],
       }
     }
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        ingredients: [...state.ingredients].filter(item => item.uniqId !== action.payload)
+        ingredients: [...state.ingredients].filter(item => item.uniqId !== action.uniqId)
       }
     }
     case SORT_INGREDIENTS: {
@@ -37,8 +44,8 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         ingredients: update(state.ingredients, {
           $splice: [
-            [action.payload.dragIndex, 1],
-            [action.payload.hoverIndex, 0, state.ingredients[action.payload.dragIndex]],
+            [action.index.dragIndex, 1],
+            [action.index.hoverIndex, 0, state.ingredients[action.index.dragIndex]],
           ],
         }),
       }
@@ -46,7 +53,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
     case DELETE_ALL_INGREDIENTS: {
       return {
         ...state,
-        buns: {},
+        buns: {} as TIngredient,
         ingredients: []
       }
     }

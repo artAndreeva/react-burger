@@ -1,0 +1,28 @@
+.container {
+  padding: 8px 0 8px 8px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: scroll;
+  max-height: 868px;
+}
+
+.orders::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orders::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.orders::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}

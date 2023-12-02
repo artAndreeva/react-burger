@@ -34,9 +34,11 @@ const Modal: FunctionComponent<IModalProps> = ({ children, header, onClose }) =>
           <button className={modalStyles.button} onClick={onClose}>
             <CloseIcon type="primary" />
           </button>
+          {header &&
           <div className={modalStyles.container}>
             <h3 className='text text_type_main-large'>{header}</h3>
           </div>
+          }
             {children}
         </div>
         <ModalOverlay onClose={onClose}/>

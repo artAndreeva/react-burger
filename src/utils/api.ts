@@ -31,7 +31,7 @@ export const getIngredients = (): Promise<type.TGetIngredientsRes> => {
   })
 }
 
-export const sendOrder = (data: type.TSendOrder): Promise<type.TSendOrderRes> => {
+export const sendOrder = (data: type.TIngredient[]): Promise<type.TSendOrderRes> => {
   return request<type.TSendOrderRes>('api/orders', {
     method: 'POST',
     headers: {
@@ -142,5 +142,14 @@ export const updateUser = (data: type.TProfileValues): Promise<type.TUpdateUserR
       name: data.name,
       password: data.password
     })
+  })
+}
+
+export const getSelectedOrder = (number: number): Promise<type.TGetSelectedOrderRes> => {
+  return request<type.TGetSelectedOrderRes>(`api/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
   })
 }

@@ -18,8 +18,17 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED
 } from '../actions/auth';
+import { TAuthActions } from '../actions/auth';
 
-const initialState = {
+type TAuthState = {
+  user: {
+    name: string,
+    email: string
+  },
+  isLoggedIn: boolean,
+}
+
+const initialState: TAuthState = {
   user: {
     name: '',
     email: ''
@@ -27,7 +36,7 @@ const initialState = {
   isLoggedIn: false,
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return {
@@ -39,8 +48,8 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          name: action.payload.name,
-          email: action.payload.email
+          name: action.user.name,
+          email: action.user.email
         },
         isLoggedIn: true
       }
@@ -65,8 +74,8 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          name: action.payload.name,
-          email: action.payload.email
+          name: action.user.name,
+          email: action.user.email
         },
         isLoggedIn: true
       }
@@ -131,8 +140,8 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          name: action.payload.name,
-          email: action.payload.email
+          name: action.user.name,
+          email: action.user.email
         },
         isLoggedIn: true
       }
@@ -156,8 +165,8 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          name: action.payload.name,
-          email: action.payload.email
+          name: action.user.name,
+          email: action.user.email
         }
       }
     }

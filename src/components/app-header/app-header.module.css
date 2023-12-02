@@ -19,7 +19,7 @@
   padding: 0;
   display: flex;
   flex-basis: 30%;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .list {
@@ -48,7 +48,7 @@
 .containerProfile {
   display: flex;
   flex-basis: 30%;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .profile {

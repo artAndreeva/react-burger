@@ -1,6 +1,6 @@
 import styles from './profile.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { logout } from '../../services/actions/auth';
 import { useMatch } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const Profile = () => {
   const match = useMatch('/profile');
 
   const handleLogout = () => {
-    dispatch<any>(logout());
+    dispatch(logout());
   }
 
   return (
@@ -50,7 +50,7 @@ const Profile = () => {
           </p>
         }
       </nav>
-      <div>
+      <div className={styles.rightColumn}>
         <Outlet />
       </div>
     </main>

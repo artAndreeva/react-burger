@@ -3,3 +3,7 @@
   align-items: center;
   gap: 8px;
 }
+
+.color {
+  background-color: #1C1C21;
+}

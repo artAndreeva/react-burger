@@ -1,7 +1,7 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { useRef, FunctionComponent } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import constructorIngredientStyles from './constructor-ingredient.module.css';
+import styles from './constructor-ingredient.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { deleteIngredient, sortIngredients } from '../../services/actions/burger-ingredients';
 import { TIngredient } from '../../types/types';
@@ -60,7 +60,7 @@ const ConstructorIngredient: FunctionComponent<IConstructorIngredientProps> = ({
         }
       }
 
-      dispatch<any>(sortIngredients({dragIndex, hoverIndex}))
+      dispatch(sortIngredients({dragIndex, hoverIndex}))
 
       item.index = hoverIndex
     },
@@ -70,18 +70,19 @@ const ConstructorIngredient: FunctionComponent<IConstructorIngredientProps> = ({
 
   dragRef(dropTarget(ref))
 
-  const handleClose = (uniqId: string | undefined) => {
-    dispatch<any>(deleteIngredient(uniqId))
+  const handleClose = (uniqId: string) => {
+    dispatch(deleteIngredient(uniqId))
   }
 
   return (
-      <li className={constructorIngredientStyles.item} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
+      <li className={styles.item} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
         <DragIcon type="primary" />
         <ConstructorElement
           text={ingredient.name}
           price={ingredient.price}
           thumbnail={ingredient.image}
-          handleClose={() => handleClose(ingredient.uniqId)}
+          handleClose={() => handleClose(ingredient.uniqId as string)}
+          extraClass={styles.color}
         />
       </li>
   );

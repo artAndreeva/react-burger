@@ -44,11 +44,15 @@
 .summary {
   display: flex;
   gap: 40px;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .price {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.color {
+  background-color: #1C1C21;
 }

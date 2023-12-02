@@ -1,6 +1,6 @@
 import AuthForm from '../../form/auth-form/auth-form';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { login } from '../../services/actions/auth';
 import { TLoginValues } from '../../types/types';
 
@@ -9,7 +9,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleLogin = (values: TLoginValues) => {
-    dispatch<any>(login(values))
+    dispatch(login(values))
   }
 
   return (

@@ -1,7 +1,7 @@
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerConstructorStyles from './burger-constructor.module.css';
-import { useEffect, useState, FunctionComponent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import styles from './burger-constructor.module.css';
+import { useEffect, useState, FunctionComponent, useCallback } from 'react';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
 import { TYPE, PLACEHOLDER_TEXT } from '../../constants/constants';
 import { sendOrder } from '../../services/actions/order';
@@ -19,8 +19,8 @@ interface IBurgerConstructorProps {
 const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrderClick }) => {
 
   const [orderTotal, setOrderTotal] = useState(0);
-  const { buns, ingredients } = useSelector((store: any) => store.burgerIngredients)
-  const isLoggedIn = useSelector((store: any) => store.auth.isLoggedIn)
+  const { buns, ingredients } = useSelector(store => store.burgerIngredients)
+  const isLoggedIn = useSelector(store => store.auth.isLoggedIn)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,37 +28,40 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
     accept: 'ingredient',
     drop(item: TIngredient) {
       if(item.type === TYPE.bun) {
-        dispatch<any>(addBun(item))
+        dispatch(addBun(item))
       } else {
-        dispatch<any>(addIngredient({...item, uniqId: uuidv4()}))
+        dispatch(addIngredient({...item, uniqId: uuidv4()}))
       }
     }
   });
 
+  const countTotalPrice = useCallback(
+    (): number => {
+      const totalPrice = ingredients.reduce(((previousValue, item) => previousValue + item.price), 0) +
+      ((buns.price * 2) || 0);
+      return totalPrice;
+    },
+    [ingredients, buns ],
+  )
+
   useEffect(() => {
     setOrderTotal(countTotalPrice())
-  }, [buns, ingredients]);
+  }, [buns, ingredients, countTotalPrice]);
 
-
-  const countTotalPrice = (): number => {
-    const totalPrice = ingredients.reduce(((previousValue: number, item: TIngredient) => previousValue + item.price), 0) +
-    ((buns.price * 2) || 0);
-    return totalPrice;
-  }
 
   const handleOrderClick = () => {
     if (isLoggedIn) {
       onOrderClick();
-      dispatch<any>(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
+      dispatch(sendOrder([...ingredients, ...[buns]].map(item => item._id)));
     } else {
       navigate('/login');
     }
   }
 
   return (
-    <section className={burgerConstructorStyles.column} ref={dropTarget}>
-      <div className={burgerConstructorStyles.container}>
-        <div className={burgerConstructorStyles.end}>
+    <section className={styles.column} ref={dropTarget}>
+      <div className={styles.container}>
+        <div className={styles.end}>
           {Object.keys(buns).length !== 0
           ? <ConstructorElement
             type="top"
@@ -66,14 +69,15 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
             text={`${buns.name} (верх)`}
             price={buns.price}
             thumbnail={buns.image}
+            extraClass={styles.color}
             />
           : <ConstructorPlaceholder top={true} text={PLACEHOLDER_TEXT.top}/>
           }
         </div>
 
         {ingredients.length !== 0
-        ? <ul className={burgerConstructorStyles.list}>
-            {ingredients.map((item: TIngredient, index: number) => (
+        ? <ul className={styles.list}>
+            {ingredients.map((item, index) => (
               <ConstructorIngredient
                 ingredient={item}
                 index={index}
@@ -84,7 +88,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
         : <ConstructorPlaceholder middle={true} text={PLACEHOLDER_TEXT.middle}/>
         }
 
-        <div className={burgerConstructorStyles.end}>
+        <div className={styles.end}>
         {Object.keys(buns).length !== 0
           ? <ConstructorElement
             type="bottom"
@@ -92,13 +96,14 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
             text={`${buns.name} (низ)`}
             price={buns.price}
             thumbnail={buns.image}
+            extraClass={styles.color}
             />
           : <ConstructorPlaceholder bottom={true} text={PLACEHOLDER_TEXT.bottom}/>
           }
         </div>
       </div>
-      <div className={burgerConstructorStyles.summary}>
-        <div className={burgerConstructorStyles.price}>
+      <div className={styles.summary}>
+        <div className={styles.price}>
           <span className='text text_type_digits-medium'>{orderTotal}</span>
           <CurrencyIcon type="primary" />
         </div>
