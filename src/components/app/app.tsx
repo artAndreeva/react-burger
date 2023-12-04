@@ -84,7 +84,6 @@ const App = () => {
 
       {locationState?.backgroundLocation && (
         <Routes>
-          <Route path='/' element={<Main onOrderClick={openOrderModal} />} />
           <Route
             path="/ingredients/:id"
             element={<Modal onClose={closeModal} header={INGREDIENT_MODAL_HEADER}><IngredientsDetails /></Modal>}/>

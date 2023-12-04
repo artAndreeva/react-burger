@@ -34,6 +34,8 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
     let wsUrl = '';
+    let isConnected = false;
+    let reconnectTimer = 0;
 
     return next => (action) => {
       const { dispatch } = store;
@@ -43,6 +45,7 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
       if (type === wsConnect) {
         wsUrl = action.wsUrl;
         socket = new WebSocket(wsUrl);
+        isConnected = true;
       }
 
       if (socket) {
@@ -66,12 +69,20 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
 
         socket.onclose = () => {
           dispatch({ type: onClose });
+          if (isConnected) {
+            reconnectTimer = window.setTimeout(() => {
+              dispatch({ type: wsConnect, wsUrl});
+            }, 3000)
+          }
         };
       }
 
       if (type === wsDisconnect) {
         socket?.close();
         dispatch({ type: onClose });
+        clearTimeout(reconnectTimer)
+        isConnected = false;
+        reconnectTimer = 0;
       }
 
       next(action);
