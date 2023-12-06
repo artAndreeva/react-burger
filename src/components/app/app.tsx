@@ -78,7 +78,7 @@ const App = () => {
         <Route path='/profile/orders/:number' element={<ProtectedRouteElement element={<Order />} />}/>
         <Route path='/feed' element={<Feed />} />
         <Route path='/feed/:number' element={<Order />} />
-        <Route path="/ingredients/:id" element={<Ingredients />} />
+        <Route path='/ingredients/:id' element={<Ingredients />} />
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
 

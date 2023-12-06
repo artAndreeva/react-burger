@@ -9,13 +9,15 @@ import { TGetSelectedOrderActions } from '../actions/selected-order';
 type TGetSelectedOrderState = {
   order: TOrder,
   getSelectedOrderRequest: boolean,
-  getSelectedOrderFailed: boolean
+  getSelectedOrderFailed: boolean,
+  getSelectedOrderSuccess: boolean
 }
 
 const initialState: TGetSelectedOrderState = {
   order: {} as TOrder,
   getSelectedOrderRequest: false,
-  getSelectedOrderFailed: false
+  getSelectedOrderFailed: false,
+  getSelectedOrderSuccess: false
 }
 
 export const selectedOrderReducer = (state = initialState, action: TGetSelectedOrderActions): TGetSelectedOrderState => {
@@ -23,7 +25,8 @@ export const selectedOrderReducer = (state = initialState, action: TGetSelectedO
     case GET_SELECTED_ORDER_REQUEST: {
       return {
         ...state,
-        getSelectedOrderRequest: true
+        getSelectedOrderRequest: true,
+        getSelectedOrderSuccess: false
       };
     }
     case GET_SELECTED_ORDER_SUCCESS: {
@@ -31,7 +34,8 @@ export const selectedOrderReducer = (state = initialState, action: TGetSelectedO
         ...state,
         order: action.orders[0],
         getSelectedOrderRequest: false,
-        getSelectedOrderFailed: false
+        getSelectedOrderFailed: false,
+        getSelectedOrderSuccess: true
       };
     }
     case GET_SELECTED_ORDER_FAILED: {
@@ -39,6 +43,7 @@ export const selectedOrderReducer = (state = initialState, action: TGetSelectedO
         ...state,
         getSelectedOrderRequest: false,
         getSelectedOrderFailed: true,
+        getSelectedOrderSuccess: false,
         order: {} as TOrder
       };
     }
