@@ -26,7 +26,7 @@ const initialState: TWSState = {
   totalToday: 0
 };
 
-export const wsReducer = (state = initialState, action: TWSActions | TWSAuthActions): TWSState => {
+export const wsReducer = (state = initialState, action: TWSAuthActions | TWSActions): TWSState => {
   switch (action.type) {
     case WS_AUTH_CONNECTION_START: {
       return {
@@ -59,7 +59,8 @@ export const wsReducer = (state = initialState, action: TWSActions | TWSAuthActi
       return {
         ...state,
         error: action.event,
-        wsConnected: false
+        wsConnected: false,
+        orders: []
       }
     }
     case WS_CONNECTION_CLOSED: {

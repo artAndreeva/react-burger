@@ -15,7 +15,7 @@ const Feed = () => {
   const url = pathname;
 
   useEffect(() => {
-    dispatch(wsConnectionStartAction(WS_URL));
+    dispatch(wsConnectionStartAction({ wsUrl: WS_URL, end: '/all'}));
     return () => {
       dispatch(wsConnectionEndAction());
     }
@@ -61,11 +61,11 @@ const Feed = () => {
           </div>
           <div>
             <h3 className='text text_type_main-medium'>Выполнено за все время:</h3>
-            <span className='text text_type_digits-large'>{total}</span>
+            <span className={`text text_type_digits-large ${styles.glow}`}>{total}</span>
           </div>
           <div>
             <h3 className='text text_type_main-medium'>Выполнено за сегодня:</h3>
-            <span className='text text_type_digits-large'>{totalToday}</span>
+            <span className={`text text_type_digits-large ${styles.glow}`}>{totalToday}</span>
           </div>
         </section>
       </div>

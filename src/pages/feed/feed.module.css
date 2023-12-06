@@ -76,3 +76,7 @@
   gap: 8px;
   flex-wrap: wrap;
 }
+
+.glow {
+  text-shadow: 0 0 25px rgba(77, 77, 255, .6);
+}

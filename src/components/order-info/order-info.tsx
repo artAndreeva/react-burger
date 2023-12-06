@@ -10,7 +10,6 @@ const OrderInfo = () => {
 
   const { number } = useParams();
   const order = useSelector(store => store.selectedOrder.order)
-
   const ingredients = useSelector(store => store.ingredients.ingredients)
   const [ingredientsToRender, setIngredientsToRender] = useState<TIngredient[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -38,8 +37,8 @@ const OrderInfo = () => {
       const foundedIngredients = ingredientsWithoutNull.map((item) => ingredients.find((ingr) => ingr._id === item));
       const buns = foundedIngredients.filter((item) => item?.type === 'bun');
       const otherIngredients = foundedIngredients.filter((item) => item?.type !== 'bun');
-      const totalPrice = (otherIngredients as TIngredient[]).reduce(((previousValue, item) => previousValue + item.price), 0) +
-      ((buns as TIngredient[]).reduce(((previousValue, item) => previousValue + item.price), 0) * 2);
+      const totalPrice = otherIngredients.reduce(((previousValue, item) => previousValue + item!.price), 0) +
+      (buns.reduce(((previousValue, item) => previousValue + item!.price), 0) * 2);
       setTotalPrice(totalPrice);
     },
     [ingredients, order],
@@ -61,12 +60,12 @@ const OrderInfo = () => {
   )
 
   useEffect(() => {
-    if (Object.keys(order).length !== 0) {
+    if (Object.keys(order).length !==0 && ingredients.length !== 0) {
       getIngredientsToRender();
       countTotalPrice();
       getStatus();
     }
-  }, [order, countTotalPrice, getIngredientsToRender, getStatus])
+  }, [order, countTotalPrice, getIngredientsToRender, getStatus, ingredients])
 
   const countIngredientQuantity = (id: string, type: string) => {
     if (type === 'bun') {
@@ -79,7 +78,7 @@ const OrderInfo = () => {
 
   return (
     <div>
-      {order && Object.keys(order).length !== 0 &&
+      {Object.keys(order).length !==0 && ingredients.length !== 0 &&
         <>
           <div className={styles.number}>
             <span className='text text_type_digits-default'>#{order.number}</span>

@@ -78,12 +78,13 @@ const App = () => {
         <Route path='/profile/orders/:number' element={<ProtectedRouteElement element={<Order />} />}/>
         <Route path='/feed' element={<Feed />} />
         <Route path='/feed/:number' element={<Order />} />
-        <Route path="/ingredients/:id" element={<Ingredients />} />
+        <Route path='/ingredients/:id' element={<Ingredients />} />
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
 
       {locationState?.backgroundLocation && (
         <Routes>
+          <Route path='/' element={<Main onOrderClick={openOrderModal} />} />
           <Route
             path="/ingredients/:id"
             element={<Modal onClose={closeModal} header={INGREDIENT_MODAL_HEADER}><IngredientsDetails /></Modal>}/>

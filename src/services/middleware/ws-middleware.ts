@@ -11,6 +11,7 @@ import {
   WS_GET_ORDERS,
 } from '../actions/ws';
 import { refreshToken } from '../actions/auth';
+import { getCookie } from '../../utils/cookie';
 
 export type TWSStoreActions = {
   wsConnect: typeof WS_CONNECTION_START,
@@ -30,12 +31,13 @@ export type TWSStoreAuthActions = {
   onMessage: typeof  WS_GET_ORDERS,
 };
 
-export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthActions): Middleware => {
+export const socketMiddleware = (wsActions: TWSStoreAuthActions | TWSStoreActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
-    let wsUrl = '';
     let isConnected = false;
     let reconnectTimer = 0;
+    let wsUrl = '';
+    let end = '';
 
     return next => (action) => {
       const { dispatch } = store;
@@ -43,9 +45,11 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
       const { wsConnect, wsDisconnect, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsConnect) {
-        wsUrl = action.wsUrl;
-        socket = new WebSocket(wsUrl);
+        wsUrl = action.payload.wsUrl;
+        end = action.payload.end;
+        socket = new WebSocket(`${wsUrl}${end}`);
         isConnected = true;
+        console.log(wsConnect)
       }
 
       if (socket) {
@@ -62,6 +66,11 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
           const parsedData = JSON.parse(data);
           if (parsedData.message === 'Invalid or missing token') {
             dispatch(refreshToken());
+            dispatch({ type: onClose });
+            reconnectTimer = window.setTimeout(() => {
+              dispatch({ type: wsConnect, payload: { wsUrl, end: `?token=${getCookie('accessToken')}` }});
+              console.log(wsConnect)
+            }, 3000)
           } else {
             dispatch({ type: onMessage, parsedData });
           }
@@ -69,22 +78,28 @@ export const socketMiddleware = (wsActions: TWSStoreActions | TWSStoreAuthAction
 
         socket.onclose = () => {
           dispatch({ type: onClose });
+
           if (isConnected) {
             reconnectTimer = window.setTimeout(() => {
-              dispatch({ type: wsConnect, wsUrl});
+              dispatch({ type: wsConnect, payload: { wsUrl, end }});
+              console.log(wsConnect)
             }, 3000)
           }
         };
       }
 
       if (type === wsDisconnect) {
-        socket?.close();
-        dispatch({ type: onClose });
-        clearTimeout(reconnectTimer)
-        isConnected = false;
-        reconnectTimer = 0;
+        if (socket?.readyState === 1) {
+          socket?.close();
+          dispatch({ type: onClose });
+          clearTimeout(reconnectTimer)
+          isConnected = false;
+          reconnectTimer = 0;
+          wsUrl = '';
+          end = '';
+          console.log(wsDisconnect)
+        }
       }
-
       next(action);
     };
   }) as Middleware;

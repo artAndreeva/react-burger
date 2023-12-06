@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import OrderCard from '../../components/order-card/order-card';
 import { useDispatch, useSelector } from '../../services/types/hooks';
-import { TOrder } from '../../types/types';
 import { wsAuthConnectionEndAction, wsAuthConnectionStartAction } from '../../services/actions/ws';
 import styles from './orders-history.module.css';
 import { useLocation } from 'react-router-dom';
-import { WS_AUTH_URL } from '../../constants/constants';
+import { WS_URL } from '../../constants/constants';
+import { getCookie } from '../../utils/cookie';
 
 const OrdersHistory = () => {
 
@@ -15,7 +15,7 @@ const OrdersHistory = () => {
   const url = pathname;
 
   useEffect(() => {
-    dispatch(wsAuthConnectionStartAction(WS_AUTH_URL));
+    dispatch(wsAuthConnectionStartAction({ wsUrl: WS_URL, end: `?token=${getCookie('accessToken')}` }));
     return () => {
       dispatch(wsAuthConnectionEndAction());
     }
@@ -23,9 +23,8 @@ const OrdersHistory = () => {
 
   return (
     <div className={styles.container}>
-      {orders && Object.keys(orders).length !== 0 &&
         <ul className={styles.orders}>
-          {orders.map((order: TOrder) => (
+          {orders.map((order) => (
             <OrderCard
               order={order}
               key={order._id}
@@ -33,7 +32,6 @@ const OrdersHistory = () => {
             />
           )).reverse()}
         </ul>
-      }
     </div>
   )
 }
