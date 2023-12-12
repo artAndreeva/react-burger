@@ -14,7 +14,7 @@ import { TOrder } from '../../types/types';
 type TWSState = {
   wsConnected: boolean;
   orders: TOrder[];
-  error?: Event;
+  error?: string | undefined;
   total: number;
   totalToday: number;
 }
@@ -23,7 +23,8 @@ const initialState: TWSState = {
   wsConnected: false,
   orders: [],
   total: 0,
-  totalToday: 0
+  totalToday: 0,
+  error: undefined
 };
 
 export const wsReducer = (state = initialState, action: TWSAuthActions | TWSActions): TWSState => {

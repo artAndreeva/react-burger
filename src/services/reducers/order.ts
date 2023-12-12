@@ -5,7 +5,7 @@ import {
 } from '../actions/order';
 import { TOrderActions } from '../actions/order';
 
-type TOrderState = {
+export type TOrderState = {
   orderNumber: number,
   sendOrderRequest: boolean,
   sendOrderFailed: boolean
@@ -28,7 +28,7 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
     case SEND_ORDER_SUCCESS: {
       return {
         ...state,
-        orderNumber: action.order.number,
+        orderNumber: action.number,
         sendOrderRequest: false,
         sendOrderFailed: false
       };

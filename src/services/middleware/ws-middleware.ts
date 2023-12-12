@@ -54,11 +54,11 @@ export const socketMiddleware = (wsActions: TWSStoreAuthActions | TWSStoreAction
 
       if (socket) {
         socket.onopen = event => {
-          dispatch({ type: onOpen, event });
+          dispatch({ type: onOpen, event: event.type });
         };
 
         socket.onerror = event => {
-          dispatch({ type: onError, event });
+          dispatch({ type: onError, event: event.type });
         };
 
         socket.onmessage = event => {

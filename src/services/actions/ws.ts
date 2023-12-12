@@ -26,11 +26,11 @@ interface IWSConnectionEndAction {
 }
 interface IWSConnectionSuccessAction {
   readonly type: typeof WS_CONNECTION_SUCCESS;
-  readonly event: Event;
+  readonly event: string;
 }
 interface IWSConnectionErrorAction {
   readonly type: typeof WS_CONNECTION_ERROR;
-  readonly event: Event;
+  readonly event: string;
 }
 interface IWSConnectionClosedAction {
   readonly type: typeof WS_CONNECTION_CLOSED;
@@ -39,6 +39,9 @@ interface IWSGetOrdersAction {
   readonly type: typeof WS_GET_ORDERS;
   readonly parsedData: TWSOrdersRes;
 }
+interface IUndefined {
+  readonly type: typeof undefined;
+}
 
 export type TWSAuthActions =
   | IWSAuthConnectionStartAction
@@ -46,7 +49,8 @@ export type TWSAuthActions =
   | IWSConnectionSuccessAction
   | IWSConnectionErrorAction
   | IWSConnectionClosedAction
-  | IWSGetOrdersAction;
+  | IWSGetOrdersAction
+  | IUndefined;
 
 export type TWSActions =
   | IWSConnectionStartAction

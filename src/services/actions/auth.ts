@@ -85,6 +85,9 @@ interface IUpdateUserSuccessAction {
 interface IUpdateUserFailedAction {
   readonly type: typeof UPDATE_USER_FAILED;
 }
+interface IUndefined {
+  readonly type: typeof undefined;
+}
 
 export type TAuthActions =
   | IRegisterRequestAction
@@ -104,7 +107,8 @@ export type TAuthActions =
   | IGetUserFailedAction
   | IUpdateUserRequestAction
   | IUpdateUserSuccessAction
-  | IUpdateUserFailedAction;
+  | IUpdateUserFailedAction
+  | IUndefined;
 
 export const registerRequestAction = (): IRegisterRequestAction => ({type: REGISTER_REQUEST});
 export const registerSuccessAction = (user: TUser): IRegisterSuccessAction => ({type: REGISTER_SUCCESS, user});

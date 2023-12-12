@@ -28,6 +28,9 @@ interface IResetSuccessAction {
 interface IResetFailedAction {
   readonly type: typeof RESET_FAILED;
 }
+interface IUndefined {
+  readonly type: typeof undefined;
+}
 
 export type TResetPasswordActions =
   | IResetPasswordRequestAction
@@ -35,7 +38,8 @@ export type TResetPasswordActions =
   | IResetPasswordFailedAction
   | IResetRequestAction
   | IResetSuccessAction
-  | IResetFailedAction;
+  | IResetFailedAction
+  | IUndefined;
 
 export const resetPasswordRequestAction = (): IResetPasswordRequestAction => ({type: RESET_PASSWORD_REQUEST});
 export const resetPasswordSuccessAction = (): IResetPasswordSuccessAction => ({type: RESET_PASSWORD_SUCCESS});
