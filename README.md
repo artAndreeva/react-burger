@@ -14,6 +14,8 @@
 * TypeScript
 * Rest API
 * WebSocet
+* Cypress
+* Jest
 
 ## Инструкция по запуску проекта
 
