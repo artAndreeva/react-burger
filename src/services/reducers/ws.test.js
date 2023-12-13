@@ -45,7 +45,7 @@ const type = '';
 describe('websocket reducer', () => {
 
   it('should return the initial state', () => {
-    const received = wsReducer(undefined, { type: undefined })
+    const received = wsReducer(undefined, {});
     const expected = {
       ...initialState
     };
@@ -148,6 +148,5 @@ describe('websocket reducer', () => {
     };
     expect(received).toEqual(expected);
   })
-
 
 })

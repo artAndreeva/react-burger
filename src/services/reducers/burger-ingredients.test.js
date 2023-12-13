@@ -6,11 +6,10 @@ import {
   SORT_INGREDIENTS,
   DELETE_ALL_INGREDIENTS
 } from '../actions/burger-ingredients';
-import { TIngredient } from '../../types/types';
 import update from 'immutability-helper';
 
 const initialState = {
-  buns: {} as TIngredient,
+  buns: {},
   ingredients: []
 };
 
@@ -42,7 +41,7 @@ const index = {
 describe('burger ingredients reducer', () => {
 
   it('should return the initial state', () => {
-    const received = burgerIngredientsReducer(undefined, { type: undefined })
+    const received = burgerIngredientsReducer(undefined, {});
     const expected = {
       ...initialState
     };
@@ -53,7 +52,7 @@ describe('burger ingredients reducer', () => {
     const received = burgerIngredientsReducer(initialState, {
       type: ADD_BUN,
       item: ingredient
-    })
+    });
     const expected = {
       ...initialState,
       buns: ingredient,
@@ -77,7 +76,7 @@ describe('burger ingredients reducer', () => {
     const received = burgerIngredientsReducer(initialState, {
       type: DELETE_INGREDIENT,
       uniqId: uniqId
-    })
+    });
     const expected = {
       ...initialState,
       ingredients: [...ingredients].filter(item => item.uniqId !== uniqId)
@@ -105,7 +104,7 @@ describe('burger ingredients reducer', () => {
   it('should handle DELETE_ALL_INGREDIENTS', () => {
     const received = burgerIngredientsReducer(initialState, {
       type: DELETE_ALL_INGREDIENTS,
-    })
+    });
     const expected = {
       ...initialState,
       buns: {},

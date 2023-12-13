@@ -36,7 +36,7 @@ const user = {
 describe('auth reducer', () => {
 
   it('should return the initial state', () => {
-    const received = authReducer(undefined, { type: undefined })
+    const received = authReducer(undefined, {});
     const expected = {
       ...initialState
     };
@@ -46,7 +46,7 @@ describe('auth reducer', () => {
   it('should handle REGISTER_REQUEST', () => {
     const received = authReducer(initialState, {
       type: REGISTER_REQUEST
-    })
+    });
     const expected = {
       ...initialState,
       isLoggedIn: false
@@ -58,7 +58,7 @@ describe('auth reducer', () => {
     const received = authReducer(initialState, {
       type: REGISTER_SUCCESS,
       user: user
-    })
+    });
     const expected = {
       ...initialState,
       user: {
@@ -73,7 +73,7 @@ describe('auth reducer', () => {
   it('should handle REGISTER_FAILED', () => {
     const received = authReducer(initialState, {
       type: REGISTER_FAILED
-    })
+    });
     const expected = {
       ...initialState,
       user: {
@@ -88,7 +88,7 @@ describe('auth reducer', () => {
   it('should handle LOGIN_REQUEST', () => {
     const received = authReducer(initialState, {
       type: LOGIN_REQUEST,
-    })
+    });
     const expected = {
       ...initialState,
       isLoggedIn: false
@@ -100,7 +100,7 @@ describe('auth reducer', () => {
     const received = authReducer(initialState, {
       type: LOGIN_SUCCESS,
       user: user
-    })
+    });
     const expected = {
       ...initialState,
       user: {
@@ -115,7 +115,7 @@ describe('auth reducer', () => {
   it('should handle LOGIN_FAILED', () => {
     const received = authReducer(initialState, {
       type: LOGIN_FAILED
-    })
+    });
     const expected = {
       ...initialState,
       user: {
@@ -130,7 +130,7 @@ describe('auth reducer', () => {
   it('should handle REFRESH_TOKEN_REQUEST', () => {
     const received = authReducer(initialState, {
       type: REFRESH_TOKEN_REQUEST
-    })
+    });
     const expected = {
       ...initialState
     };
@@ -140,7 +140,7 @@ describe('auth reducer', () => {
   it('should handle REFRESH_TOKEN_SUCCESS', () => {
     const received = authReducer(initialState, {
       type: REFRESH_TOKEN_SUCCESS
-    })
+    });
     const expected = {
       ...initialState
     };
@@ -150,7 +150,7 @@ describe('auth reducer', () => {
   it('should handle REFRESH_TOKEN_FAILED', () => {
     const received = authReducer(initialState, {
       type: REFRESH_TOKEN_FAILED
-    })
+    });
     const expected = {
       ...initialState,
       isLoggedIn: false
@@ -161,7 +161,7 @@ describe('auth reducer', () => {
   it('should handle LOGOUT_REQUEST', () => {
     const received = authReducer(initialState, {
       type: LOGOUT_REQUEST
-    })
+    });
     const expected = {
       ...initialState
     };
@@ -171,7 +171,7 @@ describe('auth reducer', () => {
   it('should handle LOGOUT_SUCCESS', () => {
     const received = authReducer(initialState, {
       type: LOGOUT_SUCCESS
-    })
+    });
     const expected = {
       ...initialState,
       user: {
@@ -186,7 +186,7 @@ describe('auth reducer', () => {
   it('should handle LOGOUT_FAILED', () => {
     const received = authReducer(initialState, {
       type: LOGOUT_FAILED
-    })
+    });
     const expected = {
       ...initialState,
       isLoggedIn: true
@@ -197,7 +197,7 @@ describe('auth reducer', () => {
   it('should handle GET_USER_REQUEST', () => {
     const received = authReducer(initialState, {
       type: GET_USER_REQUEST
-    })
+    });
     const expected = {
       ...initialState,
       user: {
@@ -212,7 +212,7 @@ describe('auth reducer', () => {
     const received = authReducer(initialState, {
       type: GET_USER_SUCCESS,
       user: user
-    })
+    });
     const expected = {
       ...initialState,
       user: {

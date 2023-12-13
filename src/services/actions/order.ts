@@ -17,15 +17,11 @@ interface ISendOrderSuccessAction {
 interface ISendOrderFailedAction {
   readonly type: typeof SEND_ORDER_FAILED;
 }
-interface IUndefined {
-  readonly type: typeof undefined;
-}
 
 export type TOrderActions =
   | ISendOrderRequestAction
   | ISendOrderSuccessAction
-  | ISendOrderFailedAction
-  | IUndefined;
+  | ISendOrderFailedAction;
 
 export const sendOrderRequestAction = (): ISendOrderRequestAction => ({type: SEND_ORDER_REQUEST});
 export const sendOrderSuccessAction = (number: number): ISendOrderSuccessAction => ({type: SEND_ORDER_SUCCESS, number});

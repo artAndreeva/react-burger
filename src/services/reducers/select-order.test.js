@@ -4,10 +4,9 @@ import {
   GET_SELECTED_ORDER_SUCCESS,
   GET_SELECTED_ORDER_FAILED
 } from '../actions/selected-order';
-import { TOrder } from '../../types/types';
 
 const initialState = {
-  order: {} as TOrder,
+  order: {},
   getSelectedOrderRequest: false,
   getSelectedOrderFailed: false,
   getSelectedOrderSuccess: false
@@ -28,7 +27,7 @@ const order = {
 describe('selected order reducer', () => {
 
   it('should return the initial state', () => {
-    const received = selectedOrderReducer(undefined, { type: undefined })
+    const received = selectedOrderReducer(undefined, {});
     const expected = {
       ...initialState
     };
@@ -38,7 +37,7 @@ describe('selected order reducer', () => {
   it('should handle GET_SELECTED_ORDER_REQUEST', () => {
     const received = selectedOrderReducer(initialState, {
       type: GET_SELECTED_ORDER_REQUEST
-    })
+    });
     const expected = {
       ...initialState,
       getSelectedOrderRequest: true,
@@ -51,7 +50,7 @@ describe('selected order reducer', () => {
     const received = selectedOrderReducer(initialState, {
       type: GET_SELECTED_ORDER_SUCCESS,
       order: order
-    })
+    });
     const expected = {
       ...initialState,
       order: order,
@@ -65,7 +64,7 @@ describe('selected order reducer', () => {
   it('should handle GET_SELECTED_ORDER_FAILED', () => {
     const received = selectedOrderReducer(initialState, {
       type: GET_SELECTED_ORDER_FAILED
-    })
+    });
     const expected = {
       ...initialState,
       getSelectedOrderRequest: false,

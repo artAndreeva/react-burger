@@ -29,7 +29,7 @@ const ingredients = [{
 describe('ingredients reducer', () => {
 
   it('should return the initial state', () => {
-    const received = ingredientsReducer(undefined, { type: undefined })
+    const received = ingredientsReducer(undefined, {});
     const expected = {
       ...initialState
     };
@@ -39,7 +39,7 @@ describe('ingredients reducer', () => {
   it('should handle GET_INGREDIENTS_REQUEST', () => {
     const received = ingredientsReducer(initialState, {
       type: GET_INGREDIENTS_REQUEST
-    })
+    });
     const expected = {
       ...initialState,
       ingredientsRequest: true
@@ -51,7 +51,7 @@ describe('ingredients reducer', () => {
     const received = ingredientsReducer(initialState, {
       type: GET_INGREDIENTS_SUCCESS,
       ingredients: ingredients
-    })
+    });
     const expected = {
       ...initialState,
       ingredients: ingredients,
@@ -64,7 +64,7 @@ describe('ingredients reducer', () => {
   it('should handle GET_INGREDIENTS_FAILED', () => {
     const received = ingredientsReducer(initialState, {
       type: GET_INGREDIENTS_FAILED
-    })
+    });
     const expected = {
       ...initialState,
       ingredientsRequest: false,

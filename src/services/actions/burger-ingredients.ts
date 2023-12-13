@@ -25,17 +25,13 @@ interface ISortIngredientsAction {
 interface IDeleteAllIngredientsAction {
   readonly type: typeof DELETE_ALL_INGREDIENTS;
 }
-interface IUndefined {
-  readonly type: typeof undefined;
-}
 
 export type TBurgerIngredientsActions =
   | IAddBunAction
   | IAddIngredientAction
   | IDeleteIngredientAction
   | ISortIngredientsAction
-  | IDeleteAllIngredientsAction
-  | IUndefined;
+  | IDeleteAllIngredientsAction;
 
 export const addBun = (item: TIngredient): IAddBunAction => ({type: ADD_BUN, item});
 export const addIngredient = (item: TIngredient): IAddIngredientAction => ({type: ADD_INGREDIENT, item});

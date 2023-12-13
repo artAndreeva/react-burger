@@ -16,15 +16,11 @@ interface IGetSelectedOrderSuccessAction {
 interface IGetSelectedOrderFailedAction {
   readonly type: typeof GET_SELECTED_ORDER_FAILED;
 }
-interface IUndefined {
-  readonly type: typeof undefined;
-}
 
 export type TGetSelectedOrderActions =
   | IGetSelectedOrderRequestAction
   | IGetSelectedOrderSuccessAction
-  | IGetSelectedOrderFailedAction
-  | IUndefined;
+  | IGetSelectedOrderFailedAction;
 
 export const GetSelectedOrderRequestAction = (): IGetSelectedOrderRequestAction => ({type: GET_SELECTED_ORDER_REQUEST});
 export const GetSelectedOrderSuccessAction = (order: TOrder): IGetSelectedOrderSuccessAction => ({type: GET_SELECTED_ORDER_SUCCESS, order});

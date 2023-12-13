@@ -16,15 +16,11 @@ interface IGetIngredientsSuccessAction {
 interface IGetIngredientsFailedAction {
   readonly type: typeof GET_INGREDIENTS_FAILED;
 }
-interface IUndefined {
-  readonly type: typeof undefined;
-}
 
 export type TIngredientsActions =
   | IGetIngredientsRequestAction
   | IGetIngredientsSuccessAction
-  | IGetIngredientsFailedAction
-  | IUndefined;
+  | IGetIngredientsFailedAction;
 
 export const getIngredientsRequestAction = (): IGetIngredientsRequestAction => ({type: GET_INGREDIENTS_REQUEST});
 export const getIngredientsSuccessAction = (ingredients: TIngredient[]): IGetIngredientsSuccessAction => ({type: GET_INGREDIENTS_SUCCESS, ingredients});

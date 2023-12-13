@@ -39,9 +39,6 @@ interface IWSGetOrdersAction {
   readonly type: typeof WS_GET_ORDERS;
   readonly parsedData: TWSOrdersRes;
 }
-interface IUndefined {
-  readonly type: typeof undefined;
-}
 
 export type TWSAuthActions =
   | IWSAuthConnectionStartAction
@@ -49,8 +46,7 @@ export type TWSAuthActions =
   | IWSConnectionSuccessAction
   | IWSConnectionErrorAction
   | IWSConnectionClosedAction
-  | IWSGetOrdersAction
-  | IUndefined;
+  | IWSGetOrdersAction;
 
 export type TWSActions =
   | IWSConnectionStartAction
