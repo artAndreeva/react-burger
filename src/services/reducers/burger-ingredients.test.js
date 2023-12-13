@@ -31,8 +31,6 @@ const ingredient = {
 
 const uniqId = '';
 
-//const ingredients = [];
-
 const index = {
   dragIndex: 123,
   hoverIndex: 123
