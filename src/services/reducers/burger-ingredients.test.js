@@ -31,7 +31,7 @@ const ingredient = {
 
 const uniqId = '';
 
-const ingredients = [ingredient];
+//const ingredients = [];
 
 const index = {
   dragIndex: 123,
@@ -60,17 +60,17 @@ describe('burger ingredients reducer', () => {
     expect(received).toEqual(expected);
   })
 
-/*   it('should handle ADD_INGREDIENT', () => {
+  it('should handle ADD_INGREDIENT', () => {
     const received = burgerIngredientsReducer(initialState, {
       type: ADD_INGREDIENT,
       item: ingredient
     })
     const expected = {
       ...initialState,
-      ingredients: [...ingredients, ingredient],
+      ingredients: [...initialState.ingredients, ingredient],
     };
     expect(received).toEqual(expected);
-  }) */
+  })
 
   it('should handle DELETE_INGREDIENT', () => {
     const received = burgerIngredientsReducer(initialState, {
@@ -79,11 +79,11 @@ describe('burger ingredients reducer', () => {
     });
     const expected = {
       ...initialState,
-      ingredients: [...ingredients].filter(item => item.uniqId !== uniqId)
+      ingredients: [...initialState.ingredients].filter(item => item.uniqId !== uniqId)
     };
     expect(received).toEqual(expected);
   })
-/*
+
   it('should handle SORT_INGREDIENTS', () => {
     const received = burgerIngredientsReducer(initialState, {
       type: SORT_INGREDIENTS,
@@ -91,15 +91,15 @@ describe('burger ingredients reducer', () => {
     })
     const expected = {
       ...initialState,
-      ingredients: update(ingredients, {
+      ingredients: update(initialState.ingredients, {
         $splice: [
           [index.dragIndex, 1],
-          [index.hoverIndex, 0, ingredients[index.dragIndex]],
+          [index.hoverIndex, 0, initialState.ingredients[index.dragIndex]],
         ],
       }),
     };
     expect(received).toEqual(expected);
-  }) */
+  })
 
   it('should handle DELETE_ALL_INGREDIENTS', () => {
     const received = burgerIngredientsReducer(initialState, {

@@ -15,8 +15,6 @@ describe('open order modal', () => {
   });
 
   it('should drag bun', () => {
-    cy.wait('@getIngredients');
-    cy.wait('@getUser');
     cy.get('[data-testid=ingredient]').contains('Краторная булка N-200i').trigger('dragstart');
     cy.get('[data-testid=constructor]').trigger('drop');
     cy.get('[data-testid=ingredient]').contains('Соус фирменный Space Sauce').trigger('dragstart');
