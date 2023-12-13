@@ -59,7 +59,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
   }
 
   return (
-    <section className={styles.column} ref={dropTarget}>
+    <section className={styles.column} ref={dropTarget} data-testid='constructor'>
       <div className={styles.container}>
         <div className={styles.end}>
           {Object.keys(buns).length !== 0
@@ -108,6 +108,7 @@ const BurgerConstructor: FunctionComponent<IBurgerConstructorProps> = ({ onOrder
           <CurrencyIcon type="primary" />
         </div>
         <Button
+          data-testid='order-button'
           htmlType="button"
           type="primary"
           size="large"

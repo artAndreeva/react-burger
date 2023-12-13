@@ -12,7 +12,7 @@ const IngredientsDetails = () => {
   return (
     <>
       {selectedIngredient &&
-        <div className={ingredientDetailStyles.container}>
+        <div className={ingredientDetailStyles.container} data-testid='ingredient-modal'>
           <img
             src={selectedIngredient.image}
             alt={selectedIngredient.name}
