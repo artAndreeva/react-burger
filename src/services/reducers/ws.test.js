@@ -1,4 +1,4 @@
-import { wsReducer } from './ws';
+import { wsReducer, initialState } from './ws';
 import {
   WS_AUTH_CONNECTION_START,
   WS_AUTH_CONNECTION_END,
@@ -9,14 +9,6 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS
 } from '../actions/ws';
-
-const initialState = {
-  wsConnected: false,
-  orders: [],
-  total: 0,
-  totalToday: 0,
-  error: undefined
-}
 
 const payload = {
   wsUrl: '',

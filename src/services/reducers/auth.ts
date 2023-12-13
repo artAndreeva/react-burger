@@ -28,7 +28,7 @@ type TAuthState = {
   isLoggedIn: boolean,
 }
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   user: {
     name: '',
     email: ''

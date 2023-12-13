@@ -1,15 +1,9 @@
-import { orderReducer } from './order';
+import { orderReducer, initialState } from './order';
 import {
   SEND_ORDER_REQUEST,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED
 } from '../actions/order';
-
-const initialState = {
-  orderNumber: 0,
-  sendOrderRequest: false,
-  sendOrderFailed: false
-}
 
 const number = 123;
 

@@ -1,15 +1,9 @@
-import { ingredientsReducer } from './ingredients';
+import { ingredientsReducer, initialState } from './ingredients';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED
 } from '../actions/ingredients';
-
-const initialState = {
-  ingredients: [],
-  ingredientsRequest: false,
-  ingredientsFailed: false
-}
 
 const ingredients = [{
   _id: '',

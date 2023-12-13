@@ -1,4 +1,4 @@
-import { burgerIngredientsReducer } from './burger-ingredients';
+import { burgerIngredientsReducer, initialState } from './burger-ingredients';
 import {
   ADD_BUN,
   ADD_INGREDIENT,
@@ -7,11 +7,6 @@ import {
   DELETE_ALL_INGREDIENTS
 } from '../actions/burger-ingredients';
 import update from 'immutability-helper';
-
-const initialState = {
-  buns: {},
-  ingredients: []
-};
 
 const ingredient = {
     _id: '',

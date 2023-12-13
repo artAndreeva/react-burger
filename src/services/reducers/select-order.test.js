@@ -1,16 +1,9 @@
-import { selectedOrderReducer } from './selected-order';
+import { selectedOrderReducer, initialState } from './selected-order';
 import {
   GET_SELECTED_ORDER_REQUEST,
   GET_SELECTED_ORDER_SUCCESS,
   GET_SELECTED_ORDER_FAILED
 } from '../actions/selected-order';
-
-const initialState = {
-  order: {},
-  getSelectedOrderRequest: false,
-  getSelectedOrderFailed: false,
-  getSelectedOrderSuccess: false
-}
 
 const order = {
   ingredients: ['', ''],

@@ -15,6 +15,7 @@ describe('open ingredient modal', () => {
   });
 
   it('should open and close ingredient modal', () => {
+    cy.wait('@getIngredients');
     cy.get('[data-testid=ingredient]').contains('Краторная булка N-200i').click();
     cy.get('[data-testid=ingredient-modal]').contains('Краторная булка N-200i').should('exist');
     cy.get('[data-testid=close-modal]').click();

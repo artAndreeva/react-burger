@@ -16,10 +16,13 @@ describe('open order modal', () => {
   });
 
   it('should open and close order modal', () => {
-    cy.get('[data-testid=ingredient]').contains('Краторная булка N-200i').trigger('dragstart');
-    cy.get('[data-testid=constructor]').trigger('drop');
-    cy.get('[data-testid=ingredient]').contains('Соус фирменный Space Sauce').trigger('dragstart');
-    cy.get('[data-testid=constructor]').trigger('drop');
+    cy.wait('@getIngredients');
+    cy.get('[data-testid=ingredient]').as('ingredient');
+    cy.get('[data-testid=constructor]').as('constructor');
+    cy.get('@ingredient').contains('Краторная булка N-200i').trigger('dragstart');
+    cy.get('@constructor').trigger('drop');
+    cy.get('@ingredient').contains('Соус фирменный Space Sauce').trigger('dragstart');
+    cy.get('@constructor').trigger('drop');
     cy.get('[data-testid=order-button]').click();
     cy.wait('@postOrder');
     cy.get('[data-testid=order-modal]').contains('123').should('exist');

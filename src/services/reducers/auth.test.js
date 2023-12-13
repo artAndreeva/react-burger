@@ -1,4 +1,4 @@
-import { authReducer } from './auth';
+import { authReducer, initialState } from './auth';
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -19,14 +19,6 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED
 } from '../actions/auth';
-
-const initialState = {
-  user: {
-    name: '',
-    email: ''
-  },
-  isLoggedIn: false,
-};
 
 const user = {
   email: '',
