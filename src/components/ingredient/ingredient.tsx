@@ -34,7 +34,7 @@ const Ingredient: FunctionComponent<IIngredientProps> = ({ item }) => {
 
   return (
     <Link to={`/ingredients/${item._id}`} className={styles.link} state={{ backgroundLocation: location }}>
-      <div className={styles.card} ref={dragRef}>
+      <div className={styles.card} ref={dragRef} data-testid='ingredient'>
         {quantity
         ? <Counter count={quantity} size="default" />
         : null

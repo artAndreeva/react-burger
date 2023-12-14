@@ -31,7 +31,7 @@ const Modal: FunctionComponent<IModalProps> = ({ children, header, onClose }) =>
     (
       <>
         <div className={modalStyles.modal}>
-          <button className={modalStyles.button} onClick={onClose}>
+          <button className={modalStyles.button} onClick={onClose} data-testid='close-modal'>
             <CloseIcon type="primary" />
           </button>
           {header &&

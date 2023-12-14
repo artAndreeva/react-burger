@@ -13,7 +13,7 @@ type TResetPasswordState = {
   isReset: boolean
 }
 
-const initialState: TResetPasswordState = {
+export const initialState: TResetPasswordState = {
   isResetPassword: false,
   isReset: false
 }

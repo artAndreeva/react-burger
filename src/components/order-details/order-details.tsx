@@ -6,7 +6,7 @@ const OrderDetails = () => {
   const { orderNumber, sendOrderRequest } = useSelector(store => store.order);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid='order-modal'>
     {!sendOrderRequest
       ? <>
           <h3 className={`text text_type_digits-large mb-8 ${styles.glow}`}>{orderNumber}</h3>

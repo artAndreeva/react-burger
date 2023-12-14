@@ -1,7 +1,7 @@
 import * as api from '../../utils/api';
 import { deleteAllIngredients } from './burger-ingredients';
 import { AppThunk, AppDispatch } from '../types/index';
-import { TOrder, TIngredient } from '../../types/types';
+import { TIngredient } from '../../types/types';
 
 export const SEND_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
 export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
@@ -12,7 +12,7 @@ interface ISendOrderRequestAction {
 }
 interface ISendOrderSuccessAction {
   readonly type: typeof SEND_ORDER_SUCCESS;
-  readonly order: TOrder;
+  readonly number: number;
 }
 interface ISendOrderFailedAction {
   readonly type: typeof SEND_ORDER_FAILED;
@@ -24,7 +24,7 @@ export type TOrderActions =
   | ISendOrderFailedAction;
 
 export const sendOrderRequestAction = (): ISendOrderRequestAction => ({type: SEND_ORDER_REQUEST});
-export const sendOrderSuccessAction = (order: TOrder): ISendOrderSuccessAction => ({type: SEND_ORDER_SUCCESS, order});
+export const sendOrderSuccessAction = (number: number): ISendOrderSuccessAction => ({type: SEND_ORDER_SUCCESS, number});
 export const sendOrderFailedAction = (): ISendOrderFailedAction => ({type: SEND_ORDER_FAILED});
 
 export const sendOrder: AppThunk = (arr: TIngredient[]) => {
@@ -32,7 +32,7 @@ export const sendOrder: AppThunk = (arr: TIngredient[]) => {
     dispatch(sendOrderRequestAction());
     api.sendOrder(arr)
     .then((res) => {
-      dispatch(sendOrderSuccessAction(res.order));
+      dispatch(sendOrderSuccessAction(res.order.number));
       dispatch(deleteAllIngredients())
     })
     .catch(() => {

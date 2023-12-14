@@ -14,7 +14,7 @@ type TBurgerIngredientsState = {
   ingredients: TIngredient[]
 }
 
-const initialState: TBurgerIngredientsState = {
+export const initialState: TBurgerIngredientsState = {
   buns: {} as TIngredient,
   ingredients: []
 }

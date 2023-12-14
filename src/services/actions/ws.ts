@@ -26,11 +26,11 @@ interface IWSConnectionEndAction {
 }
 interface IWSConnectionSuccessAction {
   readonly type: typeof WS_CONNECTION_SUCCESS;
-  readonly event: Event;
+  readonly event: string;
 }
 interface IWSConnectionErrorAction {
   readonly type: typeof WS_CONNECTION_ERROR;
-  readonly event: Event;
+  readonly event: string;
 }
 interface IWSConnectionClosedAction {
   readonly type: typeof WS_CONNECTION_CLOSED;

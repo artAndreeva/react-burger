@@ -13,7 +13,7 @@ type TGetSelectedOrderState = {
   getSelectedOrderSuccess: boolean
 }
 
-const initialState: TGetSelectedOrderState = {
+export const initialState: TGetSelectedOrderState = {
   order: {} as TOrder,
   getSelectedOrderRequest: false,
   getSelectedOrderFailed: false,
@@ -32,7 +32,7 @@ export const selectedOrderReducer = (state = initialState, action: TGetSelectedO
     case GET_SELECTED_ORDER_SUCCESS: {
       return {
         ...state,
-        order: action.orders[0],
+        order: action.order,
         getSelectedOrderRequest: false,
         getSelectedOrderFailed: false,
         getSelectedOrderSuccess: true
